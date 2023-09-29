@@ -1,0 +1,4 @@
+__pycache__/
+logs/
+orange_env/
+.env
