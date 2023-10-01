@@ -13,7 +13,7 @@ def extract_subscription_data(page):
     subscription_elements = page.query_selector_all('.PostpaidOption')
 
     for id, subscription_element in enumerate(subscription_elements, start=1):
-        mobile_data = subscription_element.query_selector('.PostpaidOption__dataAmount__text').inner_text().lower().replace('gb', '').strip()
+        mobile_data = subscription_element.query_selector('.PostpaidOption__dataAmount__text').inner_text().lower()
         network = subscription_element.query_selector('.PostpaidOption__dataAmount__networkTag')
         if network.query_selector('.FourGFiveG--has5g'):
             network = '5g'
@@ -31,7 +31,7 @@ def extract_subscription_data(page):
         subscription_data.append({
             'id': id,
             'price_per_month': price_per_month,
-            'mobile_data_gb': mobile_data,
+            'mobile_data': mobile_data,
             'network': network,
             'minutes': minutes,
             'sms': sms

@@ -15,18 +15,18 @@ def extract_prepaid_data(page):
         price = prepaid_element.query_selector('.PrepaidSelectorProduct__price').inner_text()
 
         prepaid_rates_major = prepaid_element.query_selector_all('.PrepaidSelectorProduct__rates__major')
-        mobile_data = prepaid_rates_major[0].inner_text().lower().replace('gb', '').strip()
-        call_up_to = prepaid_rates_major[1].inner_text().replace('min', '').strip()
-        sms_rate = prepaid_rates_major[2].inner_text().lower()
+        mobile_data = prepaid_rates_major[0].inner_text().lower()
+        minutes = prepaid_rates_major[1].inner_text().replace('min', '').strip()
+        sms = prepaid_rates_major[2].inner_text().lower()
 
         price_per_minute = prepaid_element.query_selector_all('.PrepaidSelectorProduct__rates__minor')[2].inner_text().replace(',', '.').replace('per minute', '').strip()
 
         prepaid_data.append({
             'price': price,
-            'mobile_data_gb': mobile_data,
-            'call_up_to_min': call_up_to,
+            'mobile_data': mobile_data,
+            'minutes': minutes,
             'price_per_minute': price_per_minute,
-            'sms_rate': sms_rate
+            'sms': sms
         })
 
     return prepaid_data
