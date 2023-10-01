@@ -1,6 +1,9 @@
 from playwright.sync_api import sync_playwright
 import json
 import re
+from pathlib import Path
+
+from utils import save_to_json
 
 URL = 'https://mobilevikings.be/en/offer/combo/'
 
@@ -64,9 +67,11 @@ def main():
         combo_data.append(combo_data_superfast)
 
         combo_dict = {'combo_plans': combo_data}
+
         json_data = json.dumps(combo_dict, indent=4)
 
         print(json_data)
+        save_to_json(json_data, 'combo_data.json')
 
         browser.close()
 

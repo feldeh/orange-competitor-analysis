@@ -1,6 +1,8 @@
 from playwright.sync_api import sync_playwright
 import json
 
+from utils import save_to_json
+
 URL = 'https://mobilevikings.be/en/offer/prepaid/'
 
 
@@ -58,6 +60,7 @@ def main():
         json_data = json.dumps(prepaid_dict, indent=4)
 
         print(json_data)
+        save_to_json(json_data, 'prepaid_data.json')
 
         browser.close()
 
