@@ -11,7 +11,7 @@ def extract_prepaid_data(page):
 
     prepaid_elements = page.query_selector_all('.PrepaidSelectorProduct')
 
-    for id, prepaid_element in enumerate(prepaid_elements, start=1):
+    for prepaid_element in prepaid_elements:
         price = prepaid_element.query_selector('.PrepaidSelectorProduct__price').inner_text()
 
         prepaid_rates_major = prepaid_element.query_selector_all('.PrepaidSelectorProduct__rates__major')
@@ -22,7 +22,6 @@ def extract_prepaid_data(page):
         price_per_minute = prepaid_element.query_selector_all('.PrepaidSelectorProduct__rates__minor')[2].inner_text().replace(',', '.').replace('per minute', '').strip()
 
         prepaid_data.append({
-            'id': id,
             'price': price,
             'mobile_data_gb': mobile_data,
             'call_up_to_min': call_up_to,
@@ -33,6 +32,12 @@ def extract_prepaid_data(page):
     return prepaid_data
 
 
+def activate_toggles(page):
+    toggles = page.query_selector_all('.slider')
+    for i in range(len(toggles)):
+        toggles[i].click()
+
+
 def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
@@ -41,8 +46,14 @@ def main():
         page.get_by_role("button", name="Accept").click()
 
         prepaid_data = extract_prepaid_data(page)
+        activate_toggles(page)
+        prepaid_data_calls = extract_prepaid_data(page)
 
-        data_dict = {'prepaid_plans': prepaid_data}
+        prepaid_data.extend(prepaid_data_calls)
+
+        indexed_data = [{'id': i+1, **item} for i, item in enumerate(prepaid_data)]
+
+        data_dict = {'prepaid_plans': indexed_data}
 
         json_data = json.dumps(data_dict, indent=4)
 

@@ -30,6 +30,12 @@ def extract_prepaid_data(page):
     return prepaid_data
 
 
+def activate_toggles(page):
+    toggles = page.query_selector_all('.slider')
+    for i in range(len(toggles)):
+        toggles[i].click()
+
+
 def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
@@ -38,6 +44,12 @@ def main():
         page.get_by_role("button", name="Accept").click()
 
         prepaid_data = extract_prepaid_data(page)
+        activate_toggles(page)
+        prepaid_data_calls = extract_prepaid_data(page)
+
+        prepaid_data.extend(prepaid_data_calls)
+
+        print(prepaid_data)
 
         data_dict = {'prepaid_plans': prepaid_data}
 
