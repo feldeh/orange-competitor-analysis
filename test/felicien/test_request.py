@@ -21,3 +21,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             conn.send(data)
             conn.send(b'</pre></body></html>')
             conn.close()
+

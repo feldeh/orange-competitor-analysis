@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 import json
-
+import re
 
 URL = 'https://mobilevikings.be/en/offer/subscriptions/'
 
@@ -22,12 +22,19 @@ def extract_subscription_data(page):
         calls_texts = subscription_element.query_selector('.PostpaidOption__voiceTextAmount').inner_text().lower()
         price_per_month = subscription_element.query_selector('.monthlyPrice__price').inner_text().replace(',-', '')
 
+        minutes_match = re.search(r'(\d+) minutes', calls_texts)
+        sms_match = re.search(r'(\d+) texts', calls_texts)
+
+        minutes = minutes_match.group(1) if minutes_match else 'unlimited'
+        sms = sms_match.group(1) if sms_match else 'unlimited'
+
         subscription_data.append({
             'id': id,
             'price_per_month': price_per_month,
             'mobile_data_gb': mobile_data,
             'network': network,
-            'calls_texts': calls_texts
+            'minutes': minutes,
+            'sms': sms
         })
 
     return subscription_data
@@ -43,7 +50,6 @@ def main():
         subscription_data = extract_subscription_data(page)
 
         data_dict = {'subscription_plans': subscription_data}
-
         json_data = json.dumps(data_dict, indent=4)
 
         print(json_data)
