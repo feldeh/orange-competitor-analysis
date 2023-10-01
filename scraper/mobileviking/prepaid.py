@@ -7,9 +7,11 @@ URL = 'https://mobilevikings.be/en/offer/prepaid/'
 def extract_prepaid_data(page):
     prepaid_data = []
 
+    page.wait_for_selector('.PrepaidSelectorProduct')
+
     prepaid_elements = page.query_selector_all('.PrepaidSelectorProduct')
 
-    for prepaid_element in prepaid_elements:
+    for id, prepaid_element in enumerate(prepaid_elements, start=1):
         price = prepaid_element.query_selector('.PrepaidSelectorProduct__price').inner_text()
 
         prepaid_rates_major = prepaid_element.query_selector_all('.PrepaidSelectorProduct__rates__major')
@@ -20,6 +22,7 @@ def extract_prepaid_data(page):
         price_per_minute = prepaid_element.query_selector_all('.PrepaidSelectorProduct__rates__minor')[2].inner_text().replace(',', '.').replace('per minute', '').strip()
 
         prepaid_data.append({
+            'id': id,
             'price': price,
             'mobile_data_gb': mobile_data,
             'call_up_to_min': call_up_to,
