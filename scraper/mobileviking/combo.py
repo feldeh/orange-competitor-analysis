@@ -46,12 +46,25 @@ def main():
         page = browser.new_page()
         page.goto(URL)
         page.get_by_role("button", name="Accept").click()
-        combo_advantage = find_combo_advantage(page)
-        combo_data = extract_combo_data(page)
-        combo_data['combo_advantage'] = combo_advantage
 
-        data_dict = {'combo_plans': combo_data}
-        json_data = json.dumps(data_dict, indent=4)
+        combo_advantage = find_combo_advantage(page)
+        combo_names = page.query_selector_all('.wideScreenFilters__budgetItem__label')
+
+        combo_data_fast = extract_combo_data(page)
+        combo_data_fast['combo_advantage'] = combo_advantage
+        combo_data_fast['name'] = combo_names[0].inner_text()
+
+        combo_names[1].click()
+        combo_data_superfast = extract_combo_data(page)
+        combo_data_superfast['combo_advantage'] = combo_advantage
+        combo_data_superfast['name'] = combo_names[1].inner_text()
+
+        combo_data = []
+        combo_data.append(combo_data_fast)
+        combo_data.append(combo_data_superfast)
+
+        combo_dict = {'combo_plans': combo_data}
+        json_data = json.dumps(combo_dict, indent=4)
 
         print(json_data)
 

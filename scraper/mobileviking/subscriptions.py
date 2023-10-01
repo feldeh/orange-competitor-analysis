@@ -5,22 +5,22 @@ import re
 URL = 'https://mobilevikings.be/en/offer/subscriptions/'
 
 
-def extract_subscription_data(page):
-    subscription_data = []
+def extract_subs_data(page):
+    subs_data = []
 
     page.wait_for_selector('.PostpaidOption')
 
-    subscription_elements = page.query_selector_all('.PostpaidOption')
+    subs_elements = page.query_selector_all('.PostpaidOption')
 
-    for id, subscription_element in enumerate(subscription_elements, start=1):
-        mobile_data = subscription_element.query_selector('.PostpaidOption__dataAmount__text').inner_text().lower()
-        network = subscription_element.query_selector('.PostpaidOption__dataAmount__networkTag')
+    for id, subs_element in enumerate(subs_elements, start=1):
+        mobile_data = subs_element.query_selector('.PostpaidOption__dataAmount__text').inner_text().lower()
+        network = subs_element.query_selector('.PostpaidOption__dataAmount__networkTag')
         if network.query_selector('.FourGFiveG--has5g'):
             network = '5g'
         else:
             network = '4g'
-        calls_texts = subscription_element.query_selector('.PostpaidOption__voiceTextAmount').inner_text().lower()
-        price_per_month = subscription_element.query_selector('.monthlyPrice__price').inner_text().replace(',-', '')
+        calls_texts = subs_element.query_selector('.PostpaidOption__voiceTextAmount').inner_text().lower()
+        price_per_month = subs_element.query_selector('.monthlyPrice__price').inner_text().replace(',-', '')
 
         minutes_match = re.search(r'(\d+) minutes', calls_texts)
         sms_match = re.search(r'(\d+) texts', calls_texts)
@@ -28,7 +28,7 @@ def extract_subscription_data(page):
         minutes = minutes_match.group(1) if minutes_match else 'unlimited'
         sms = sms_match.group(1) if sms_match else 'unlimited'
 
-        subscription_data.append({
+        subs_data.append({
             'id': id,
             'price_per_month': price_per_month,
             'mobile_data': mobile_data,
@@ -37,7 +37,7 @@ def extract_subscription_data(page):
             'sms': sms
         })
 
-    return subscription_data
+    return subs_data
 
 
 def main():
@@ -47,10 +47,10 @@ def main():
         page.goto(URL)
         page.get_by_role("button", name="Accept").click()
 
-        subscription_data = extract_subscription_data(page)
+        subs_data = extract_subs_data(page)
 
-        data_dict = {'subscription_plans': subscription_data}
-        json_data = json.dumps(data_dict, indent=4)
+        subs_dict = {'subscription_plans': subs_data}
+        json_data = json.dumps(subs_dict, indent=4)
 
         print(json_data)
 

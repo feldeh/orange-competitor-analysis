@@ -53,9 +53,9 @@ def main():
 
         indexed_data = [{'id': i+1, **item} for i, item in enumerate(prepaid_data)]
 
-        data_dict = {'prepaid_plans': indexed_data}
+        prepaid_dict = {'prepaid_plans': indexed_data}
 
-        json_data = json.dumps(data_dict, indent=4)
+        json_data = json.dumps(prepaid_dict, indent=4)
 
         print(json_data)
 
