@@ -1,0 +1,69 @@
+{
+    "mobile_subscription_product": [
+        {
+            "id": 1,
+            "product_name": "mobile_subscription_2_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_subscription",
+            "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
+            "price": "10",
+            "data": "2",
+            "network": "4g",
+            "minutes": "150",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 2,
+            "product_name": "mobile_subscription_4_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_subscription",
+            "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
+            "price": "12",
+            "data": "4",
+            "network": "4g",
+            "minutes": "150",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 3,
+            "product_name": "mobile_subscription_10_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_subscription",
+            "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
+            "price": "15",
+            "data": "10",
+            "network": "5g",
+            "minutes": "unlimited",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 4,
+            "product_name": "mobile_subscription_20_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_subscription",
+            "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
+            "price": "20",
+            "data": "20",
+            "network": "5g",
+            "minutes": "unlimited",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 5,
+            "product_name": "mobile_subscription_70_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_subscription",
+            "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
+            "price": "29",
+            "data": "70",
+            "network": "5g",
+            "minutes": "unlimited",
+            "sms": "unlimited",
+            "internet_speed": ""
+        }
+    ]
+}
