@@ -32,7 +32,7 @@ def extract_prepaid_data(page):
             'product_category': 'mobile_prepaid',
             'product_url': URL,
             'price': data_price,
-            'mobile_data': data_gb,
+            'data': data_gb,
             'minutes': data_min,
             'price_per_minute': price_per_minute,
             'sms': sms,

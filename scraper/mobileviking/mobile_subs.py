@@ -15,7 +15,7 @@ def extract_subs_data(page):
     subs_elements = page.query_selector_all('.PostpaidOption')
 
     for id, subs_element in enumerate(subs_elements, start=1):
-        mobile_data = subs_element.query_selector('.PostpaidOption__dataAmount__text').inner_text().lower()
+        mobile_data = subs_element.query_selector('.PostpaidOption__dataAmount__text').inner_text().lower().replace('gb', '').strip()
         network = subs_element.query_selector('.PostpaidOption__dataAmount__networkTag')
         if network.query_selector('.FourGFiveG--has5g'):
             network = '5g'
@@ -28,15 +28,21 @@ def extract_subs_data(page):
         sms_match = re.search(r'(\d+) texts', calls_texts)
 
         minutes = minutes_match.group(1) if minutes_match else 'unlimited'
+        minutes = minutes_match.group(1) if minutes_match else 'unlimited'
         sms = sms_match.group(1) if sms_match else 'unlimited'
 
         subs_data.append({
             'id': id,
-            'price_per_month': price_per_month,
-            'mobile_data': mobile_data,
+            'product_name': f"mobile_subscription_{mobile_data}_gb",
+            'competitor_name': 'mobile_viking',
+            'product_category': 'mobile_subscription',
+            'product_url': URL,
+            'price': price_per_month,
+            'data': mobile_data,
             'network': network,
             'minutes': minutes,
-            'sms': sms
+            'sms': sms,
+            'internet_speed': ''
         })
 
     return subs_data
