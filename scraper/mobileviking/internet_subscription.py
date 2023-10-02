@@ -22,9 +22,13 @@ def extract_internet_data(page):
 
         cleaned_data = [part.split('\t')[0:2] for part in row]
 
+        print(cleaned_data)
+
         key = cleaned_data[0][0]
         value = cleaned_data[0][1].encode('ascii', 'ignore').decode('ascii')
         internet_data[key] = value
+
+        print(internet_data)
 
     return internet_data
 
