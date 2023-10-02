@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright
 import json
 from pathlib import Path
 
-# from utils import save_to_json
+from utils import save_to_json
 
 URL = 'https://mobilevikings.be/en/offer/internet/'
 
@@ -55,7 +55,7 @@ def main():
         json_data = json.dumps(internet_dict, indent=4)
 
         print(json_data)
-        # save_to_json(json_data, 'internet_data.json')
+        save_to_json(json_data, 'internet_data.json')
 
         browser.close()
 

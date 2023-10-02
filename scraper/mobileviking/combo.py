@@ -23,7 +23,11 @@ def extract_combo_data(page):
     for header in headers_to_scrape:
         row = page.locator(f'tr.matrix__{header}').all_inner_texts()
 
+        print(row)
+
         cleaned_data = [part.split('\t')[0:2] for part in row]
+
+        print(cleaned_data)
 
         key = cleaned_data[0][0]
         value = cleaned_data[0][1].encode('ascii', 'ignore').decode('ascii')
@@ -51,16 +55,16 @@ def main():
         page.get_by_role("button", name="Accept").click()
 
         combo_advantage = find_combo_advantage(page)
-        combo_names = page.query_selector_all('.wideScreenFilters__budgetItem__label')
+        label_btn = page.query_selector_all('.wideScreenFilters__budgetItem__label')
 
         combo_data_fast = extract_combo_data(page)
         combo_data_fast['combo_advantage'] = combo_advantage
-        combo_data_fast['name'] = combo_names[0].inner_text()
+        combo_data_fast['name'] = label_btn[0].inner_text()
 
-        combo_names[1].click()
+        label_btn[1].click()
         combo_data_superfast = extract_combo_data(page)
         combo_data_superfast['combo_advantage'] = combo_advantage
-        combo_data_superfast['name'] = combo_names[1].inner_text()
+        combo_data_superfast['name'] = label_btn[1].inner_text()
 
         combo_data = []
         combo_data.append(combo_data_fast)
