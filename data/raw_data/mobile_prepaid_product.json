@@ -1,0 +1,108 @@
+{
+    "mobile_prepaid_product": [
+        {
+            "id": 1,
+            "product_name": "mobile_prepaid_data_1_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_prepaid",
+            "product_url": "https://mobilevikings.be/en/offer/prepaid/",
+            "price": "10",
+            "mobile_data": "1",
+            "minutes": "25",
+            "price_per_minute": "0.40",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 2,
+            "product_name": "mobile_prepaid_data_4_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_prepaid",
+            "product_url": "https://mobilevikings.be/en/offer/prepaid/",
+            "price": "15",
+            "mobile_data": "4",
+            "minutes": "50",
+            "price_per_minute": "0.30",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 3,
+            "product_name": "mobile_prepaid_data_6_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_prepaid",
+            "product_url": "https://mobilevikings.be/en/offer/prepaid/",
+            "price": "20",
+            "mobile_data": "6",
+            "minutes": "67",
+            "price_per_minute": "0.30",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 4,
+            "product_name": "mobile_prepaid_data_8_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_prepaid",
+            "product_url": "https://mobilevikings.be/en/offer/prepaid/",
+            "price": "25",
+            "mobile_data": "8",
+            "minutes": "100",
+            "price_per_minute": "0.25",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 5,
+            "product_name": "mobile_prepaid_voice_0.5_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_prepaid",
+            "product_url": "https://mobilevikings.be/en/offer/prepaid/",
+            "price": "10",
+            "mobile_data": "0.5",
+            "minutes": "50",
+            "price_per_minute": "0.20",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 6,
+            "product_name": "mobile_prepaid_voice_2_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_prepaid",
+            "product_url": "https://mobilevikings.be/en/offer/prepaid/",
+            "price": "15",
+            "mobile_data": "2",
+            "minutes": "100",
+            "price_per_minute": "0.15",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 7,
+            "product_name": "mobile_prepaid_voice_3_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_prepaid",
+            "product_url": "https://mobilevikings.be/en/offer/prepaid/",
+            "price": "20",
+            "mobile_data": "3",
+            "minutes": "133",
+            "price_per_minute": "0.15",
+            "sms": "unlimited",
+            "internet_speed": ""
+        },
+        {
+            "id": 8,
+            "product_name": "mobile_prepaid_voice_4_gb",
+            "competitor_name": "mobile_viking",
+            "product_category": "mobile_prepaid",
+            "product_url": "https://mobilevikings.be/en/offer/prepaid/",
+            "price": "25",
+            "mobile_data": "4",
+            "minutes": "200",
+            "price_per_minute": "0.125",
+            "sms": "unlimited",
+            "internet_speed": ""
+        }
+    ]
+}
