@@ -7,22 +7,22 @@ from utils import save_to_json
 URL = 'https://mobilevikings.be/en/offer/subscriptions/'
 
 
-def extract_subs_data(page):
-    subs_data = []
+def extract_subscription_data(page):
+    subscription_data = []
 
     page.wait_for_selector('.PostpaidOption')
 
-    subs_elements = page.query_selector_all('.PostpaidOption')
+    subscription_elements = page.query_selector_all('.PostpaidOption')
 
-    for id, subs_element in enumerate(subs_elements, start=1):
-        mobile_data = subs_element.query_selector('.PostpaidOption__dataAmount__text').inner_text().lower().replace('gb', '').strip()
-        network = subs_element.query_selector('.PostpaidOption__dataAmount__networkTag')
+    for id, subscription_element in enumerate(subscription_elements, start=1):
+        mobile_data = subscription_element.query_selector('.PostpaidOption__dataAmount__text').inner_text().lower().replace('gb', '').strip()
+        network = subscription_element.query_selector('.PostpaidOption__dataAmount__networkTag')
         if network.query_selector('.FourGFiveG--has5g'):
             network = '5g'
         else:
             network = '4g'
-        calls_texts = subs_element.query_selector('.PostpaidOption__voiceTextAmount').inner_text().lower()
-        price_per_month = subs_element.query_selector('.monthlyPrice__price').inner_text().replace(',-', '')
+        calls_texts = subscription_element.query_selector('.PostpaidOption__voiceTextAmount').inner_text().lower()
+        price_per_month = subscription_element.query_selector('.monthlyPrice__price').inner_text().replace(',-', '')
 
         minutes_match = re.search(r'(\d+) minutes', calls_texts)
         sms_match = re.search(r'(\d+) texts', calls_texts)
@@ -31,7 +31,7 @@ def extract_subs_data(page):
         minutes = minutes_match.group(1) if minutes_match else 'unlimited'
         sms = sms_match.group(1) if sms_match else 'unlimited'
 
-        subs_data.append({
+        subscription_data.append({
             'id': id,
             'product_name': f"mobile_subscription_{mobile_data}_gb",
             'competitor_name': 'mobile_viking',
@@ -45,7 +45,7 @@ def extract_subs_data(page):
             'internet_speed': ''
         })
 
-    return subs_data
+    return subscription_data
 
 
 def main():
@@ -55,13 +55,13 @@ def main():
         page.goto(URL)
         page.get_by_role("button", name="Accept").click()
 
-        subs_data = extract_subs_data(page)
+        subscription_data = extract_subscription_data(page)
 
-        subs_dict = {'mobile_subs_product': subs_data}
-        json_data = json.dumps(subs_dict, indent=4)
+        subscription_dict = {'mobile_subscription_product': subscription_data}
+        json_data = json.dumps(subscription_dict, indent=4)
 
         print(json_data)
-        save_to_json(json_data, 'mobile_subs_product.json')
+        save_to_json(json_data, 'mobile_subscription_product.json')
 
         browser.close()
 

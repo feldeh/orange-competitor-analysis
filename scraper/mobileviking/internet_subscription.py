@@ -1,6 +1,5 @@
 from playwright.sync_api import sync_playwright
 import json
-from pathlib import Path
 
 from utils import save_to_json
 
@@ -50,12 +49,12 @@ def main():
         internet_data.append(internet_data_fast)
         internet_data.append(internet_data_superfast)
 
-        internet_dict = {'internet_subs_product': internet_data}
+        internet_dict = {'internet_subscription_product': internet_data}
 
         json_data = json.dumps(internet_dict, indent=4)
 
         print(json_data)
-        save_to_json(json_data, 'internet_subs_product.json')
+        save_to_json(json_data, 'internet_subscription_product.json')
 
         browser.close()
 
