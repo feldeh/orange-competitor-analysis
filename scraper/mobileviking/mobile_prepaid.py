@@ -55,12 +55,12 @@ def main():
 
         indexed_data = [{'id': i+1, **item} for i, item in enumerate(prepaid_data)]
 
-        prepaid_dict = {'prepaid_plans': indexed_data}
+        prepaid_dict = {'mobile_prepaid_product': indexed_data}
 
         json_data = json.dumps(prepaid_dict, indent=4)
 
         print(json_data)
-        save_to_json(json_data, 'prepaid_data.json')
+        save_to_json(json_data, 'mobile_prepaid_product.json')
 
         browser.close()
 

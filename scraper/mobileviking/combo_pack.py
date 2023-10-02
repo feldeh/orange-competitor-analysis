@@ -70,12 +70,12 @@ def main():
         combo_data.append(combo_data_fast)
         combo_data.append(combo_data_superfast)
 
-        combo_dict = {'combo_plans': combo_data}
+        combo_dict = {'combo_pack': combo_data}
 
         json_data = json.dumps(combo_dict, indent=4)
 
         print(json_data)
-        save_to_json(json_data, 'combo_data.json')
+        save_to_json(json_data, 'combo_pack.json')
 
         browser.close()
 

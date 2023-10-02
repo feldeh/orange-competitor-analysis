@@ -51,11 +51,11 @@ def main():
 
         subs_data = extract_subs_data(page)
 
-        subs_dict = {'subscription_plans': subs_data}
+        subs_dict = {'mobile_subs_product': subs_data}
         json_data = json.dumps(subs_dict, indent=4)
 
         print(json_data)
-        save_to_json(json_data, 'subscription_data.json')
+        save_to_json(json_data, 'mobile_subs_product.json')
 
         browser.close()
 
