@@ -33,10 +33,12 @@ def extract_prepaid_data(page):
             'product_url': URL,
             'price': data_price,
             'data': data_gb,
+            'network': '',
             'minutes': data_min,
             'price_per_minute': price_per_minute,
             'sms': sms,
-            'internet_speed': ''
+            'upload_speed': '',
+            'download_speed': ''
         })
 
     return prepaid_data
@@ -52,7 +54,8 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        page.goto(URL)
+        page.goto(URL, wait_until="load")
+
         page.get_by_role("button", name="Accept").click()
 
         prepaid_data = extract_prepaid_data(page)
@@ -61,7 +64,7 @@ def main():
 
         prepaid_data.extend(prepaid_data_calls)
 
-        indexed_data = [{'id': i+1, **item} for i, item in enumerate(prepaid_data)]
+        indexed_data = [{'product_id': i+1, **item} for i, item in enumerate(prepaid_data)]
 
         prepaid_dict = {'mobile_prepaid_product': indexed_data}
 

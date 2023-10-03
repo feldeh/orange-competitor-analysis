@@ -32,7 +32,7 @@ def extract_subscription_data(page):
         sms = sms_match.group(1) if sms_match else 'unlimited'
 
         subscription_data.append({
-            'id': id,
+            'product_id': id,
             'product_name': f"mobile_subscription_{mobile_data}_gb",
             'competitor_name': 'mobile_viking',
             'product_category': 'mobile_subscription',
@@ -41,8 +41,10 @@ def extract_subscription_data(page):
             'data': mobile_data,
             'network': network,
             'minutes': minutes,
+            'price_per_minute': '',
             'sms': sms,
-            'internet_speed': ''
+            'upload_speed': '',
+            'download_speed': ''
         })
 
     return subscription_data
@@ -52,7 +54,7 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        page.goto(URL)
+        page.goto(URL, wait_until="load")
         page.get_by_role("button", name="Accept").click()
 
         subscription_data = extract_subscription_data(page)

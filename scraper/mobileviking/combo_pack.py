@@ -51,7 +51,7 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        page.goto(URL)
+        page.goto(URL, wait_until="load")
         page.get_by_role("button", name="Accept").click()
 
         combo_advantage = find_combo_advantage(page)
