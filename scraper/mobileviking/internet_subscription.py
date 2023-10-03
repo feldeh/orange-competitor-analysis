@@ -1,10 +1,7 @@
+from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 import json
 import re
-
-from utils import save_to_json
-from pathlib import Path
-
 
 URL = 'https://mobilevikings.be/en/offer/internet/'
 
@@ -12,37 +9,38 @@ URL = 'https://mobilevikings.be/en/offer/internet/'
 def internet_speed_cleanup(string):
     pattern = r'(\d+)(gb|mb)'
     match = re.search(pattern, string)
-    value = int(match.group(1))
+    value = int(match.group(1)) if match else 0
 
-    if match:
-        unit = match.group(2)
-        if unit == "gb":
-            cleaned_value = value * 1000
-        else:
-            cleaned_value = value
+    unit = match.group(2) if match else ''
+
+    if unit == "gb":
+        cleaned_value = value * 1000
+    else:
+        cleaned_value = value
 
     return cleaned_value
 
 
-def extract_internet_data(page):
+def extract_internet_data(page_content, url):
+    soup = BeautifulSoup(page_content, 'html.parser')
 
     internet_data = {}
 
-    price = page.query_selector_all('tr.matrix__price td')[0].inner_text()
-    cleaned_price = re.sub(r'\D', '', price)
+    price = soup.select('tr.matrix__price td')[0].get_text()
+    cleaned_price = ''.join(filter(str.isdigit, price))
 
-    monthly_data = page.query_selector_all('tr.matrix__data td')[0].inner_text().lower()
+    monthly_data = soup.select('tr.matrix__data td')[0].get_text().lower()
 
-    download_speed = page.query_selector_all('tr.matrix__downloadSpeed td')[0].inner_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
-    upload_speed = page.query_selector_all('tr.matrix__voice td')[0].inner_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
-    line_type = page.query_selector_all('tr.matrix__lineType td')[0].inner_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
+    download_speed = soup.select('tr.matrix__downloadSpeed td')[0].get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
+    upload_speed = soup.select('tr.matrix__voice td')[0].get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
+    line_type = soup.select('tr.matrix__lineType td')[0].get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
 
     cleaned_download_speed = internet_speed_cleanup(download_speed)
     cleaned_upload_speed = internet_speed_cleanup(upload_speed)
 
     internet_data['competitor_name'] = 'mobile_viking'
     internet_data['product_category'] = 'internet_subscription'
-    internet_data['product_url'] = URL
+    internet_data['product_url'] = url
     internet_data['price'] = cleaned_price
     internet_data['data'] = monthly_data
     internet_data['network'] = ''
@@ -68,13 +66,15 @@ def main():
 
         internet_type_btn = page.query_selector_all('.wideScreenFilters__budgetItem__label')
 
-        first_table_data = extract_internet_data(page)
+        first_page_content = page.content()
+        first_table_data = extract_internet_data(first_page_content, URL)
         first_btn_text = internet_type_btn[0].inner_text().lower().replace(' ', '_')
         first_table_data = {'product_name': first_btn_text, **first_table_data}
 
         internet_type_btn[1].click()
 
-        second_table_data = extract_internet_data(page)
+        second_page_content = page.content()
+        second_table_data = extract_internet_data(second_page_content, URL)
         second_btn_text = internet_type_btn[1].inner_text().lower().replace(' ', '_')
         second_table_data = {'product_name': second_btn_text, **second_table_data}
 
@@ -87,7 +87,6 @@ def main():
         json_data = json.dumps(internet_dict, indent=4)
 
         print(json_data)
-        save_to_json(json_data, 'internet_subscription_product.json')
 
         browser.close()
 
