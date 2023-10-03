@@ -35,6 +35,7 @@ def extract_internet_data(page):
 
     download_speed = page.query_selector_all('tr.matrix__downloadSpeed td')[0].inner_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
     upload_speed = page.query_selector_all('tr.matrix__voice td')[0].inner_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
+    line_type = page.query_selector_all('tr.matrix__lineType td')[0].inner_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
 
     cleaned_download_speed = internet_speed_cleanup(download_speed)
     cleaned_upload_speed = internet_speed_cleanup(upload_speed)
@@ -50,6 +51,7 @@ def extract_internet_data(page):
     internet_data['sms'] = ''
     internet_data['download_speed'] = cleaned_download_speed
     internet_data['upload_speed'] = cleaned_upload_speed
+    internet_data['line_type'] = line_type
 
     return internet_data
 
@@ -58,8 +60,10 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
-        page.goto(URL, wait_until="load")
-        page.get_by_role("button", name="Accept").click()
+        page.goto(URL)
+
+        page.wait_for_selector('#btn-accept-cookies')
+        page.query_selector('#btn-accept-cookies').click()
 
         extract_internet_data(page)
 

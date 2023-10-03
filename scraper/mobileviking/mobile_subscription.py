@@ -44,7 +44,8 @@ def extract_subscription_data(page):
             'price_per_minute': '',
             'sms': sms,
             'upload_speed': '',
-            'download_speed': ''
+            'download_speed': '',
+            'line_type': ''
         })
 
     return subscription_data
@@ -54,8 +55,10 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        page.goto(URL, wait_until="load")
-        page.get_by_role("button", name="Accept").click()
+        page.goto(URL)
+
+        page.wait_for_selector('#btn-accept-cookies')
+        page.query_selector('#btn-accept-cookies').click()
 
         subscription_data = extract_subscription_data(page)
 

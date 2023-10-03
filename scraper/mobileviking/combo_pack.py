@@ -51,8 +51,10 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        page.goto(URL, wait_until="load")
-        page.get_by_role("button", name="Accept").click()
+        page.goto(URL)
+
+        page.wait_for_selector('#btn-accept-cookies')
+        page.query_selector('#btn-accept-cookies').click()
 
         combo_advantage = find_combo_advantage(page)
         label_btn = page.query_selector_all('.wideScreenFilters__budgetItem__label')

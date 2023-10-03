@@ -38,7 +38,8 @@ def extract_prepaid_data(page):
             'price_per_minute': price_per_minute,
             'sms': sms,
             'upload_speed': '',
-            'download_speed': ''
+            'download_speed': '',
+            'line_type': ''
         })
 
     return prepaid_data
@@ -54,9 +55,10 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        page.goto(URL, wait_until="load")
+        page.goto(URL)
 
-        page.get_by_role("button", name="Accept").click()
+        page.wait_for_selector('#btn-accept-cookies')
+        page.query_selector('#btn-accept-cookies').click()
 
         prepaid_data = extract_prepaid_data(page)
         activate_toggles(page)

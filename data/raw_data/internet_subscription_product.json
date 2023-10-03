@@ -12,7 +12,8 @@
             "price_per_minute": "",
             "sms": "",
             "download_speed": 100,
-            "upload_speed": 40
+            "upload_speed": 40,
+            "line_type": "copper"
         },
         {
             "product_name": "unlimited_superfast_internet",
@@ -26,7 +27,8 @@
             "price_per_minute": "",
             "sms": "",
             "download_speed": 1000,
-            "upload_speed": 500
+            "upload_speed": 500,
+            "line_type": "fiber"
         }
     ]
 }
