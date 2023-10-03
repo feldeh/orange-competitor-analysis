@@ -1,0 +1,20 @@
+{
+    "internet_subscription_product": [
+        {
+            "Monthly fee": "40,-",
+            "Data": "Unlimited",
+            "Download speed": "100Mbps",
+            "Upload speed": "40Mbps",
+            "Technology": "Copper",
+            "name": "Unlimited fast internet"
+        },
+        {
+            "Monthly fee": "55,-",
+            "Data": "Unlimited",
+            "Download speed": "1Gbps",
+            "Upload speed": "500Mbps",
+            "Technology": "Fiber",
+            "name": "Unlimited superfast internet"
+        }
+    ]
+}
