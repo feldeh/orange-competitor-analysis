@@ -1,36 +1,30 @@
+from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 import json
-
-from utils import save_to_json
-
 
 URL = 'https://mobilevikings.be/en/offer/prepaid/'
 
 
-def extract_prepaid_data(page):
+def extract_prepaid_data(page_content, url):
     prepaid_data = []
+    soup = BeautifulSoup(page_content, 'html.parser')
 
-    page.wait_for_selector('.PrepaidSelectorProduct')
-
-    prepaid_elements = page.query_selector_all('.PrepaidSelectorProduct')
+    prepaid_elements = soup.select('.PrepaidSelectorProduct')
 
     for prepaid_element in prepaid_elements:
-
-        prepaid_rates_major = prepaid_element.query_selector_all('.PrepaidSelectorProduct__rates__major')
-
-        sms = prepaid_rates_major[2].inner_text().lower()
-
-        price_per_minute = prepaid_element.query_selector_all('.PrepaidSelectorProduct__rates__minor')[2].inner_text().replace(',', '.').replace('per minute', '').strip()
-        data_focus = prepaid_element.get_attribute('data-focus')
-        data_gb = prepaid_element.get_attribute('data-gb')
-        data_min = prepaid_element.get_attribute('data-min')
-        data_price = prepaid_element.get_attribute('data-price')
+        prepaid_rates_major = prepaid_element.select('.PrepaidSelectorProduct__rates__major')
+        sms = prepaid_rates_major[2].get_text().lower()
+        price_per_minute = prepaid_element.select('.PrepaidSelectorProduct__rates__minor')[2].get_text().replace(',', '.').replace('per minute', '').strip()
+        data_focus = prepaid_element['data-focus']
+        data_gb = prepaid_element['data-gb']
+        data_min = prepaid_element['data-min']
+        data_price = prepaid_element['data-price']
 
         prepaid_data.append({
             'product_name': f"mobile_prepaid_{data_focus}_{data_gb}_gb",
             'competitor_name': 'mobile_viking',
             'product_category': 'mobile_prepaid',
-            'product_url': URL,
+            'product_url': url,
             'price': data_price,
             'data': data_gb,
             'network': '',
@@ -56,13 +50,19 @@ def main():
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         page.goto(URL)
+        page.wait_for_selector('#btn-cookie-settings')
+        page.query_selector('#btn-cookie-settings').click()
+        page.query_selector('#btn-accept-custom-cookies').click(force=True)
 
-        page.wait_for_selector('#btn-accept-cookies')
-        page.query_selector('#btn-accept-cookies').click()
+        page_content = page.content()
 
-        prepaid_data = extract_prepaid_data(page)
+        prepaid_data = extract_prepaid_data(page_content, URL)
+
         activate_toggles(page)
-        prepaid_data_calls = extract_prepaid_data(page)
+
+        second_page_content = page.content()
+
+        prepaid_data_calls = extract_prepaid_data(second_page_content, URL)
 
         prepaid_data.extend(prepaid_data_calls)
 
@@ -71,9 +71,6 @@ def main():
         json_data = json.dumps(prepaid_dict, indent=4)
 
         print(json_data)
-        save_to_json(json_data, 'mobile_prepaid_product.json')
-
-        browser.close()
 
 
 if __name__ == "__main__":

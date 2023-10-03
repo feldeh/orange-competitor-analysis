@@ -1,7 +1,6 @@
 {
     "mobile_prepaid_product": [
         {
-            "product_id": 1,
             "product_name": "mobile_prepaid_data_1_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_prepaid",
@@ -17,7 +16,6 @@
             "line_type": ""
         },
         {
-            "product_id": 2,
             "product_name": "mobile_prepaid_data_4_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_prepaid",
@@ -33,7 +31,6 @@
             "line_type": ""
         },
         {
-            "product_id": 3,
             "product_name": "mobile_prepaid_data_6_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_prepaid",
@@ -49,7 +46,6 @@
             "line_type": ""
         },
         {
-            "product_id": 4,
             "product_name": "mobile_prepaid_data_8_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_prepaid",
@@ -65,7 +61,6 @@
             "line_type": ""
         },
         {
-            "product_id": 5,
             "product_name": "mobile_prepaid_voice_0.5_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_prepaid",
@@ -81,7 +76,6 @@
             "line_type": ""
         },
         {
-            "product_id": 6,
             "product_name": "mobile_prepaid_voice_2_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_prepaid",
@@ -97,7 +91,6 @@
             "line_type": ""
         },
         {
-            "product_id": 7,
             "product_name": "mobile_prepaid_voice_3_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_prepaid",
@@ -113,7 +106,6 @@
             "line_type": ""
         },
         {
-            "product_id": 8,
             "product_name": "mobile_prepaid_voice_4_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_prepaid",

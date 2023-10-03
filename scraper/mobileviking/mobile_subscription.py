@@ -48,11 +48,11 @@ def main():
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         page.goto(URL)
+        page.wait_for_selector('#btn-cookie-settings')
+        page.query_selector('#btn-cookie-settings').click()
+        page.query_selector('#btn-accept-custom-cookies').click(force=True)
 
-        page.wait_for_selector('#btn-accept-cookies')
-        page.query_selector('#btn-accept-cookies').click()
-
-        # Get the page content after accepting cookies
+        # TODO: implement status code logger with requests
         page_content = page.content()
 
         subscription_data = extract_subscription_data(page_content)
