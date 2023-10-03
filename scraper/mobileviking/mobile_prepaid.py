@@ -66,9 +66,7 @@ def main():
 
         prepaid_data.extend(prepaid_data_calls)
 
-        indexed_data = [{'product_id': i+1, **item} for i, item in enumerate(prepaid_data)]
-
-        prepaid_dict = {'mobile_prepaid_product': indexed_data}
+        prepaid_dict = {'mobile_prepaid_product': prepaid_data}
 
         json_data = json.dumps(prepaid_dict, indent=4)
 

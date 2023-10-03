@@ -11,11 +11,11 @@ URL = 'https://mobilevikings.be/en/offer/internet/'
 
 def internet_speed_cleanup(string):
     pattern = r'(\d+)(gb|mb)'
-    gb_match = re.search(pattern, string)
-    value = int(gb_match.group(1))
+    match = re.search(pattern, string)
+    value = int(match.group(1))
 
-    if gb_match:
-        unit = gb_match.group(2)
+    if match:
+        unit = match.group(2)
         if unit == "gb":
             cleaned_value = value * 1000
         else:
@@ -58,30 +58,29 @@ def extract_internet_data(page):
 
 def main():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         page.goto(URL)
 
-        page.wait_for_selector('#btn-accept-cookies')
-        page.query_selector('#btn-accept-cookies').click()
+        page.wait_for_selector('#btn-cookie-settings')
+        page.query_selector('#btn-cookie-settings').click()
+        page.query_selector('#btn-accept-custom-cookies').click(force=True)
 
-        extract_internet_data(page)
+        internet_type_btn = page.query_selector_all('.wideScreenFilters__budgetItem__label')
 
-        internet_names = page.query_selector_all('.wideScreenFilters__budgetItem__label')
+        first_table_data = extract_internet_data(page)
+        first_btn_text = internet_type_btn[0].inner_text().lower().replace(' ', '_')
+        first_table_data = {'product_name': first_btn_text, **first_table_data}
 
-        internet_data_fast = extract_internet_data(page)
-        first_product_name = internet_names[0].inner_text().lower().replace(' ', '_')
-        internet_data_fast = {'product_name': first_product_name, **internet_data_fast}
+        internet_type_btn[1].click()
 
-        internet_names[1].click()
-
-        internet_data_superfast = extract_internet_data(page)
-        second_product_name = internet_names[1].inner_text().lower().replace(' ', '_')
-        internet_data_superfast = {'product_name': second_product_name, **internet_data_superfast}
+        second_table_data = extract_internet_data(page)
+        second_btn_text = internet_type_btn[1].inner_text().lower().replace(' ', '_')
+        second_table_data = {'product_name': second_btn_text, **second_table_data}
 
         internet_data = []
-        internet_data.append(internet_data_fast)
-        internet_data.append(internet_data_superfast)
+        internet_data.append(first_table_data)
+        internet_data.append(second_table_data)
 
         internet_dict = {'internet_subscription_product': internet_data}
 
