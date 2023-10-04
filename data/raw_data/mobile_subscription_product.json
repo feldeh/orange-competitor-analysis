@@ -1,7 +1,7 @@
 {
     "mobile_subscription_product": [
         {
-            "id": 1,
+            "product_id": 1,
             "product_name": "mobile_subscription_2_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_subscription",
@@ -10,11 +10,13 @@
             "data": "2",
             "network": "4g",
             "minutes": "150",
+            "price_per_minute": "",
             "sms": "unlimited",
-            "internet_speed": ""
+            "upload_speed": "",
+            "download_speed": ""
         },
         {
-            "id": 2,
+            "product_id": 2,
             "product_name": "mobile_subscription_4_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_subscription",
@@ -23,11 +25,13 @@
             "data": "4",
             "network": "4g",
             "minutes": "150",
+            "price_per_minute": "",
             "sms": "unlimited",
-            "internet_speed": ""
+            "upload_speed": "",
+            "download_speed": ""
         },
         {
-            "id": 3,
+            "product_id": 3,
             "product_name": "mobile_subscription_10_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_subscription",
@@ -36,11 +40,13 @@
             "data": "10",
             "network": "5g",
             "minutes": "unlimited",
+            "price_per_minute": "",
             "sms": "unlimited",
-            "internet_speed": ""
+            "upload_speed": "",
+            "download_speed": ""
         },
         {
-            "id": 4,
+            "product_id": 4,
             "product_name": "mobile_subscription_20_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_subscription",
@@ -49,11 +55,13 @@
             "data": "20",
             "network": "5g",
             "minutes": "unlimited",
+            "price_per_minute": "",
             "sms": "unlimited",
-            "internet_speed": ""
+            "upload_speed": "",
+            "download_speed": ""
         },
         {
-            "id": 5,
+            "product_id": 5,
             "product_name": "mobile_subscription_70_gb",
             "competitor_name": "mobile_viking",
             "product_category": "mobile_subscription",
@@ -62,8 +70,10 @@
             "data": "70",
             "network": "5g",
             "minutes": "unlimited",
+            "price_per_minute": "",
             "sms": "unlimited",
-            "internet_speed": ""
+            "upload_speed": "",
+            "download_speed": ""
         }
     ]
 }
