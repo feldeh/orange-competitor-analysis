@@ -6,7 +6,8 @@ import time
 import logging
 from pathlib import Path
 
-from utils import save_to_json
+from utils import save_to_json, save_to_ndjson
+import ndjson
 
 URL = {
     'mobile_prepaid': 'https://mobilevikings.be/en/offer/prepaid/',
@@ -55,8 +56,6 @@ def extract_prepaid_selector_data(page_content, url):
                 'download_speed': '',
                 'line_type': ''
             })
-
-            return prepaid_data
 
         except Exception as e:
             error_message = f"Error extracting prepaid data: {str(e)}"
@@ -126,12 +125,12 @@ def extract_subscription_data(page_content, url):
                 'line_type': ''
             })
 
-            return subscription_data
-
     except Exception as e:
         error_message = f"Error extracting subscription data: {str(e)}"
         print(error_message)
         logging.error(error_message)
+
+    return subscription_data
 
 
 def extract_internet_table_data(page_content, url):
@@ -260,15 +259,14 @@ def product_scraper():
         start_message = f"=========== product_scraper start: {start_time} ==========="
         logging.info(start_message)
 
-        browser = p.chromium.launch(slow_mo=50)
+        browser = p.chromium.launch(headless=False, slow_mo=50)
 
         try:
             product_dict = get_products(browser, URL)
 
-            product_json = json.dumps(product_dict, indent=4)
-            print(product_json)
-
-            save_to_json(product_json, 'products.json')
+            save_to_ndjson(product_dict['products'], 'products')
+            print(product_dict)
+            save_to_json(product_dict, 'products')
         except Exception as e:
             error_message = f"Error in main function: {str(e)}"
             print(error_message)
