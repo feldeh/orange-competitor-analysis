@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import json
 import re
 import time
+import logging
+from pathlib import Path
 
 from utils import save_to_json
 
@@ -57,7 +59,9 @@ def extract_prepaid_selector_data(page_content, url):
             return prepaid_data
 
         except Exception as e:
-            print(f"Error extracting prepaid data: {str(e)}")
+            error_message = f"Error extracting prepaid data: {str(e)}"
+            print(error_message)
+            logging.error(error_message)
 
     return prepaid_data
 
@@ -81,8 +85,9 @@ def extract_prepaid_data(page, url):
 
         return prepaid_data
     except Exception as e:
-        print(f"Error extracting prepaid data: {str(e)}")
-        return []
+        error_message = f"Error extracting prepaid data: {str(e)}"
+        print(error_message)
+        logging.error(error_message)
 
 
 def extract_subscription_data(page_content, url):
@@ -124,7 +129,9 @@ def extract_subscription_data(page_content, url):
             return subscription_data
 
     except Exception as e:
-        print(f"Error extracting subscription data: {str(e)}")
+        error_message = f"Error extracting subscription data: {str(e)}"
+        print(error_message)
+        logging.error(error_message)
 
 
 def extract_internet_table_data(page_content, url):
@@ -158,7 +165,9 @@ def extract_internet_table_data(page_content, url):
         return internet_data
 
     except Exception as e:
-        print(f"Error extracting internet table data: {str(e)}")
+        error_message = f"Error extracting internet table data: {str(e)}"
+        print(error_message)
+        logging.error(error_message)
 
 
 def extract_internet_data(page, url):
@@ -186,12 +195,15 @@ def extract_internet_data(page, url):
         return internet_data
 
     except Exception as e:
-        print(f"Error extracting internet data: {str(e)}")
+        error_message = f"Error extracting internet data: {str(e)}"
+        print(error_message)
+        logging.error(error_message)
 
 
 def get_mobile_prepaid_data(browser, url):
     page = goto_page(browser, url)
     time.sleep(5)
+    logging.info(f"Extracting mobile prepaid data from URL: {url}")
     mobile_prepaid_data = extract_prepaid_data(page, url)
     page.close()
 
@@ -201,6 +213,7 @@ def get_mobile_prepaid_data(browser, url):
 def get_mobile_subscription_data(browser, url):
     page = goto_page(browser, url)
     time.sleep(5)
+    logging.info(f"Extracting mobile subscription from URL: {url}")
     # TODO: implement status code logger with requests
     page_content = page.content()
     mobile_subscription_data = extract_subscription_data(page_content, url)
@@ -212,6 +225,7 @@ def get_mobile_subscription_data(browser, url):
 def get_internet_subscription_data(browser, url):
     page = goto_page(browser, url)
     time.sleep(5)
+    logging.info(f"Extracting internet subscription data from URL: {url}")
     internet_subscription_data = extract_internet_data(page, url)
     page.close()
 
@@ -219,7 +233,6 @@ def get_internet_subscription_data(browser, url):
 
 
 def get_products(browser, url):
-    start = time.time()
 
     prepaid_data = get_mobile_prepaid_data(browser, url['mobile_prepaid'])
     mobile_subscription_data = get_mobile_subscription_data(browser, url['mobile_subscriptions'])
@@ -232,14 +245,21 @@ def get_products(browser, url):
 
     product_dict = {'products': product_list}
 
-    end = time.time()
-    print("Time taken to scrape products: {:.3f}s".format(end - start))
-
     return product_dict
 
 
-def main():
+def product_scraper():
     with sync_playwright() as p:
+
+        log_file_name = 'product_scraper.log'
+        log_file_path = Path.cwd() / f"scraper/mobileviking/logs/{log_file_name}"
+        log_format = '%(asctime)s [%(levelname)s] - %(message)s'
+        logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
+        start_time = time.strftime("%Y-%m-%d %H:%M:%S")
+        start_time_seconds = time.time()
+        start_message = f"=========== product_scraper start: {start_time} ==========="
+        logging.info(start_message)
+
         browser = p.chromium.launch(slow_mo=50)
 
         try:
@@ -250,10 +270,18 @@ def main():
 
             save_to_json(product_json, 'products.json')
         except Exception as e:
-            print(f"Error in main function: {str(e)}")
+            error_message = f"Error in main function: {str(e)}"
+            print(error_message)
+            logging.error(error_message)
         finally:
             browser.close()
 
+            end_time_seconds = time.time()
+            end_time = time.strftime("%Y-%m-%d %H:%M:%S")
+            end_message = f"=========== product_scraper end: {end_time} ==========="
+            logging.info("product_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds))
+            logging.info(end_message)
+
 
 if __name__ == "__main__":
-    main()
+    product_scraper()

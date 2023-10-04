@@ -1,18 +1,11 @@
-import re
+import inspect
 
 
-def internet_speed_cleanup(string):
-    match = re.search(r'(\d+)\s*gb', string, re.IGNORECASE)
+def test():
 
-    if match:
-        digits = int(match.group(1))
-        return digits * 1000
+    current_function = inspect.currentframe()
 
-    match = re.search(r'(\d+)', string)
-
-    if match:
-        return int(match.group(1))
+    print(current_function)
 
 
-print(internet_speed_cleanup('1 gb'))
-print(internet_speed_cleanup('1 mb'))
+test()
