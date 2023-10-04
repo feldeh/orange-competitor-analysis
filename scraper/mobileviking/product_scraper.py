@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
+import requests
 import json
 import re
 import time
@@ -12,7 +13,8 @@ import ndjson
 URL = {
     'mobile_prepaid': 'https://mobilevikings.be/en/offer/prepaid/',
     'mobile_subscriptions': 'https://mobilevikings.be/en/offer/subscriptions/',
-    'internet_subscription': 'https://mobilevikings.be/en/offer/internet/'
+    'internet_subscription': 'https://mobilevikings.be/en/offer/internet/',
+    'combo': 'https://mobilevikings.be/en/offer/combo/'
 }
 
 
@@ -246,6 +248,19 @@ def get_products(browser, url):
 
     return product_dict
 
+def get_combo_advantage(url):
+    page_content = requests.get(url).text
+    soup = BeautifulSoup(page_content, "html.parser")
+    combo_text = soup.select_one('.monthlyPrice__discountMessage').get_text()
+    match = re.search(r'\d+', combo_text)
+    if combo_text:
+        combo_advantage = int(match.group())
+    else:
+        combo_advantage = None
+    return combo_advantage
+
+
+
 
 def product_scraper():
     with sync_playwright() as p:
@@ -262,7 +277,11 @@ def product_scraper():
         browser = p.chromium.launch(headless=False, slow_mo=50)
 
         try:
+            # TODO: add product_id
+            # TODO: add timestamp
             product_dict = get_products(browser, URL)
+            combo_advantage = get_combo_advantage(URL['combo'])
+
 
             save_to_ndjson(product_dict['products'], 'products')
             print(product_dict)
