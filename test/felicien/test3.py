@@ -2,19 +2,17 @@ import re
 
 
 def internet_speed_cleanup(string):
-    pattern = r'(\d+)(gb)'
-    match = re.search(pattern, string)
-    value = int(match.group(1))
+    match = re.search(r'(\d+)\s*gb', string, re.IGNORECASE)
 
     if match:
-        unit = match.group(2)
-        if unit == "gb":
-            cleaned_value = value * 1000
-        else:
-            cleaned_value = value
+        digits = int(match.group(1))
+        return digits * 1000
 
-    return cleaned_value
+    match = re.search(r'(\d+)', string)
+
+    if match:
+        return int(match.group(1))
 
 
-print(internet_speed_cleanup('1gb'))
-print(internet_speed_cleanup('1mb'))
+print(internet_speed_cleanup('1 gb'))
+print(internet_speed_cleanup('1 mb'))
