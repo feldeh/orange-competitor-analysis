@@ -59,7 +59,6 @@ def extract_prepaid_selector_data(page_content, url):
 
         except Exception as e:
             error_message = f"Error extracting prepaid data: {str(e)}"
-            print(error_message)
             logging.error(error_message)
 
     return prepaid_data
@@ -84,7 +83,6 @@ def extract_prepaid_data(page, url):
         return prepaid_data
     except Exception as e:
         error_message = f"Error extracting prepaid data: {str(e)}"
-        print(error_message)
         logging.error(error_message)
 
 
@@ -126,7 +124,6 @@ def extract_subscription_data(page_content, url):
 
     except Exception as e:
         error_message = f"Error extracting subscription data: {str(e)}"
-        print(error_message)
         logging.error(error_message)
 
     return subscription_data
@@ -164,7 +161,6 @@ def extract_internet_table_data(page_content, url):
 
     except Exception as e:
         error_message = f"Error extracting internet table data: {str(e)}"
-        print(error_message)
         logging.error(error_message)
 
 
@@ -193,7 +189,6 @@ def extract_internet_data(page, url):
 
     except Exception as e:
         error_message = f"Error extracting internet data: {str(e)}"
-        print(error_message)
         logging.error(error_message)
 
 
@@ -256,7 +251,6 @@ def extract_combo_advantage(url):
 
     except Exception as e:
         error_message = f'Error extracting combo: {str(e)}'
-        print(error_message)
         logging.error(error_message)
 
 
@@ -289,7 +283,6 @@ def generate_packs(products_list, combo_advantage, url):
 
     except Exception as e:
         error_message = f'Error generating packs: {str(e)}'
-        print(error_message)
         logging.error(error_message)
 
 
@@ -299,13 +292,13 @@ def mobile_viking_scraper():
         start_time = time.strftime("%Y-%m-%d %H:%M:%S")
         start_time_seconds = time.time()
 
-        log_file_name = 'mobile_viking_scraper.log'
+        log_file_name = 'test.log'
         log_file_path = f"logs/scraper/{log_file_name}"
         log_format = '%(asctime)s [%(levelname)s] - %(message)s'
         logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
         logging.info(f"=========== mobile_viking_scraper start: {start_time} ===========")
 
-        browser = p.chromium.launch(headless=False, slow_mo=50)
+        browser = p.chromium.launch(headless=True, slow_mo=50)
 
         try:
             # by order of importance
@@ -327,14 +320,12 @@ def mobile_viking_scraper():
 
         except Exception as e:
             error_message = f"Error in main function: {str(e)}"
-            print(error_message)
             logging.error(error_message)
         finally:
             browser.close()
 
             end_time_seconds = time.time()
             execution_time_message = "mobile_viking_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds)
-            print(execution_time_message)
             logging.info(execution_time_message)
 
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
