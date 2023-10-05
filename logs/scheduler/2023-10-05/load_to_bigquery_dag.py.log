@@ -1,0 +1,486 @@
+[2023-10-05T13:56:58.146+0000] {processor.py:157} INFO - Started process (PID=2869) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:56:58.148+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T13:56:58.150+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:56:58.149+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:56:59.718+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:00.058+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:00.057+0000] {manager.py:499} INFO - Created Permission View: %s
+[2023-10-05T13:57:00.069+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:00.069+0000] {manager.py:499} INFO - Created Permission View: %s
+[2023-10-05T13:57:00.074+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:00.074+0000] {manager.py:499} INFO - Created Permission View: %s
+[2023-10-05T13:57:00.075+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:00.075+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T13:57:00.076+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:00.076+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T13:57:00.086+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:00.086+0000] {dag.py:2937} INFO - Creating ORM DAG for load_to_bigquery_dag
+[2023-10-05T13:57:00.087+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:00.087+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T13:57:00.099+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.962 seconds
+[2023-10-05T13:57:18.345+0000] {processor.py:157} INFO - Started process (PID=2887) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:18.348+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T13:57:18.350+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:18.349+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:19.128+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:19.148+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:19.147+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T13:57:19.161+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:19.161+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T13:57:19.185+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.847 seconds
+[2023-10-05T13:57:34.381+0000] {processor.py:157} INFO - Started process (PID=2898) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:34.386+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T13:57:34.389+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:34.388+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:35.181+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:35.176+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 31, in <module>
+    load_to_bigquery
+NameError: name 'load_to_bigquery' is not defined
+[2023-10-05T13:57:35.182+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:35.227+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.859 seconds
+[2023-10-05T13:57:39.614+0000] {processor.py:157} INFO - Started process (PID=2911) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:39.617+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T13:57:39.620+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:39.619+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:40.214+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:57:40.546+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:40.545+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T13:57:40.547+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:40.547+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T13:57:40.557+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:57:40.557+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T13:57:40.575+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.971 seconds
+[2023-10-05T13:58:11.133+0000] {processor.py:157} INFO - Started process (PID=2939) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:58:11.136+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T13:58:11.138+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:58:11.137+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:58:11.725+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:58:11.756+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:58:11.755+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T13:58:11.769+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:58:11.769+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T13:58:12.021+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.893 seconds
+[2023-10-05T13:58:42.638+0000] {processor.py:157} INFO - Started process (PID=2972) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:58:42.643+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T13:58:42.646+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:58:42.645+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:58:43.607+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:58:43.665+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:58:43.665+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T13:58:43.935+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:58:43.934+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T13:58:43.956+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.333 seconds
+[2023-10-05T13:59:14.550+0000] {processor.py:157} INFO - Started process (PID=2995) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:59:14.553+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T13:59:14.555+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:59:14.555+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:59:15.346+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:59:15.693+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:59:15.692+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T13:59:15.767+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:59:15.766+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T13:59:15.824+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.282 seconds
+[2023-10-05T13:59:46.362+0000] {processor.py:157} INFO - Started process (PID=3018) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:59:46.365+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T13:59:46.368+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:59:46.367+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:59:47.459+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T13:59:47.487+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:59:47.486+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T13:59:47.499+0000] {logging_mixin.py:151} INFO - [2023-10-05T13:59:47.499+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T13:59:47.515+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.163 seconds
+[2023-10-05T14:00:07.828+0000] {processor.py:157} INFO - Started process (PID=3046) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:00:07.829+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:00:07.831+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:00:07.831+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:00:08.414+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:00:08.441+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:00:08.440+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:00:08.452+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:00:08.452+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:00:08.470+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.647 seconds
+[2023-10-05T14:00:39.185+0000] {processor.py:157} INFO - Started process (PID=3069) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:00:39.187+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:00:39.189+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:00:39.188+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:00:41.245+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:00:41.334+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:00:41.333+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:00:41.411+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:00:41.410+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:00:41.491+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 2.310 seconds
+[2023-10-05T14:01:12.183+0000] {processor.py:157} INFO - Started process (PID=3245) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:01:12.191+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:01:12.200+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:01:12.198+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:01:13.128+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:01:13.176+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:01:13.176+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:01:13.193+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:01:13.193+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:01:13.445+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.274 seconds
+[2023-10-05T14:01:43.511+0000] {processor.py:157} INFO - Started process (PID=3305) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:01:43.513+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:01:43.514+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:01:43.514+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:01:44.197+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:01:44.224+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:01:44.224+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:01:44.428+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:01:44.428+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:01:44.444+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.937 seconds
+[2023-10-05T14:02:15.020+0000] {processor.py:157} INFO - Started process (PID=3329) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:15.023+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:02:15.025+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:15.024+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:15.640+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:15.843+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:15.842+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:02:15.855+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:15.855+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:02:15.869+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.854 seconds
+[2023-10-05T14:02:42.418+0000] {processor.py:157} INFO - Started process (PID=3352) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:42.421+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:02:42.422+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:42.422+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:43.193+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:43.190+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 29, in <module>
+    op_kwargs={"pages": NUMBER_OF_PAGES, "bucket_name": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'NUMBER_OF_PAGES' is not defined
+[2023-10-05T14:02:43.194+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:43.223+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.811 seconds
+[2023-10-05T14:02:44.569+0000] {processor.py:157} INFO - Started process (PID=3358) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:44.572+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:02:44.574+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:44.573+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:45.085+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:45.083+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 29, in <module>
+    op_kwargs={"pages": NUMBER_OF_PAGES, "bucket_name": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'NUMBER_OF_PAGES' is not defined
+[2023-10-05T14:02:45.087+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:45.109+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.546 seconds
+[2023-10-05T14:02:57.685+0000] {processor.py:157} INFO - Started process (PID=3364) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:57.688+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:02:57.690+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:57.689+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:58.511+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:02:58.508+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 30, in <module>
+    op_kwargs={"pages": NUMBER_OF_PAGES, "bucket_name": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'NUMBER_OF_PAGES' is not defined
+[2023-10-05T14:02:58.512+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:02:58.547+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.871 seconds
+[2023-10-05T14:03:29.036+0000] {processor.py:157} INFO - Started process (PID=3387) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:03:29.040+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:03:29.042+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:03:29.041+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:03:29.625+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:03:29.623+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 30, in <module>
+    op_kwargs={"pages": NUMBER_OF_PAGES, "bucket_name": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'NUMBER_OF_PAGES' is not defined
+[2023-10-05T14:03:29.626+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:03:29.654+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.626 seconds
+[2023-10-05T14:04:00.610+0000] {processor.py:157} INFO - Started process (PID=3410) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:00.615+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:04:00.618+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:00.617+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:01.271+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:01.269+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 30, in <module>
+    op_kwargs={"pages": NUMBER_OF_PAGES, "bucket_name": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'NUMBER_OF_PAGES' is not defined
+[2023-10-05T14:04:01.272+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:01.301+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.708 seconds
+[2023-10-05T14:04:21.690+0000] {processor.py:157} INFO - Started process (PID=3433) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:21.693+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:04:21.696+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:21.695+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:21.711+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:21.708+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 9, in <module>
+    client = bigquery.Client.from_service_account_json(service_acc_key_path)
+NameError: name 'bigquery' is not defined
+[2023-10-05T14:04:21.712+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:21.742+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.059 seconds
+[2023-10-05T14:04:29.830+0000] {processor.py:157} INFO - Started process (PID=3438) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:29.833+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:04:29.835+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:29.834+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:30.488+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:30.482+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 34, in <module>
+    python_callable=load_json_to_bigquery,
+NameError: name 'load_json_to_bigquery' is not defined
+[2023-10-05T14:04:30.497+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:30.532+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.707 seconds
+[2023-10-05T14:04:31.602+0000] {processor.py:157} INFO - Started process (PID=3444) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:31.604+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:04:31.606+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:31.605+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:32.128+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:32.125+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 33, in <module>
+    python_callable=load_json_to_bigquery,
+NameError: name 'load_json_to_bigquery' is not defined
+[2023-10-05T14:04:32.130+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:32.163+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.566 seconds
+[2023-10-05T14:04:32.876+0000] {processor.py:157} INFO - Started process (PID=3450) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:32.879+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:04:32.882+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:32.881+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:33.449+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:33.446+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 34, in <module>
+    python_callable=load_json_to_bigquery,
+NameError: name 'load_json_to_bigquery' is not defined
+[2023-10-05T14:04:33.450+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:33.478+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.610 seconds
+[2023-10-05T14:04:48.525+0000] {processor.py:157} INFO - Started process (PID=3473) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:48.529+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:04:48.532+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:48.531+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:48.545+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:48.543+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 839, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 976, in get_code
+  File "<frozen importlib._bootstrap_external>", line 906, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 5
+    from bi
+          ^
+SyntaxError: invalid syntax
+[2023-10-05T14:04:48.547+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:48.585+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.067 seconds
+[2023-10-05T14:04:51.639+0000] {processor.py:157} INFO - Started process (PID=3478) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:51.641+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:04:51.643+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:51.643+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:51.651+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:51.650+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 839, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 976, in get_code
+  File "<frozen importlib._bootstrap_external>", line 906, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 5
+    from bigquery import
+                        ^
+SyntaxError: invalid syntax
+[2023-10-05T14:04:51.652+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:51.675+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.041 seconds
+[2023-10-05T14:04:54.677+0000] {processor.py:157} INFO - Started process (PID=3483) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:54.681+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:04:54.685+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:54.683+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:55.366+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:04:55.363+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 36, in <module>
+    op_kwargs={"pages": NUMBER_OF_PAGES, "bucket_name": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'NUMBER_OF_PAGES' is not defined
+[2023-10-05T14:04:55.369+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:04:55.666+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.996 seconds
+[2023-10-05T14:05:26.347+0000] {processor.py:157} INFO - Started process (PID=3506) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:26.351+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:05:26.353+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:26.352+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:27.660+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:27.657+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 36, in <module>
+    op_kwargs={"client": NUMBER_OF_PAGES, "bucket_name": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'NUMBER_OF_PAGES' is not defined
+[2023-10-05T14:05:27.663+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:27.688+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.349 seconds
+[2023-10-05T14:05:28.776+0000] {processor.py:157} INFO - Started process (PID=3512) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:28.778+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:05:28.779+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:28.779+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:29.365+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:29.363+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 36, in <module>
+    op_kwargs={"client": client, "bucket_name": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'BUCKET_NAME' is not defined
+[2023-10-05T14:05:29.366+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:29.385+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.614 seconds
+[2023-10-05T14:05:38.533+0000] {processor.py:157} INFO - Started process (PID=3525) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:38.537+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:05:38.540+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:38.539+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:39.513+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:39.510+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 36, in <module>
+    op_kwargs={"client": client, "dataset_id": BUCKET_NAME, "object_name": ID_OBJECT_NAME},
+NameError: name 'BUCKET_NAME' is not defined
+[2023-10-05T14:05:39.514+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:39.543+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.019 seconds
+[2023-10-05T14:05:43.871+0000] {processor.py:157} INFO - Started process (PID=3541) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:43.873+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:05:43.874+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:43.874+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:44.490+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:44.488+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 36, in <module>
+    op_kwargs={"client": client, "dataset_id": BUCKET_NAME, "table_names": ID_OBJECT_NAME},
+NameError: name 'BUCKET_NAME' is not defined
+[2023-10-05T14:05:44.491+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:44.513+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.646 seconds
+[2023-10-05T14:05:51.642+0000] {processor.py:157} INFO - Started process (PID=3547) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:51.645+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:05:51.647+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:51.646+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:52.544+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:52.542+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 36, in <module>
+    op_kwargs={"client": client, DATASET_ID: BUCKET_NAME, "table_names": ID_OBJECT_NAME},
+NameError: name 'BUCKET_NAME' is not defined
+[2023-10-05T14:05:52.545+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:52.577+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.942 seconds
+[2023-10-05T14:05:59.020+0000] {processor.py:157} INFO - Started process (PID=3553) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:59.023+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:05:59.026+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:59.025+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:59.851+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:05:59.849+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 36, in <module>
+    op_kwargs={"client": client, "dataset_id": BUCKET_NAME, "table_names": ID_OBJECT_NAME},
+NameError: name 'BUCKET_NAME' is not defined
+[2023-10-05T14:05:59.852+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:05:59.883+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.870 seconds
+[2023-10-05T14:06:02.722+0000] {processor.py:157} INFO - Started process (PID=3559) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:02.724+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:06:02.726+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:02.725+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:03.451+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:03.449+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 36, in <module>
+    op_kwargs={"client": client, "dataset_id": DATASET_ID, "table_names": ID_OBJECT_NAME},
+NameError: name 'ID_OBJECT_NAME' is not defined
+[2023-10-05T14:06:03.452+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:03.481+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.764 seconds
+[2023-10-05T14:06:10.606+0000] {processor.py:157} INFO - Started process (PID=3571) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:10.609+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:06:10.611+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:10.610+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:11.415+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:11.772+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:11.772+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:06:11.774+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:11.774+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:06:11.784+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:11.784+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:06:11.809+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.211 seconds
+[2023-10-05T14:06:13.631+0000] {processor.py:157} INFO - Started process (PID=3577) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:13.634+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:06:13.637+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:13.636+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:14.151+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:14.169+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:14.168+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:06:14.180+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:14.180+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:06:14.197+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.572 seconds
+[2023-10-05T14:06:44.646+0000] {processor.py:157} INFO - Started process (PID=3600) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:44.649+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:06:44.651+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:44.650+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:45.255+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:45.587+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:45.586+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:06:45.590+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:45.589+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:06:45.607+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:45.607+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:06:45.627+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.988 seconds
+[2023-10-05T14:06:46.735+0000] {processor.py:157} INFO - Started process (PID=3616) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:46.738+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:06:46.741+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:46.740+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:47.286+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:47.284+0000] {dagbag.py:347} ERROR - Failed to import: /opt/airflow/dags/load_to_bigquery_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 343, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/load_to_bigquery_dag.py", line 24, in <module>
+    default_args=default_args,
+NameError: name 'default_args' is not defined
+[2023-10-05T14:06:47.287+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:47.311+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.583 seconds
+[2023-10-05T14:06:48.073+0000] {processor.py:157} INFO - Started process (PID=3622) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:48.074+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:06:48.076+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:48.075+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:48.559+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:48.575+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:48.574+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:06:48.587+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:48.587+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:06:48.768+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.700 seconds
+[2023-10-05T14:06:56.475+0000] {processor.py:157} INFO - Started process (PID=3628) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:56.478+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:06:56.481+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:56.480+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:57.083+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:06:57.102+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:57.101+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:06:57.283+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:06:57.283+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:06:57.310+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.844 seconds
+[2023-10-05T14:07:27.894+0000] {processor.py:157} INFO - Started process (PID=3654) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:07:27.899+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:07:27.920+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:07:27.915+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:07:29.771+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:07:31.632+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:07:31.631+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:07:31.653+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:07:31.652+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:07:31.715+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:07:31.715+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:07:31.773+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 3.892 seconds
+[2023-10-05T14:08:02.654+0000] {processor.py:157} INFO - Started process (PID=3677) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:08:02.660+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:08:02.663+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:08:02.662+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:08:03.605+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:08:03.710+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:08:03.709+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:08:03.711+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:08:03.711+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:08:03.721+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:08:03.721+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:08:03.735+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.088 seconds
+[2023-10-05T14:08:34.198+0000] {processor.py:157} INFO - Started process (PID=3700) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:08:34.201+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:08:34.204+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:08:34.203+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:08:35.149+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:08:35.253+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:08:35.252+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:08:35.254+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:08:35.254+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:08:35.264+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:08:35.263+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:08:35.278+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.087 seconds
+[2023-10-05T14:09:05.997+0000] {processor.py:157} INFO - Started process (PID=3723) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:09:06.001+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:09:06.004+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:09:06.003+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:09:06.680+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:09:07.004+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:09:07.004+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:09:07.006+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:09:07.006+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:09:07.017+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:09:07.017+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:09:07.035+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.045 seconds
+[2023-10-05T14:09:37.482+0000] {processor.py:157} INFO - Started process (PID=3746) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:09:37.486+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:09:37.490+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:09:37.488+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:09:39.022+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:09:39.430+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:09:39.429+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:09:39.433+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:09:39.432+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:09:39.448+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:09:39.448+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:09:39.475+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 2.001 seconds
+[2023-10-05T14:10:09.967+0000] {processor.py:157} INFO - Started process (PID=3947) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:10:09.971+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:10:09.982+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:10:09.974+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:10:12.079+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:10:13.147+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:10:13.145+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:10:13.176+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:10:13.173+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:10:13.237+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:10:13.237+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:10:13.302+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 3.345 seconds
+[2023-10-05T14:10:44.074+0000] {processor.py:157} INFO - Started process (PID=3989) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:10:44.079+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:10:44.083+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:10:44.081+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:10:45.055+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:10:45.171+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:10:45.170+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-05T14:10:45.173+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:10:45.172+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-05T14:10:45.182+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:10:45.182+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-05T14:10:45.196+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.131 seconds
+[2023-10-05T14:11:15.564+0000] {processor.py:157} INFO - Started process (PID=4012) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-05T14:11:15.567+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-05T14:11:15.570+0000] {logging_mixin.py:151} INFO - [2023-10-05T14:11:15.569+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py

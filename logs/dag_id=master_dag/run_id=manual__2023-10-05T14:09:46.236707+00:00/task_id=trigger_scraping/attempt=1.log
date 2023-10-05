@@ -1,0 +1,12 @@
+[2023-10-05T14:09:48.891+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: master_dag.trigger_scraping manual__2023-10-05T14:09:46.236707+00:00 [queued]>
+[2023-10-05T14:09:48.926+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: master_dag.trigger_scraping manual__2023-10-05T14:09:46.236707+00:00 [queued]>
+[2023-10-05T14:09:48.932+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 1
+[2023-10-05T14:09:48.995+0000] {taskinstance.py:1380} INFO - Executing <Task(TriggerDagRunOperator): trigger_scraping> on 2023-10-05 14:09:46.236707+00:00
+[2023-10-05T14:09:49.069+0000] {standard_task_runner.py:57} INFO - Started process 3766 to run task
+[2023-10-05T14:09:49.073+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'master_dag', 'trigger_scraping', 'manual__2023-10-05T14:09:46.236707+00:00', '--job-id', '36', '--raw', '--subdir', 'DAGS_FOLDER/master_dag.py', '--cfg-path', '/tmp/tmpwtz4_xzr']
+[2023-10-05T14:09:49.098+0000] {standard_task_runner.py:85} INFO - Job 36: Subtask trigger_scraping
+[2023-10-05T14:09:49.391+0000] {task_command.py:415} INFO - Running <TaskInstance: master_dag.trigger_scraping manual__2023-10-05T14:09:46.236707+00:00 [running]> on host bd744fef73d7
+[2023-10-05T14:09:49.741+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='master_dag' AIRFLOW_CTX_TASK_ID='trigger_scraping' AIRFLOW_CTX_EXECUTION_DATE='2023-10-05T14:09:46.236707+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-10-05T14:09:46.236707+00:00'
+[2023-10-05T14:09:50.039+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=master_dag, task_id=trigger_scraping, execution_date=20231005T140946, start_date=20231005T140948, end_date=20231005T140950
+[2023-10-05T14:09:50.122+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-05T14:09:50.298+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check
