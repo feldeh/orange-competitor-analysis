@@ -1,5 +1,4 @@
 __pycache__/
-logs/
 orange_env/
 .env
-service_account_key/
+gcloud/
