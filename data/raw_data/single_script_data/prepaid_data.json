@@ -1,0 +1,68 @@
+{
+    "prepaid_plans": [
+        {
+            "id": 1,
+            "price": "10",
+            "mobile_data": "1 gb",
+            "minutes": "25",
+            "price_per_minute": "0.40",
+            "sms": "unlimited"
+        },
+        {
+            "id": 2,
+            "price": "15",
+            "mobile_data": "4 gb",
+            "minutes": "50",
+            "price_per_minute": "0.30",
+            "sms": "unlimited"
+        },
+        {
+            "id": 3,
+            "price": "20",
+            "mobile_data": "6 gb",
+            "minutes": "66",
+            "price_per_minute": "0.30",
+            "sms": "unlimited"
+        },
+        {
+            "id": 4,
+            "price": "25",
+            "mobile_data": "8 gb",
+            "minutes": "100",
+            "price_per_minute": "0.25",
+            "sms": "unlimited"
+        },
+        {
+            "id": 5,
+            "price": "10",
+            "mobile_data": "512 mb",
+            "minutes": "50",
+            "price_per_minute": "0.20",
+            "sms": "unlimited"
+        },
+        {
+            "id": 6,
+            "price": "15",
+            "mobile_data": "2 gb",
+            "minutes": "100",
+            "price_per_minute": "0.15",
+            "sms": "unlimited"
+        },
+        {
+            "id": 7,
+            "price": "20",
+            "mobile_data": "3 gb",
+            "minutes": "133",
+            "price_per_minute": "0.15",
+            "sms": "unlimited"
+        },
+        {
+            "id": 8,
+            "price": "25",
+            "mobile_data": "4 gb",
+            "minutes": "200",
+            "price_per_minute": "0.125",
+            "sms": "unlimited"
+        }
+    ]
+}
