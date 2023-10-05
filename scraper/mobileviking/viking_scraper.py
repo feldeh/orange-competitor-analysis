@@ -1,17 +1,18 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-import json
+import requests
 import re
 import time
 import logging
 from pathlib import Path
 
-from utils import save_to_json
+from utils import save_to_json, save_to_ndjson
 
 URL = {
     'mobile_prepaid': 'https://mobilevikings.be/en/offer/prepaid/',
     'mobile_subscriptions': 'https://mobilevikings.be/en/offer/subscriptions/',
-    'internet_subscription': 'https://mobilevikings.be/en/offer/internet/'
+    'internet_subscription': 'https://mobilevikings.be/en/offer/internet/',
+    'combo': 'https://mobilevikings.be/en/offer/combo/'
 }
 
 
@@ -56,8 +57,6 @@ def extract_prepaid_selector_data(page_content, url):
                 'line_type': ''
             })
 
-            return prepaid_data
-
         except Exception as e:
             error_message = f"Error extracting prepaid data: {str(e)}"
             print(error_message)
@@ -74,7 +73,6 @@ def activate_toggles(page):
 
 def extract_prepaid_data(page, url):
     try:
-        # TODO: implement status code logger with requests
         page_content = page.content()
         prepaid_data = extract_prepaid_selector_data(page_content, url)
         activate_toggles(page)
@@ -126,12 +124,12 @@ def extract_subscription_data(page_content, url):
                 'line_type': ''
             })
 
-            return subscription_data
-
     except Exception as e:
         error_message = f"Error extracting subscription data: {str(e)}"
         print(error_message)
         logging.error(error_message)
+
+    return subscription_data
 
 
 def extract_internet_table_data(page_content, url):
@@ -172,7 +170,6 @@ def extract_internet_table_data(page_content, url):
 
 def extract_internet_data(page, url):
 
-    # TODO: implement status code logger with requests
     page_content = page.content()
 
     try:
@@ -214,7 +211,6 @@ def get_mobile_subscription_data(browser, url):
     page = goto_page(browser, url)
     time.sleep(5)
     logging.info(f"Extracting mobile subscription from URL: {url}")
-    # TODO: implement status code logger with requests
     page_content = page.content()
     mobile_subscription_data = extract_subscription_data(page_content, url)
     page.close()
@@ -248,27 +244,86 @@ def get_products(browser, url):
     return product_dict
 
 
-def product_scraper():
-    with sync_playwright() as p:
+def extract_combo_advantage(url):
+    try:
+        page_content = requests.get(url).text
+        soup = BeautifulSoup(page_content, "html.parser")
+        combo_text = soup.select_one('.monthlyPrice__discountMessage').get_text()
+        match = re.search(r'\d+', combo_text)
+        combo_advantage = int(match.group())
 
-        log_file_name = 'product_scraper.log'
-        log_file_path = Path.cwd() / f"scraper/mobileviking/logs/{log_file_name}"
-        log_format = '%(asctime)s [%(levelname)s] - %(message)s'
-        logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
+        return combo_advantage
+
+    except Exception as e:
+        error_message = f'Error extracting combo: {str(e)}'
+        print(error_message)
+        logging.error(error_message)
+
+
+def generate_packs(products_list, combo_advantage, url):
+    logging.info('Generating packs')
+    try:
+        packs_list = []
+
+        mobile_products = [product for product in products_list if 'mobile' in product['product_name']]
+        internet_products = [product for product in products_list if 'internet' in product['product_name']]
+
+        for internet_product in internet_products:
+            for mobile_product in mobile_products:
+                price = float(mobile_product['price']) + float(internet_product['price']) - combo_advantage
+
+                pack_name = f"{mobile_product['product_name']}_{internet_product['product_name']}"
+                competitor_name = internet_product['competitor_name']
+
+                packs_list.append(
+                    {
+                        'competitor_name': competitor_name,
+                        'pack_name': pack_name,
+                        'pack_url': url,
+                        'price': price,
+                    })
+
+        packs_dict = {'packs': packs_list}
+
+        return packs_dict
+
+    except Exception as e:
+        error_message = f'Error generating packs: {str(e)}'
+        print(error_message)
+        logging.error(error_message)
+
+
+def mobile_viking_scraper():
+
+    with sync_playwright() as p:
         start_time = time.strftime("%Y-%m-%d %H:%M:%S")
         start_time_seconds = time.time()
-        start_message = f"=========== product_scraper start: {start_time} ==========="
-        logging.info(start_message)
 
-        browser = p.chromium.launch(slow_mo=50)
+        log_file_name = 'mobile_viking_scraper.log'
+        log_file_path = f"scraper/mobileviking/logs/{log_file_name}"
+        log_format = '%(asctime)s [%(levelname)s] - %(message)s'
+        logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
+        logging.info(f"=========== mobile_viking_scraper start: {start_time} ===========")
+
+        browser = p.chromium.launch(headless=False, slow_mo=50)
 
         try:
+            # TODO: add only data product
+            # TODO: add product_id
+            # TODO: add timestamp
+            # TODO: cast product price, data, minutes, price_per_min, sms to float or int
+            # TODO: implement status code logger with requests
+            # TODO: add data validation with pydantic
+            # TODO: add typing
             product_dict = get_products(browser, URL)
+            save_to_ndjson(product_dict['products'], 'products')
+            save_to_json(product_dict, 'products')
 
-            product_json = json.dumps(product_dict, indent=4)
-            print(product_json)
+            combo_advantage = extract_combo_advantage(URL['combo'])
+            packs_dict = generate_packs(product_dict['products'], combo_advantage, URL['combo'])
+            save_to_ndjson(packs_dict['packs'], 'packs')
+            save_to_json(packs_dict, 'packs')
 
-            save_to_json(product_json, 'products.json')
         except Exception as e:
             error_message = f"Error in main function: {str(e)}"
             print(error_message)
@@ -277,11 +332,13 @@ def product_scraper():
             browser.close()
 
             end_time_seconds = time.time()
+            execution_time_message = "mobile_viking_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds)
+            print(execution_time_message)
+            logging.info(execution_time_message)
+
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
-            end_message = f"=========== product_scraper end: {end_time} ==========="
-            logging.info("product_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds))
-            logging.info(end_message)
+            logging.info(f"=========== mobile_viking_scraper end: {end_time} ===========")
 
 
 if __name__ == "__main__":
-    product_scraper()
+    mobile_viking_scraper()
