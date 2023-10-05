@@ -17,24 +17,28 @@ def goto_page(browser, url):
 
 def extract_mobile_subscription_data(page_content, url):
 
-    mobile_data = []
+    mobile_subscription_data = []
     soup = BeautifulSoup(page_content, 'html.parser')
-    mobile_subscription_elements = soup.find_all('div')
-    print(mobile_subscription_elements)
+    mobile_subscription_elements = soup.find_all('div', class_='rs-ctable-panel')
+    for element in mobile_subscription_elements:
+        
     
-    
-    '''only_data.append({
-        'product_name': f"mobile_prepaid_only_data_{data_gb}_gb",
-        'competitor_name': 'mobile_viking',
-        'product_category': 'mobile_prepaid',
-        'product_url': URL,
-        'price': data_price,
-        'data': data_gb,
-        'minutes': "unlimited",
-        'price_per_minute': "0",
-        'sms': "no",
-        'internet_speed': ''
-    })'''
+    mobile_subscription_data.append({
+                'product_name': f"mobile_subscription_{mobile_data}_gb",
+                'competitor_name': 'scarlet',
+                'product_category': 'mobile_subscription',
+                'product_url': url,
+                'price': price_per_month,
+                'data': mobile_data,
+                'network': network,
+                'minutes': minutes,
+                'price_per_minute': '',
+                'sms': sms,
+                'upload_speed': '',
+                'download_speed': '',
+                'line_type': ''
+            })
+    return mobile_subscription_data
   
 def get_mobile_subscription_data(browser, url):
     page = goto_page(browser, url)
