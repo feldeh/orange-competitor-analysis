@@ -1,0 +1,123 @@
+2023-10-04 11:18:46,571 [INFO] - =========== Scraper start: 2023-10-04 11:18:46 ===========
+2023-10-04 11:18:48,099 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:18:50,253 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:18:50,357 [ERROR] - Error extracting subscription data: 'NoneType' object has no attribute 'get_text'
+2023-10-04 11:18:51,723 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:18:52,025 [ERROR] - Error extracting internet table data: 'NoneType' object has no attribute 'get_text'
+2023-10-04 11:18:52,169 [ERROR] - Error extracting internet data: 'NoneType' object is not a mapping
+2023-10-04 11:18:52,197 [ERROR] - Error in main function: 'NoneType' object is not iterable
+2023-10-04 11:18:52,224 [INFO] - =========== Scraper end: 2023-10-04 11:18:52 ===========
+2023-10-04 11:18:52,224 [INFO] - Scraper execution time: 5.653s
+2023-10-04 11:19:31,993 [INFO] - =========== Scraper start: 2023-10-04 11:19:31 ===========
+2023-10-04 11:19:39,637 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:19:46,505 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:19:52,733 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:19:53,023 [INFO] - =========== Scraper end: 2023-10-04 11:19:53 ===========
+2023-10-04 11:19:53,023 [INFO] - Scraper execution time: 21.030s
+2023-10-04 11:30:37,868 [INFO] - =========== product_scraper start: 2023-10-04 11:30:37 ===========
+2023-10-04 11:30:46,210 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:30:54,483 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:31:02,424 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:31:02,704 [INFO] - =========== product_scraper end: 2023-10-04 11:31:02 ===========
+2023-10-04 11:31:02,704 [INFO] - product_scraper execution time: 24.836s
+2023-10-04 11:31:39,301 [INFO] - =========== product_scraper start: 2023-10-04 11:31:39 ===========
+2023-10-04 11:31:46,087 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:31:52,820 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:31:59,762 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:32:00,028 [INFO] - product_scraper execution time: 20.727s
+2023-10-04 11:32:00,028 [INFO] - =========== product_scraper end: 2023-10-04 11:32:00 ===========
+2023-10-04 15:25:33,683 [INFO] - =========== product_scraper start: 2023-10-04 15:25:33 ===========
+2023-10-04 15:25:41,539 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 15:25:49,690 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 15:25:57,289 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 15:25:57,572 [INFO] - product_scraper execution time: 23.889s
+2023-10-04 15:25:57,572 [INFO] - =========== product_scraper end: 2023-10-04 15:25:57 ===========
+2023-10-04 15:40:39,491 [INFO] - =========== product_scraper start: 2023-10-04 15:40:39 ===========
+2023-10-04 15:40:47,938 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 15:40:56,105 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 15:41:03,818 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 15:41:04,628 [INFO] - product_scraper execution time: 25.137s
+2023-10-04 15:41:04,629 [INFO] - =========== product_scraper end: 2023-10-04 15:41:04 ===========
+2023-10-04 18:04:39,089 [INFO] - =========== product_scraper start: 2023-10-04 18:04:39 ===========
+2023-10-04 18:04:47,504 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 18:04:56,790 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 18:05:04,799 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 18:05:05,428 [INFO] - product_scraper execution time: 26.338s
+2023-10-04 18:05:05,428 [INFO] - =========== product_scraper end: 2023-10-04 18:05:05 ===========
+2023-10-04 18:11:18,855 [INFO] - =========== product_scraper start: 2023-10-04 18:11:18 ===========
+2023-10-04 18:11:26,323 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 18:11:33,345 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 18:11:39,804 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 18:11:40,124 [INFO] - product_scraper execution time: 21.270s
+2023-10-04 18:11:40,124 [INFO] - =========== product_scraper end: 2023-10-04 18:11:40 ===========
+2023-10-04 18:12:41,198 [INFO] - =========== product_scraper start: 2023-10-04 18:12:41 ===========
+2023-10-04 18:12:48,155 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 18:12:55,292 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 18:13:02,212 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 18:13:02,555 [INFO] - product_scraper execution time: 21.357s
+2023-10-04 18:13:02,555 [INFO] - =========== product_scraper end: 2023-10-04 18:13:02 ===========
+2023-10-04 23:16:50,106 [INFO] - =========== product_scraper start: 2023-10-04 23:16:50 ===========
+2023-10-04 23:17:00,441 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 23:17:08,856 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 23:17:16,498 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 23:17:17,958 [ERROR] - Error in main function: list indices must be integers or slices, not str
+2023-10-04 23:17:18,025 [INFO] - product_scraper execution time: 27.920s
+2023-10-04 23:17:18,026 [INFO] - =========== product_scraper end: 2023-10-04 23:17:18 ===========
+2023-10-04 23:20:45,051 [INFO] - =========== product_scraper start: 2023-10-04 23:20:45 ===========
+2023-10-04 23:20:54,721 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 23:21:02,562 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 23:21:09,232 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 23:21:10,008 [ERROR] - Error in main function: list indices must be integers or slices, not str
+2023-10-04 23:21:10,082 [INFO] - product_scraper execution time: 25.031s
+2023-10-04 23:21:10,082 [INFO] - =========== product_scraper end: 2023-10-04 23:21:10 ===========
+2023-10-04 23:25:29,194 [INFO] - =========== product_scraper start: 2023-10-04 23:25:29 ===========
+2023-10-04 23:25:39,451 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 23:25:46,639 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 23:25:53,236 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 23:25:53,814 [INFO] - Generating packs
+2023-10-04 23:25:53,814 [ERROR] - Error in main function: list indices must be integers or slices, not str
+2023-10-04 23:25:53,874 [INFO] - product_scraper execution time: 24.681s
+2023-10-04 23:25:53,874 [INFO] - =========== product_scraper end: 2023-10-04 23:25:53 ===========
+2023-10-04 23:29:12,168 [INFO] - =========== product_scraper start: 2023-10-04 23:29:12 ===========
+2023-10-04 23:29:20,915 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 23:29:29,078 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 23:29:36,699 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 23:29:38,233 [INFO] - Generating packs
+2023-10-04 23:29:38,284 [INFO] - product_scraper execution time: 26.116s
+2023-10-04 23:29:38,284 [INFO] - =========== product_scraper end: 2023-10-04 23:29:38 ===========
+2023-10-04 23:32:56,755 [INFO] - =========== product_scraper start: 2023-10-04 23:32:56 ===========
+2023-10-04 23:33:04,473 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 23:33:12,830 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 23:33:19,690 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 23:33:20,375 [INFO] - Generating packs
+2023-10-04 23:33:20,434 [INFO] - product_scraper execution time: 23.679s
+2023-10-04 23:33:20,434 [INFO] - =========== product_scraper end: 2023-10-04 23:33:20 ===========
+2023-10-04 23:46:27,092 [INFO] - =========== product_scraper start: 2023-10-04 23:46:27 ===========
+2023-10-04 23:46:35,746 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 23:46:43,955 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 23:46:51,474 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 23:46:53,054 [INFO] - Generating packs
+2023-10-04 23:46:53,119 [INFO] - product_scraper execution time: 26.028s
+2023-10-04 23:46:53,120 [INFO] - =========== product_scraper end: 2023-10-04 23:46:53 ===========
+2023-10-04 23:55:23,436 [INFO] - =========== product_scraper start: 2023-10-04 23:55:23 ===========
+2023-10-04 23:55:31,465 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 23:55:38,965 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 23:55:46,139 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 23:55:46,597 [INFO] - NDJSON data saved to data/raw_data/ndjson/products.ndjson
+2023-10-04 23:55:46,597 [INFO] - JSON data saved to data/raw_data/json/products.json
+2023-10-04 23:55:47,032 [INFO] - Generating packs
+2023-10-04 23:55:47,033 [INFO] - NDJSON data saved to data/raw_data/ndjson/packs.ndjson
+2023-10-04 23:55:47,033 [INFO] - JSON data saved to data/raw_data/json/packs.json
+2023-10-04 23:55:47,114 [INFO] - product_scraper execution time: 23.678s
+2023-10-04 23:55:47,114 [INFO] - =========== product_scraper end: 2023-10-04 23:55:47 ===========
+2023-10-04 23:58:11,191 [INFO] - =========== product_scraper start: 2023-10-04 23:58:11 ===========
+2023-10-04 23:58:19,560 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 23:58:27,246 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 23:58:34,815 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 23:58:35,088 [INFO] - products NDJSON data saved | data/raw_data/ndjson/products.ndjson
+2023-10-04 23:58:35,088 [INFO] - products JSON data saved | data/raw_data/json/products.json
+2023-10-04 23:58:36,382 [INFO] - Generating packs
+2023-10-04 23:58:36,382 [INFO] - packs NDJSON data saved | data/raw_data/ndjson/packs.ndjson
+2023-10-04 23:58:36,383 [INFO] - packs JSON data saved | data/raw_data/json/packs.json
+2023-10-04 23:58:36,497 [INFO] - product_scraper execution time: 25.306s
+2023-10-04 23:58:36,497 [INFO] - =========== product_scraper end: 2023-10-04 23:58:36 ===========

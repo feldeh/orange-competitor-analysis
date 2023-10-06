@@ -1,0 +1,11 @@
+2023-10-05 00:10:21,476 [INFO] - =========== mobile_viking_scraper start: 2023-10-05 00:10:21 ===========
+2023-10-05 00:10:30,934 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-05 00:10:38,773 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-05 00:10:46,323 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-05 00:10:46,591 [INFO] - products NDJSON file saved | data/raw_data/ndjson/products.ndjson
+2023-10-05 00:10:46,591 [INFO] - products JSON file saved | data/raw_data/json/products.json
+2023-10-05 00:10:47,787 [INFO] - Generating packs
+2023-10-05 00:10:47,787 [INFO] - packs NDJSON file saved | data/raw_data/ndjson/packs.ndjson
+2023-10-05 00:10:47,788 [INFO] - packs JSON file saved | data/raw_data/json/packs.json
+2023-10-05 00:10:47,850 [INFO] - mobile_viking_scraper execution time: 26.374s
+2023-10-05 00:10:47,850 [INFO] - =========== mobile_viking_scraper end: 2023-10-05 00:10:47 ===========

@@ -1,0 +1,44 @@
+2023-10-04 10:59:41,084 [INFO] - Scraper started at 1696409981.084537
+2023-10-04 10:59:43,595 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 10:59:46,597 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 10:59:48,597 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 10:59:48,724 [ERROR] - Error extracting internet table data: 'NoneType' object has no attribute 'get_text'
+2023-10-04 10:59:48,724 [ERROR] - Error extracting internet data: list index out of range
+2023-10-04 10:59:48,734 [ERROR] - Error in main function: 'NoneType' object is not iterable
+2023-10-04 10:59:48,756 [INFO] - Scraper ended at 1696409988.755975
+2023-10-04 10:59:48,756 [INFO] - Time taken to scrape products: 7.671s
+2023-10-04 11:07:38,437 [INFO] - Scraper started at 1696410458.4370172
+2023-10-04 11:07:40,858 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:07:42,137 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:07:44,002 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:07:44,321 [INFO] - Scraper ended at 1696410464.321723
+2023-10-04 11:08:34,125 [INFO] - Scraper started at 2023-10-04 11:08:34
+2023-10-04 11:08:35,450 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:08:36,626 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:08:39,129 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:08:39,452 [INFO] - Scraper ended at 1696410519.4524758
+2023-10-04 11:12:15,404 [INFO] - Scraper started at 2023-10-04 11:12:15
+2023-10-04 11:12:18,119 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:12:20,452 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:12:22,512 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:12:22,666 [ERROR] - Error extracting internet table data: 'NoneType' object has no attribute 'get_text'
+2023-10-04 11:12:22,667 [ERROR] - Error extracting internet data: list index out of range
+2023-10-04 11:12:22,675 [ERROR] - Error in main function: 'NoneType' object is not iterable
+2023-10-04 11:12:22,694 [INFO] - Scraper ended at 2023-10-04 11:12:22
+2023-10-04 11:12:22,694 [INFO] - Scraper execution time: 7.290s
+2023-10-04 11:13:42,200 [INFO] - =========== Scraper started at 2023-10-04 11:13:42 ===========
+2023-10-04 11:13:44,000 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:13:46,009 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:13:47,501 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:13:47,779 [ERROR] - Error extracting internet table data: 'NoneType' object has no attribute 'get_text'
+2023-10-04 11:13:47,970 [ERROR] - Error extracting internet data: 'NoneType' object is not a mapping
+2023-10-04 11:13:47,978 [ERROR] - Error in main function: 'NoneType' object is not iterable
+2023-10-04 11:13:48,002 [INFO] - =========== Scraper ended at 2023-10-04 11:13:48 ===========
+2023-10-04 11:13:48,003 [INFO] - Scraper execution time: 5.803s
+2023-10-04 11:14:30,104 [INFO] - =========== Scraper start: 2023-10-04 11:14:30 ===========
+2023-10-04 11:14:31,513 [INFO] - Extracting mobile prepaid data from URL: https://mobilevikings.be/en/offer/prepaid/
+2023-10-04 11:14:32,734 [INFO] - Extracting mobile subscription from URL: https://mobilevikings.be/en/offer/subscriptions/
+2023-10-04 11:14:34,656 [INFO] - Extracting internet subscription data from URL: https://mobilevikings.be/en/offer/internet/
+2023-10-04 11:14:35,071 [ERROR] - Error in main function: 'NoneType' object is not iterable
+2023-10-04 11:14:35,096 [INFO] - =========== Scraper end: 2023-10-04 11:14:35 ===========
+2023-10-04 11:14:35,096 [INFO] - Scraper execution time: 4.991s
