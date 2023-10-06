@@ -1,0 +1,23 @@
+[2023-10-05T14:23:09.282+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: load_to_bigquery_dag.wait_for_ndjson manual__2023-10-05T14:23:06.025351+00:00 [queued]>
+[2023-10-05T14:23:09.295+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: load_to_bigquery_dag.wait_for_ndjson manual__2023-10-05T14:23:06.025351+00:00 [queued]>
+[2023-10-05T14:23:09.296+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 1
+[2023-10-05T14:23:09.312+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonSensor): wait_for_ndjson> on 2023-10-05 14:23:06.025351+00:00
+[2023-10-05T14:23:09.332+0000] {standard_task_runner.py:57} INFO - Started process 4701 to run task
+[2023-10-05T14:23:09.451+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'load_to_bigquery_dag', 'wait_for_ndjson', 'manual__2023-10-05T14:23:06.025351+00:00', '--job-id', '45', '--raw', '--subdir', 'DAGS_FOLDER/load_to_bigquery_dag.py', '--cfg-path', '/tmp/tmp1fdjuqo0']
+[2023-10-05T14:23:09.520+0000] {standard_task_runner.py:85} INFO - Job 45: Subtask wait_for_ndjson
+[2023-10-05T14:23:10.002+0000] {task_command.py:415} INFO - Running <TaskInstance: load_to_bigquery_dag.wait_for_ndjson manual__2023-10-05T14:23:06.025351+00:00 [running]> on host bd744fef73d7
+[2023-10-05T14:23:10.640+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='admin' AIRFLOW_CTX_DAG_ID='load_to_bigquery_dag' AIRFLOW_CTX_TASK_ID='wait_for_ndjson' AIRFLOW_CTX_EXECUTION_DATE='2023-10-05T14:23:06.025351+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-10-05T14:23:06.025351+00:00'
+[2023-10-05T14:23:10.666+0000] {python.py:72} INFO - Poking callable: <function check_file_exists at 0xffff909af310>
+[2023-10-05T14:23:10.677+0000] {taskinstance.py:1935} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/sensors/base.py", line 257, in execute
+    raise e
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/sensors/base.py", line 239, in execute
+    poke_return = self.poke(context)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/sensors/python.py", line 73, in poke
+    return_value = self.python_callable(*self.op_args, **self.op_kwargs)
+TypeError: check_file_exists() missing 1 required positional argument: 'file_name'
+[2023-10-05T14:23:10.759+0000] {taskinstance.py:1398} INFO - Marking task as FAILED. dag_id=load_to_bigquery_dag, task_id=wait_for_ndjson, execution_date=20231005T142306, start_date=20231005T142309, end_date=20231005T142310
+[2023-10-05T14:23:10.813+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 45 for task wait_for_ndjson (check_file_exists() missing 1 required positional argument: 'file_name'; 4701)
+[2023-10-05T14:23:10.879+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-10-05T14:23:10.934+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check
