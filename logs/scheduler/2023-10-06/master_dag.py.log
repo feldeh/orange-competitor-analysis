@@ -1614,3 +1614,115 @@
 [2023-10-06T07:35:34.092+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:35:34.091+0000] {dag.py:2915} INFO - Sync 1 DAGs
 [2023-10-06T07:35:34.111+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:35:34.110+0000] {dag.py:3696} INFO - Setting next_dagrun for master_dag to None, run_after=None
 [2023-10-06T07:35:34.132+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/master_dag.py took 0.164 seconds
+[2023-10-06T07:36:04.625+0000] {processor.py:157} INFO - Started process (PID=13201) to work on /opt/airflow/dags/master_dag.py
+[2023-10-06T07:36:04.628+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/master_dag.py for tasks to queue
+[2023-10-06T07:36:04.631+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:04.630+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:36:04.669+0000] {logging_mixin.py:151} INFO - ['/home/airflow/.local/bin',
+ '/usr/local/lib/python38.zip',
+ '/usr/local/lib/python3.8',
+ '/usr/local/lib/python3.8/lib-dynload',
+ '/home/airflow/.local/lib/python3.8/site-packages',
+ '/usr/local/lib/python3.8/site-packages',
+ '/opt/airflow/dags',
+ '/opt/airflow/config',
+ '/opt/airflow/plugins']
+[2023-10-06T07:36:04.676+0000] {processor.py:839} INFO - DAG(s) dict_keys(['master_dag']) retrieved from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:36:04.718+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:04.718+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:36:04.748+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:04.747+0000] {dag.py:3696} INFO - Setting next_dagrun for master_dag to None, run_after=None
+[2023-10-06T07:36:04.770+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/master_dag.py took 0.154 seconds
+[2023-10-06T07:36:35.153+0000] {processor.py:157} INFO - Started process (PID=13224) to work on /opt/airflow/dags/master_dag.py
+[2023-10-06T07:36:35.156+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/master_dag.py for tasks to queue
+[2023-10-06T07:36:35.158+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:35.157+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:36:35.173+0000] {logging_mixin.py:151} INFO - ['/home/airflow/.local/bin',
+ '/usr/local/lib/python38.zip',
+ '/usr/local/lib/python3.8',
+ '/usr/local/lib/python3.8/lib-dynload',
+ '/home/airflow/.local/lib/python3.8/site-packages',
+ '/usr/local/lib/python3.8/site-packages',
+ '/opt/airflow/dags',
+ '/opt/airflow/config',
+ '/opt/airflow/plugins']
+[2023-10-06T07:36:35.178+0000] {processor.py:839} INFO - DAG(s) dict_keys(['master_dag']) retrieved from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:36:35.221+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:35.221+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:36:35.245+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:35.245+0000] {dag.py:3696} INFO - Setting next_dagrun for master_dag to None, run_after=None
+[2023-10-06T07:36:35.263+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/master_dag.py took 0.117 seconds
+[2023-10-06T07:37:05.734+0000] {processor.py:157} INFO - Started process (PID=13248) to work on /opt/airflow/dags/master_dag.py
+[2023-10-06T07:37:05.737+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/master_dag.py for tasks to queue
+[2023-10-06T07:37:05.740+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:05.739+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:37:05.760+0000] {logging_mixin.py:151} INFO - ['/home/airflow/.local/bin',
+ '/usr/local/lib/python38.zip',
+ '/usr/local/lib/python3.8',
+ '/usr/local/lib/python3.8/lib-dynload',
+ '/home/airflow/.local/lib/python3.8/site-packages',
+ '/usr/local/lib/python3.8/site-packages',
+ '/opt/airflow/dags',
+ '/opt/airflow/config',
+ '/opt/airflow/plugins']
+[2023-10-06T07:37:05.767+0000] {processor.py:839} INFO - DAG(s) dict_keys(['master_dag']) retrieved from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:37:05.827+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:05.827+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:37:05.851+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:05.850+0000] {dag.py:3696} INFO - Setting next_dagrun for master_dag to None, run_after=None
+[2023-10-06T07:37:05.877+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/master_dag.py took 0.151 seconds
+[2023-10-06T07:37:36.212+0000] {processor.py:157} INFO - Started process (PID=13271) to work on /opt/airflow/dags/master_dag.py
+[2023-10-06T07:37:36.216+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/master_dag.py for tasks to queue
+[2023-10-06T07:37:36.219+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:36.219+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:37:36.240+0000] {logging_mixin.py:151} INFO - ['/home/airflow/.local/bin',
+ '/usr/local/lib/python38.zip',
+ '/usr/local/lib/python3.8',
+ '/usr/local/lib/python3.8/lib-dynload',
+ '/home/airflow/.local/lib/python3.8/site-packages',
+ '/usr/local/lib/python3.8/site-packages',
+ '/opt/airflow/dags',
+ '/opt/airflow/config',
+ '/opt/airflow/plugins']
+[2023-10-06T07:37:36.246+0000] {processor.py:839} INFO - DAG(s) dict_keys(['master_dag']) retrieved from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:37:36.287+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:36.287+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:37:36.307+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:36.307+0000] {dag.py:3696} INFO - Setting next_dagrun for master_dag to None, run_after=None
+[2023-10-06T07:37:36.329+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/master_dag.py took 0.126 seconds
+[2023-10-06T07:38:06.713+0000] {processor.py:157} INFO - Started process (PID=13294) to work on /opt/airflow/dags/master_dag.py
+[2023-10-06T07:38:06.716+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/master_dag.py for tasks to queue
+[2023-10-06T07:38:06.719+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:06.718+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:38:06.738+0000] {logging_mixin.py:151} INFO - ['/home/airflow/.local/bin',
+ '/usr/local/lib/python38.zip',
+ '/usr/local/lib/python3.8',
+ '/usr/local/lib/python3.8/lib-dynload',
+ '/home/airflow/.local/lib/python3.8/site-packages',
+ '/usr/local/lib/python3.8/site-packages',
+ '/opt/airflow/dags',
+ '/opt/airflow/config',
+ '/opt/airflow/plugins']
+[2023-10-06T07:38:06.746+0000] {processor.py:839} INFO - DAG(s) dict_keys(['master_dag']) retrieved from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:38:06.791+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:06.791+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:38:06.836+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:06.835+0000] {dag.py:3696} INFO - Setting next_dagrun for master_dag to None, run_after=None
+[2023-10-06T07:38:06.857+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/master_dag.py took 0.159 seconds
+[2023-10-06T07:38:37.189+0000] {processor.py:157} INFO - Started process (PID=13318) to work on /opt/airflow/dags/master_dag.py
+[2023-10-06T07:38:37.192+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/master_dag.py for tasks to queue
+[2023-10-06T07:38:37.195+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:37.194+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:38:37.223+0000] {logging_mixin.py:151} INFO - ['/home/airflow/.local/bin',
+ '/usr/local/lib/python38.zip',
+ '/usr/local/lib/python3.8',
+ '/usr/local/lib/python3.8/lib-dynload',
+ '/home/airflow/.local/lib/python3.8/site-packages',
+ '/usr/local/lib/python3.8/site-packages',
+ '/opt/airflow/dags',
+ '/opt/airflow/config',
+ '/opt/airflow/plugins']
+[2023-10-06T07:38:37.231+0000] {processor.py:839} INFO - DAG(s) dict_keys(['master_dag']) retrieved from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:38:37.294+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:37.294+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:38:37.316+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:37.316+0000] {dag.py:3696} INFO - Setting next_dagrun for master_dag to None, run_after=None
+[2023-10-06T07:38:37.340+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/master_dag.py took 0.160 seconds
+[2023-10-06T07:39:07.679+0000] {processor.py:157} INFO - Started process (PID=13341) to work on /opt/airflow/dags/master_dag.py
+[2023-10-06T07:39:07.682+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/master_dag.py for tasks to queue
+[2023-10-06T07:39:07.685+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:39:07.685+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:39:07.702+0000] {logging_mixin.py:151} INFO - ['/home/airflow/.local/bin',
+ '/usr/local/lib/python38.zip',
+ '/usr/local/lib/python3.8',
+ '/usr/local/lib/python3.8/lib-dynload',
+ '/home/airflow/.local/lib/python3.8/site-packages',
+ '/usr/local/lib/python3.8/site-packages',
+ '/opt/airflow/dags',
+ '/opt/airflow/config',
+ '/opt/airflow/plugins']
+[2023-10-06T07:39:07.708+0000] {processor.py:839} INFO - DAG(s) dict_keys(['master_dag']) retrieved from /opt/airflow/dags/master_dag.py
+[2023-10-06T07:39:07.750+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:39:07.750+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:39:07.766+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:39:07.766+0000] {dag.py:3696} INFO - Setting next_dagrun for master_dag to None, run_after=None
+[2023-10-06T07:39:07.783+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/master_dag.py took 0.112 seconds

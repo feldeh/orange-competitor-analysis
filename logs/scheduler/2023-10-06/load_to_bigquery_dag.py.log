@@ -815,3 +815,51 @@
 [2023-10-06T07:35:43.646+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:35:43.646+0000] {dag.py:2915} INFO - Sync 1 DAGs
 [2023-10-06T07:35:43.657+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:35:43.657+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
 [2023-10-06T07:35:43.677+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.360 seconds
+[2023-10-06T07:36:13.882+0000] {processor.py:157} INFO - Started process (PID=13211) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:36:13.884+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-06T07:36:13.886+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:13.885+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:36:14.770+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:36:14.867+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:14.867+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-06T07:36:14.869+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:14.868+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:36:14.883+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:14.883+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-06T07:36:14.899+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.022 seconds
+[2023-10-06T07:36:45.424+0000] {processor.py:157} INFO - Started process (PID=13234) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:36:45.428+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-06T07:36:45.430+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:45.429+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:36:46.592+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:36:46.692+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:46.691+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-06T07:36:46.693+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:46.693+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:36:46.705+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:36:46.705+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-06T07:36:46.721+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 1.303 seconds
+[2023-10-06T07:37:17.060+0000] {processor.py:157} INFO - Started process (PID=13258) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:37:17.062+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-06T07:37:17.064+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:17.063+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:37:17.841+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:37:17.942+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:17.941+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-06T07:37:17.945+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:17.944+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:37:17.956+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:17.956+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-06T07:37:17.971+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.917 seconds
+[2023-10-06T07:37:48.486+0000] {processor.py:157} INFO - Started process (PID=13281) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:37:48.489+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-06T07:37:48.491+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:48.490+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:37:49.302+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:37:49.407+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:49.406+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-06T07:37:49.409+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:49.408+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:37:49.421+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:37:49.421+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-06T07:37:49.440+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.961 seconds
+[2023-10-06T07:38:20.026+0000] {processor.py:157} INFO - Started process (PID=13304) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:38:20.028+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-06T07:38:20.030+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:20.030+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:38:20.807+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:38:20.911+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:20.911+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-06T07:38:20.913+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:20.912+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:38:20.923+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:20.923+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-06T07:38:20.939+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.919 seconds
+[2023-10-06T07:38:51.513+0000] {processor.py:157} INFO - Started process (PID=13328) to work on /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:38:51.515+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/load_to_bigquery_dag.py for tasks to queue
+[2023-10-06T07:38:51.517+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:51.516+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:38:52.309+0000] {processor.py:839} INFO - DAG(s) dict_keys(['load_to_bigquery_dag']) retrieved from /opt/airflow/dags/load_to_bigquery_dag.py
+[2023-10-06T07:38:52.430+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:52.429+0000] {security.py:708} INFO - Not syncing DAG-level permissions for DAG 'DAG:load_to_bigquery_dag' as access control is unset.
+[2023-10-06T07:38:52.432+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:52.431+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-06T07:38:52.443+0000] {logging_mixin.py:151} INFO - [2023-10-06T07:38:52.442+0000] {dag.py:3696} INFO - Setting next_dagrun for load_to_bigquery_dag to None, run_after=None
+[2023-10-06T07:38:52.464+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/load_to_bigquery_dag.py took 0.956 seconds

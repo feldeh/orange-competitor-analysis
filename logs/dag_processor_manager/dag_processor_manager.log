@@ -9335,3 +9335,63 @@ File Path                                  PID    Runtime      # DAGs    # Error
 /opt/airflow/dags/master_dag.py                                     1           0  0.21s           2023-10-06T07:35:34
 /opt/airflow/dags/scraping_dag.py                                   1           0  0.30s           2023-10-06T07:35:36
 ================================================================================
+[2023-10-06T07:36:13.867+0000] {manager.py:893} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                    PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/load_to_bigquery_dag.py  13211  0.01s             1           0  1.46s           2023-10-06T07:35:43
+/opt/airflow/dags/master_dag.py                                     1           0  0.21s           2023-10-06T07:36:04
+/opt/airflow/dags/scraping_dag.py                                   1           0  0.34s           2023-10-06T07:36:06
+================================================================================
+[2023-10-06T07:36:44.369+0000] {manager.py:893} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/load_to_bigquery_dag.py                           1           0  1.09s           2023-10-06T07:36:14
+/opt/airflow/dags/master_dag.py                                     1           0  0.17s           2023-10-06T07:36:35
+/opt/airflow/dags/scraping_dag.py                                   1           0  0.25s           2023-10-06T07:36:37
+================================================================================
+[2023-10-06T07:37:14.974+0000] {manager.py:893} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/load_to_bigquery_dag.py                           1           0  1.38s           2023-10-06T07:36:46
+/opt/airflow/dags/master_dag.py                                     1           0  0.20s           2023-10-06T07:37:05
+/opt/airflow/dags/scraping_dag.py                                   1           0  0.27s           2023-10-06T07:37:08
+================================================================================
+[2023-10-06T07:37:45.420+0000] {manager.py:893} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/load_to_bigquery_dag.py                           1           0  1.01s           2023-10-06T07:37:18
+/opt/airflow/dags/master_dag.py                                     1           0  0.19s           2023-10-06T07:37:36
+/opt/airflow/dags/scraping_dag.py                                   1           0  0.24s           2023-10-06T07:37:38
+================================================================================
+[2023-10-06T07:38:15.941+0000] {manager.py:893} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/load_to_bigquery_dag.py                           1           0  1.03s           2023-10-06T07:37:49
+/opt/airflow/dags/master_dag.py                                     1           0  0.23s           2023-10-06T07:38:06
+/opt/airflow/dags/scraping_dag.py                                   1           0  0.31s           2023-10-06T07:38:09
+================================================================================
+[2023-10-06T07:38:46.432+0000] {manager.py:893} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/load_to_bigquery_dag.py                           1           0  1.00s           2023-10-06T07:38:20
+/opt/airflow/dags/master_dag.py                                     1           0  0.21s           2023-10-06T07:38:37
+/opt/airflow/dags/scraping_dag.py                                   1           0  0.26s           2023-10-06T07:38:39
+================================================================================

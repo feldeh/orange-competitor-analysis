@@ -2,3 +2,4 @@ __pycache__/
 orange_env/
 .env
 gcloud/
+logs/
