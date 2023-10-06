@@ -6,7 +6,7 @@ import json
 import ndjson
 import re
 import time
-import datetime
+from datetime import date
 
 URL = 'https://www.scarlet.be/en/packs.html'
 
@@ -34,8 +34,6 @@ def scarlet_trio():
             break
         else:
             continue
-    
-    pack_description = (f"{pack_desc} + {pack_desc1}")
 
     for i in internet_speed:
         if 'download' in i.get_text():
@@ -52,13 +50,18 @@ def scarlet_trio():
         else:
             continue
     
+    pack_description = (f"{pack_desc} {pack_desc1} Internet info: Upload speed:{upload_speed}, Download speed:{download_speed}, Data:{internet_data}")
+
+    today = date.today()
+    today = today.strftime("%d/%m/%Y")        
+
     packs['competitor_id'] = 'scarlet'
     packs['pack_name'] = pack_name
     packs['pack_url'] = url
-    packs['pack_description'] = (f"{pack_description} Internet info: Upload speed:{upload_speed}, Download speed:{download_speed}, Data:{internet_data}")
+    packs['pack_description'] = pack_description
     packs['download_speed'] = "N/A"
     packs['upload_speed'] = "N/A"
-    packprices['date'] = datetime.datetime.now
+    packprices['date'] = today
     packprices['price'] = float(price)
    
     
@@ -90,7 +93,7 @@ def scarlet_trio_mobile():
             break
         else:
             continue
-    pack_description = (f"{pack_desc} + {pack_desc1}")
+    
     for i in internet_speed:
         if 'download' in i.get_text():
             download_speed = ''.join(filter(str.isdigit, i.get_text()))
@@ -102,9 +105,9 @@ def scarlet_trio_mobile():
 
         elif 'Unlimited' in i.get_text():
             internet_data = "unlimited"
-
         else:
             continue
+    
     info = soup.find_all("h3", class_="rs-tit4 rs-txt-c2 rs-padding-bottom1")
     for i in info:
         if "GB" in i.get_text():
@@ -119,13 +122,17 @@ def scarlet_trio_mobile():
             continue
     
     product_url = soup.find("a", text="Cherry").get_text()
+
+    pack_description = (f"{pack_desc} {pack_desc1} Internet info: Upload speed:{upload_speed}, Download speed:{download_speed}, Data:{internet_data}")
     
+    today = date.today()
+    today = today.strftime("%d/%m/%Y")
 
     packs['competitor_id'] = 'scarlet'
     packs['pack_name'] = pack_name
     packs['pack_url'] = url
-    packs['pack_description'] = (f"{pack_description} Internet info: Upload speed:{upload_speed}, Download speed:{download_speed}, Data:{internet_data}")
-    packprices['date'] = datetime.datetime.now
+    packs['pack_description'] = pack_description
+    packprices['date'] = today
     packprices['price'] = float(price)
     products['product_name'] = "Cherry"
     products['product_category'] = "Mobile Subscription"
