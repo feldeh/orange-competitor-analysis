@@ -4,7 +4,6 @@ import os
 
 
 service_acc_key_path = os.environ.get("SERVICE_ACC_KEY_PATH")
-
 project_id = 'arched-media-273319'
 dataset_id = 'mobileviking'
 table_id = 'test_table'

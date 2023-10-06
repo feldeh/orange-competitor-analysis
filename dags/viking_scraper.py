@@ -304,7 +304,7 @@ def mobile_viking_scraper():
             # by order of importance
             # TODO: add "only data" product
             # TODO: add product_id
-            # TODO: add timestamp
+            # TODO: add timestamp to adhere to target db schema
             # TODO: cast product price, data, minutes, price_per_min, sms to float or int
             # TODO: implement status code logger with requests
             # TODO: add data validation with pydantic

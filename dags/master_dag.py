@@ -29,14 +29,15 @@ with DAG(
     #     trigger_dag_id='cleaning_dag',
     # )
 
-    # trigger_store_to_bigquery = TriggerDagRunOperator(
-    #     task_id='trigger_store_to_bigquery',
-    #     trigger_dag_id='store_to_bigquery_dag',
-    # )
+    trigger_load_to_bigquery = TriggerDagRunOperator(
+        task_id='trigger_load_to_bigquery',
+        trigger_dag_id='load_to_bigquery_dag',
+    )
 
 
-# trigger_scraping >> trigger_cleaning >> trigger_store_to_bigquery
-trigger_scraping
+# trigger_scraping >> trigger_cleaning >> trigger_load_to_bigquery
+trigger_scraping >> trigger_load_to_bigquery
+
 
 
 pprint(sys.path)
