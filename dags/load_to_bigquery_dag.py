@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from airflow import DAG
+from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
 from airflow.sensors.python import PythonSensor
 
@@ -37,17 +37,15 @@ def check_ndjson_exist(file_names):
         else:
             time.sleep(5)
 
-with DAG(
 
-    default_args=DEFAULT_DAG_ARGS,
+@dag(
     dag_id='load_to_bigquery_dag',
     start_date=datetime(2023, 10, 5),
     schedule_interval=None,
     catchup=False,
-
-
-) as dag:
-
+    default_args=DEFAULT_DAG_ARGS
+)
+def load_to_bigquery_dag():
 
     wait_for_file = PythonSensor(
         task_id='wait_for_file',
@@ -64,3 +62,6 @@ with DAG(
     )
 
     wait_for_file >> load_to_bigquery
+
+
+load_to_bigquery = load_to_bigquery_dag()
