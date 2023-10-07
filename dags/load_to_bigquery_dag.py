@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.sensors.python import PythonSensor
-from airflow.sensors.time_delta import TimeDeltaSensor
 
 from bigquery import load_json_to_bigquery
 from google.cloud import bigquery
