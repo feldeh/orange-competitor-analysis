@@ -42,6 +42,7 @@ def unlimited_check_to_float(string):
 
 def extract_prepaid_selector_data(page_content, url):
     prepaid_data = []
+    date = time.strftime("%Y-%m-%d")
     soup = BeautifulSoup(page_content, 'html.parser')
 
     prepaid_elements = soup.select('.PrepaidSelectorProduct')
@@ -65,6 +66,7 @@ def extract_prepaid_selector_data(page_content, url):
                 'product_category': 'mobile_prepaid',
                 'product_url': url,
                 'price': float(price),
+                'date': date,
                 'data': float(data),
                 'network': None,
                 'minutes': minutes,
@@ -110,6 +112,7 @@ def extract_prepaid_data(page, url):
 
 def extract_subscription_data(page_content, url):
     subscription_data = []
+    date = time.strftime("%Y-%m-%d")
 
     try:
         soup = BeautifulSoup(page_content, 'html.parser')
@@ -134,6 +137,7 @@ def extract_subscription_data(page_content, url):
                 'product_category': 'mobile_subscription',
                 'product_url': url,
                 'price': float(price_per_month),
+                'date': date,
                 'data': float(mobile_data),
                 'network': network,
                 'minutes': minutes,
@@ -155,6 +159,7 @@ def extract_subscription_data(page_content, url):
 
 def extract_internet_table_data(page_content, url):
     soup = BeautifulSoup(page_content, 'html.parser')
+    date = time.strftime("%Y-%m-%d")
 
     internet_data = {}
 
@@ -174,6 +179,7 @@ def extract_internet_table_data(page_content, url):
         internet_data['product_category'] = 'internet_subscription'
         internet_data['product_url'] = url
         internet_data['price'] = float(cleaned_price)
+        internet_data['date'] = date
         internet_data['data'] = monthly_data
         internet_data['network'] = None
         internet_data['minutes'] = None
@@ -244,7 +250,7 @@ def get_mobile_prepaid_data(browser, url):
 
     page = goto_page(browser, url)
     time.sleep(5)
-    logging.info(f"Extracting mobile prepaid data from URL: {url}")
+    logging.info(f"Extracting mobile prepaid data from: {url}")
     mobile_prepaid_data = extract_prepaid_data(page, url)
     page.close()
 
@@ -257,7 +263,7 @@ def get_mobile_subscription_data(browser, url):
 
     page = goto_page(browser, url)
     time.sleep(5)
-    logging.info(f"Extracting mobile subscription from URL: {url}")
+    logging.info(f"Extracting mobile subscription from: {url}")
     page_content = page.content()
     mobile_subscription_data = extract_subscription_data(page_content, url)
     page.close()
@@ -271,7 +277,7 @@ def get_internet_subscription_data(browser, url):
 
     page = goto_page(browser, url)
     time.sleep(5)
-    logging.info(f"Extracting internet subscription data from URL: {url}")
+    logging.info(f"Extracting internet subscription data from: {url}")
     internet_subscription_data = extract_internet_data(page, url)
     page.close()
 
@@ -315,6 +321,7 @@ def generate_packs(products_list, combo_advantage, url):
     logging.info('Generating packs')
     try:
         packs_list = []
+        date = time.strftime("%Y-%m-%d")
 
         mobile_products = [product for product in products_list if 'mobile' in product['product_name']]
         internet_products = [product for product in products_list if 'internet' in product['product_name']]
@@ -335,6 +342,7 @@ def generate_packs(products_list, combo_advantage, url):
                         'pack_name': pack_name,
                         'pack_url': url,
                         'price': price,
+                        'date': date,
                         'mobile_product_name': mobile_product_name,
                         'internet_product_name': internet_product_name
                     })
@@ -350,13 +358,13 @@ def generate_packs(products_list, combo_advantage, url):
         raise AirflowException(error_message)
 
 
-def save_scraping_log(date, error_details):
+def save_scraping_log(error_details):
 
     status = 'success' if error_details == 'no error' else 'failed'
 
     log_entry = {
         'competitor_name': 'mobile_viking',
-        'scrape_date': date,
+        'scrape_date': time.strftime("%Y-%m-%d"),
         'error_details': error_details,
         'status': status
     }
@@ -367,18 +375,17 @@ def mobile_viking_scraper():
 
     with sync_playwright() as p:
         start_time = time.strftime("%Y-%m-%d %H:%M:%S")
-        start_date = time.strftime("%Y-%m-%d")
         start_time_seconds = time.time()
         error_details = 'no error'
 
         log_file_name = 'test.log'
         log_file_path = f"logs/scraper/{log_file_name}"
-        log_directory = os.path.dirname(log_file_path)
-        if not os.path.exists(log_directory):
-            os.makedirs(log_directory)
-        if not os.path.exists(log_file_path):
-            with open(log_file_path, 'w'):
-                pass
+        # log_directory = os.path.dirname(log_file_path)
+        # if not os.path.exists(log_directory):
+        #     os.makedirs(log_directory)
+        # if not os.path.exists(log_file_path):
+        #     with open(log_file_path, 'w'):
+        #         pass
 
         log_format = '%(asctime)s [%(levelname)s] - %(message)s'
         logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
@@ -390,9 +397,6 @@ def mobile_viking_scraper():
             # by order of importance
             # TODO: add "only data" product
             # TODO: add product_id
-            # TODO: add timestamp to adhere to target db schema
-            # TODO: cast product price, data, minutes, price_per_min, sms to float or int
-            # TODO: implement status code logger with requests
             # TODO: add data validation with pydantic
             # TODO: add typing
             product_dict = get_products(browser, URL)
@@ -420,4 +424,4 @@ def mobile_viking_scraper():
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
             logging.info(f"=========== mobile_viking_scraper end: {end_time} ===========")
 
-            save_scraping_log(start_date, error_details)
+            save_scraping_log(error_details)
