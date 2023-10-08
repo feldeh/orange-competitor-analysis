@@ -4,7 +4,7 @@ from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
 DEFAULT_ARGS = {
     'owner': 'admin',
-    'retry': 5,
+    'retries': 2,
     'retry_delay': timedelta(minutes=1)
 }
 

@@ -9,8 +9,8 @@ from viking_scraper import mobile_viking_scraper
 
 DEFAULT_ARGS = {
     'owner': 'admin',
-    'retry': 5,
-    'retry_delay': timedelta(minutes=1)
+    # 'retries': 2,
+    # 'retry_delay': timedelta(seconds=30)
 }
 
 

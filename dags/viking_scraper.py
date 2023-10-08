@@ -6,6 +6,8 @@ import time
 import logging
 import traceback
 import os
+from datetime import datetime
+from airflow import AirflowException
 
 
 from utils import save_to_json, save_to_ndjson
@@ -21,8 +23,15 @@ URL = {
 def goto_page(browser, url):
     page = browser.new_page()
     page.goto(url, wait_until='domcontentloaded')
-    page.wait_for_selector('#btn-accept-cookies')
-    page.query_selector('#btn-accept-cookies').click(force=True)
+
+    try:
+        page.wait_for_selector('#btn-accept-cookies')
+        page.query_selector('#btn-accept-cookies').click(force=True)
+
+    except Exception as e:
+        error_message = f"Accept cookie button error: {str(e)}"
+        logging.error(error_message)
+        raise AirflowException(error_message)
 
     return page
 
@@ -39,7 +48,7 @@ def extract_prepaid_selector_data(page_content, url):
 
     for prepaid_element in prepaid_elements:
         try:
-            prepaid_rates_major = prepaid_element.select('.PrepaidSelectorProduct__rates__major')
+            prepaid_rates_major = prepaid_element.select('.ppPrepaidSelectorProduct__rates__major')
             sms = prepaid_rates_major[2].get_text().lower()
             price_per_minute = prepaid_element.select('.PrepaidSelectorProduct__rates__minor')[2].get_text().replace(',', '.').replace('per minute', '').strip()
             data_focus = prepaid_element['data-focus']
@@ -67,9 +76,10 @@ def extract_prepaid_selector_data(page_content, url):
             })
 
         except Exception as e:
-            error_message = f"Error extracting prepaid data: {str(e)}"
+            error_message = f"Error extracting prepaid selector data: {str(e)}"
             logging.error(error_message)
             traceback.print_exc()
+            raise AirflowException(error_message)
 
     return prepaid_data
 
@@ -95,6 +105,7 @@ def extract_prepaid_data(page, url):
         error_message = f"Error extracting prepaid data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def extract_subscription_data(page_content, url):
@@ -137,6 +148,7 @@ def extract_subscription_data(page_content, url):
         error_message = f"Error extracting subscription data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
     return subscription_data
 
@@ -177,6 +189,7 @@ def extract_internet_table_data(page_content, url):
         error_message = f"Error extracting internet table data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def extract_internet_data(page, url):
@@ -206,19 +219,28 @@ def extract_internet_data(page, url):
         error_message = f"Error extracting internet data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
-def check_for_http_error(url):
+def check_request(url):
     try:
         response = requests.get(url)
         response.raise_for_status()
-    except requests.exceptions.HTTPError as e:
-        logging.error(Exception(e))
+
+    except requests.exceptions.ConnectionError as ec:
+        logging.error(ec)
+        raise AirflowException(ec)
+    except requests.exceptions.Timeout as et:
+        logging.error(et)
+        raise AirflowException(et)
+    except requests.exceptions.HTTPError as eh:
+        logging.error(eh)
+        raise AirflowException(eh)
 
 
 def get_mobile_prepaid_data(browser, url):
 
-    check_for_http_error(url)
+    check_request(url)
 
     page = goto_page(browser, url)
     time.sleep(5)
@@ -231,7 +253,7 @@ def get_mobile_prepaid_data(browser, url):
 
 def get_mobile_subscription_data(browser, url):
 
-    check_for_http_error(url)
+    check_request(url)
 
     page = goto_page(browser, url)
     time.sleep(5)
@@ -245,7 +267,7 @@ def get_mobile_subscription_data(browser, url):
 
 def get_internet_subscription_data(browser, url):
 
-    check_for_http_error(url)
+    check_request(url)
 
     page = goto_page(browser, url)
     time.sleep(5)
@@ -286,6 +308,7 @@ def extract_combo_advantage(url):
         error_message = f'Error extracting combo: {str(e)}'
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def generate_packs(products_list, combo_advantage, url):
@@ -324,12 +347,27 @@ def generate_packs(products_list, combo_advantage, url):
         error_message = f'Error generating packs: {str(e)}'
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
+
+
+def save_scraping_log():
+
+    log_entry = {
+        'competitor_name': 'mobile_viking',
+        'scrape_date': datetime.now().strftime("%Y-%m-%d"),
+        'error_details': 'log_data',
+
+    }
+
+    save_to_json(log_entry, "scraping_log.json")
+    pass
 
 
 def mobile_viking_scraper():
 
     with sync_playwright() as p:
         start_time = time.strftime("%Y-%m-%d %H:%M:%S")
+        start_date = time.strftime("%Y-%m-%d")
         start_time_seconds = time.time()
 
         log_file_name = 'test.log'
@@ -366,9 +404,10 @@ def mobile_viking_scraper():
             save_to_json(packs_dict, 'packs')
 
         except Exception as e:
-            error_message = f"Error in main function: {str(e)}"
+            error_message = f"Error in mobile_viking_scraper function: {str(e)}"
             logging.error(error_message)
             traceback.print_exc()
+            raise AirflowException(error_message)
         finally:
             browser.close()
 
