@@ -48,7 +48,7 @@ def extract_prepaid_selector_data(page_content, url):
 
     for prepaid_element in prepaid_elements:
         try:
-            prepaid_rates_major = prepaid_element.select('.ppPrepaidSelectorProduct__rates__major')
+            prepaid_rates_major = prepaid_element.select('.PrepaidSelectorProduct__rates__major')
             sms = prepaid_rates_major[2].get_text().lower()
             price_per_minute = prepaid_element.select('.PrepaidSelectorProduct__rates__minor')[2].get_text().replace(',', '.').replace('per minute', '').strip()
             data_focus = prepaid_element['data-focus']
@@ -350,17 +350,17 @@ def generate_packs(products_list, combo_advantage, url):
         raise AirflowException(error_message)
 
 
-def save_scraping_log():
+def save_scraping_log(date, error_details):
+
+    status = 'success' if error_details == 'no error' else 'failed'
 
     log_entry = {
         'competitor_name': 'mobile_viking',
-        'scrape_date': datetime.now().strftime("%Y-%m-%d"),
-        'error_details': 'log_data',
-
+        'scrape_date': date,
+        'error_details': error_details,
+        'status': status
     }
-
     save_to_json(log_entry, "scraping_log.json")
-    pass
 
 
 def mobile_viking_scraper():
@@ -369,6 +369,7 @@ def mobile_viking_scraper():
         start_time = time.strftime("%Y-%m-%d %H:%M:%S")
         start_date = time.strftime("%Y-%m-%d")
         start_time_seconds = time.time()
+        error_details = 'no error'
 
         log_file_name = 'test.log'
         log_file_path = f"logs/scraper/{log_file_name}"
@@ -406,6 +407,7 @@ def mobile_viking_scraper():
         except Exception as e:
             error_message = f"Error in mobile_viking_scraper function: {str(e)}"
             logging.error(error_message)
+            error_details = error_message
             traceback.print_exc()
             raise AirflowException(error_message)
         finally:
@@ -417,3 +419,5 @@ def mobile_viking_scraper():
 
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
             logging.info(f"=========== mobile_viking_scraper end: {end_time} ===========")
+
+            save_scraping_log(start_date, error_details)

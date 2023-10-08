@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
-from airflow import AirflowException
 
 
 from viking_scraper import mobile_viking_scraper
@@ -9,8 +8,8 @@ from viking_scraper import mobile_viking_scraper
 
 DEFAULT_ARGS = {
     'owner': 'admin',
-    # 'retries': 2,
-    # 'retry_delay': timedelta(seconds=30)
+    'retries': 1,
+    'retry_delay': timedelta(seconds=30)
 }
 
 
