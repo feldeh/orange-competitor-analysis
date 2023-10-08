@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
+from airflow import AirflowException
+
 
 from viking_scraper import mobile_viking_scraper
 
@@ -28,4 +30,4 @@ def scraping_dag():
     scrape_data
 
 
-scrape = scraping_dag()
+scrape_job = scraping_dag()

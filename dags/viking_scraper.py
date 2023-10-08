@@ -208,7 +208,18 @@ def extract_internet_data(page, url):
         traceback.print_exc()
 
 
+def check_for_http_error(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        logging.error(Exception(e))
+
+
 def get_mobile_prepaid_data(browser, url):
+
+    check_for_http_error(url)
+
     page = goto_page(browser, url)
     time.sleep(5)
     logging.info(f"Extracting mobile prepaid data from URL: {url}")
@@ -219,6 +230,9 @@ def get_mobile_prepaid_data(browser, url):
 
 
 def get_mobile_subscription_data(browser, url):
+
+    check_for_http_error(url)
+
     page = goto_page(browser, url)
     time.sleep(5)
     logging.info(f"Extracting mobile subscription from URL: {url}")
@@ -230,6 +244,9 @@ def get_mobile_subscription_data(browser, url):
 
 
 def get_internet_subscription_data(browser, url):
+
+    check_for_http_error(url)
+
     page = goto_page(browser, url)
     time.sleep(5)
     logging.info(f"Extracting internet subscription data from URL: {url}")
@@ -286,12 +303,17 @@ def generate_packs(products_list, combo_advantage, url):
                 pack_name = f"{mobile_product['product_name']}_{internet_product['product_name']}"
                 competitor_name = internet_product['competitor_name']
 
+                mobile_product_name = mobile_product['product_name']
+                internet_product_name = internet_product['product_name']
+
                 packs_list.append(
                     {
                         'competitor_name': competitor_name,
                         'pack_name': pack_name,
                         'pack_url': url,
                         'price': price,
+                        'mobile_product_name': mobile_product_name,
+                        'internet_product_name': internet_product_name
                     })
 
         packs_dict = {'packs': packs_list}

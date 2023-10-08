@@ -64,4 +64,4 @@ def load_to_bigquery_dag():
     wait_for_file >> load_to_bigquery
 
 
-load_to_bigquery = load_to_bigquery_dag()
+load_job = load_to_bigquery_dag()
