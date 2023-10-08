@@ -1,7 +1,6 @@
 FROM apache/airflow:2.7.1
 ADD requirements.txt .
-RUN pip install apache-airflow==2.7.1 -r requirements.txt && \
-    playwright install
+
 USER root
 RUN apt update && apt-get install -y \
        libglib2.0-0 \
@@ -26,3 +25,6 @@ RUN apt update && apt-get install -y \
        libcairo2 \
        libasound2
 
+USER airflow
+RUN pip install apache-airflow==2.7.1 -r requirements.txt && \
+    playwright install

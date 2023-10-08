@@ -4,7 +4,11 @@ import requests
 import re
 import time
 import logging
-from pathlib import Path
+import traceback
+import os
+from datetime import datetime
+from airflow import AirflowException
+
 
 from utils import save_to_json, save_to_ndjson
 
@@ -19,14 +23,26 @@ URL = {
 def goto_page(browser, url):
     page = browser.new_page()
     page.goto(url, wait_until='domcontentloaded')
-    page.wait_for_selector('#btn-accept-cookies')
-    page.query_selector('#btn-accept-cookies').click(force=True)
+
+    try:
+        page.wait_for_selector('#btn-accept-cookies')
+        page.query_selector('#btn-accept-cookies').click(force=True)
+
+    except Exception as e:
+        error_message = f"Accept cookie button error: {str(e)}"
+        logging.error(error_message)
+        raise AirflowException(error_message)
 
     return page
 
 
+def unlimited_check_to_float(string):
+    return -1 if string.lower() == 'unlimited' else float(string)
+
+
 def extract_prepaid_selector_data(page_content, url):
     prepaid_data = []
+    date = time.strftime("%Y-%m-%d")
     soup = BeautifulSoup(page_content, 'html.parser')
 
     prepaid_elements = soup.select('.PrepaidSelectorProduct')
@@ -37,29 +53,35 @@ def extract_prepaid_selector_data(page_content, url):
             sms = prepaid_rates_major[2].get_text().lower()
             price_per_minute = prepaid_element.select('.PrepaidSelectorProduct__rates__minor')[2].get_text().replace(',', '.').replace('per minute', '').strip()
             data_focus = prepaid_element['data-focus']
-            data_gb = prepaid_element['data-gb']
-            data_min = prepaid_element['data-min']
-            data_price = prepaid_element['data-price']
+            data = prepaid_element['data-gb']
+            minutes = prepaid_element['data-min']
+            price = prepaid_element['data-price']
+
+            sms = unlimited_check_to_float(sms)
+            minutes = unlimited_check_to_float(minutes)
 
             prepaid_data.append({
-                'product_name': f"mobile_prepaid_{data_focus}_{data_gb}_gb",
+                'product_name': f"mobile_prepaid_{data_focus}_{data}_gb",
                 'competitor_name': 'mobile_viking',
                 'product_category': 'mobile_prepaid',
                 'product_url': url,
-                'price': data_price,
-                'data': data_gb,
-                'network': '',
-                'minutes': data_min,
-                'price_per_minute': price_per_minute,
+                'price': float(price),
+                'date': date,
+                'data': float(data),
+                'network': None,
+                'minutes': minutes,
+                'price_per_minute': float(price_per_minute),
                 'sms': sms,
-                'upload_speed': '',
-                'download_speed': '',
-                'line_type': ''
+                'upload_speed': None,
+                'download_speed': None,
+                # 'line_type': None
             })
 
         except Exception as e:
-            error_message = f"Error extracting prepaid data: {str(e)}"
+            error_message = f"Error extracting prepaid selector data: {str(e)}"
             logging.error(error_message)
+            traceback.print_exc()
+            raise AirflowException(error_message)
 
     return prepaid_data
 
@@ -84,10 +106,13 @@ def extract_prepaid_data(page, url):
     except Exception as e:
         error_message = f"Error extracting prepaid data: {str(e)}"
         logging.error(error_message)
+        traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def extract_subscription_data(page_content, url):
     subscription_data = []
+    date = time.strftime("%Y-%m-%d")
 
     try:
         soup = BeautifulSoup(page_content, 'html.parser')
@@ -103,34 +128,38 @@ def extract_subscription_data(page_content, url):
             minutes_match = re.search(r'(\d+) minutes', calls_texts)
             sms_match = re.search(r'(\d+) texts', calls_texts)
 
-            minutes = minutes_match.group(1) if minutes_match else 'unlimited'
-            sms = sms_match.group(1) if sms_match else 'unlimited'
+            minutes = float(minutes_match.group(1)) if minutes_match else -1
+            sms = int(sms_match.group(1)) if sms_match else -1
 
             subscription_data.append({
                 'product_name': f"mobile_subscription_{mobile_data}_gb",
                 'competitor_name': 'mobile_viking',
                 'product_category': 'mobile_subscription',
                 'product_url': url,
-                'price': price_per_month,
-                'data': mobile_data,
+                'price': float(price_per_month),
+                'date': date,
+                'data': float(mobile_data),
                 'network': network,
                 'minutes': minutes,
-                'price_per_minute': '',
+                'price_per_minute': None,
                 'sms': sms,
-                'upload_speed': '',
-                'download_speed': '',
-                'line_type': ''
+                'upload_speed': None,
+                'download_speed': None,
+                # 'line_type': None
             })
 
     except Exception as e:
         error_message = f"Error extracting subscription data: {str(e)}"
         logging.error(error_message)
+        traceback.print_exc()
+        raise AirflowException(error_message)
 
     return subscription_data
 
 
 def extract_internet_table_data(page_content, url):
     soup = BeautifulSoup(page_content, 'html.parser')
+    date = time.strftime("%Y-%m-%d")
 
     internet_data = {}
 
@@ -142,26 +171,31 @@ def extract_internet_table_data(page_content, url):
 
         download_speed = soup.select_one('tr.matrix__downloadSpeed td').get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
         upload_speed = soup.select_one('tr.matrix__voice td').get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
-        line_type = soup.select_one('tr.matrix__lineType td').get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
+        # line_type = soup.select_one('tr.matrix__lineType td').get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
+
+        monthly_data = unlimited_check_to_float(monthly_data)
 
         internet_data['competitor_name'] = 'mobile_viking'
         internet_data['product_category'] = 'internet_subscription'
         internet_data['product_url'] = url
-        internet_data['price'] = cleaned_price
+        internet_data['price'] = float(cleaned_price)
+        internet_data['date'] = date
         internet_data['data'] = monthly_data
-        internet_data['network'] = ''
-        internet_data['minutes'] = ''
-        internet_data['price_per_minute'] = ''
-        internet_data['sms'] = ''
+        internet_data['network'] = None
+        internet_data['minutes'] = None
+        internet_data['price_per_minute'] = None
+        internet_data['sms'] = None
         internet_data['download_speed'] = download_speed
         internet_data['upload_speed'] = upload_speed
-        internet_data['line_type'] = line_type
+        # internet_data['line_type'] = line_type
 
         return internet_data
 
     except Exception as e:
         error_message = f"Error extracting internet table data: {str(e)}"
         logging.error(error_message)
+        traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def extract_internet_data(page, url):
@@ -190,12 +224,33 @@ def extract_internet_data(page, url):
     except Exception as e:
         error_message = f"Error extracting internet data: {str(e)}"
         logging.error(error_message)
+        traceback.print_exc()
+        raise AirflowException(error_message)
+
+
+def check_request(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+
+    except requests.exceptions.ConnectionError as ec:
+        logging.error(ec)
+        raise AirflowException(ec)
+    except requests.exceptions.Timeout as et:
+        logging.error(et)
+        raise AirflowException(et)
+    except requests.exceptions.HTTPError as eh:
+        logging.error(eh)
+        raise AirflowException(eh)
 
 
 def get_mobile_prepaid_data(browser, url):
+
+    check_request(url)
+
     page = goto_page(browser, url)
     time.sleep(5)
-    logging.info(f"Extracting mobile prepaid data from URL: {url}")
+    logging.info(f"Extracting mobile prepaid data from: {url}")
     mobile_prepaid_data = extract_prepaid_data(page, url)
     page.close()
 
@@ -203,9 +258,12 @@ def get_mobile_prepaid_data(browser, url):
 
 
 def get_mobile_subscription_data(browser, url):
+
+    check_request(url)
+
     page = goto_page(browser, url)
     time.sleep(5)
-    logging.info(f"Extracting mobile subscription from URL: {url}")
+    logging.info(f"Extracting mobile subscription from: {url}")
     page_content = page.content()
     mobile_subscription_data = extract_subscription_data(page_content, url)
     page.close()
@@ -214,9 +272,12 @@ def get_mobile_subscription_data(browser, url):
 
 
 def get_internet_subscription_data(browser, url):
+
+    check_request(url)
+
     page = goto_page(browser, url)
     time.sleep(5)
-    logging.info(f"Extracting internet subscription data from URL: {url}")
+    logging.info(f"Extracting internet subscription data from: {url}")
     internet_subscription_data = extract_internet_data(page, url)
     page.close()
 
@@ -252,12 +313,15 @@ def extract_combo_advantage(url):
     except Exception as e:
         error_message = f'Error extracting combo: {str(e)}'
         logging.error(error_message)
+        traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def generate_packs(products_list, combo_advantage, url):
     logging.info('Generating packs')
     try:
         packs_list = []
+        date = time.strftime("%Y-%m-%d")
 
         mobile_products = [product for product in products_list if 'mobile' in product['product_name']]
         internet_products = [product for product in products_list if 'internet' in product['product_name']]
@@ -269,12 +333,18 @@ def generate_packs(products_list, combo_advantage, url):
                 pack_name = f"{mobile_product['product_name']}_{internet_product['product_name']}"
                 competitor_name = internet_product['competitor_name']
 
+                mobile_product_name = mobile_product['product_name']
+                internet_product_name = internet_product['product_name']
+
                 packs_list.append(
                     {
                         'competitor_name': competitor_name,
                         'pack_name': pack_name,
                         'pack_url': url,
                         'price': price,
+                        'date': date,
+                        'mobile_product_name': mobile_product_name,
+                        'internet_product_name': internet_product_name
                     })
 
         packs_dict = {'packs': packs_list}
@@ -284,6 +354,21 @@ def generate_packs(products_list, combo_advantage, url):
     except Exception as e:
         error_message = f'Error generating packs: {str(e)}'
         logging.error(error_message)
+        traceback.print_exc()
+        raise AirflowException(error_message)
+
+
+def save_scraping_log(error_details):
+
+    status = 'success' if error_details == 'no error' else 'failed'
+
+    log_entry = {
+        'competitor_name': 'mobile_viking',
+        'scrape_date': time.strftime("%Y-%m-%d"),
+        'error_details': error_details,
+        'status': status
+    }
+    save_to_json(log_entry, "scraping_log.json")
 
 
 def mobile_viking_scraper():
@@ -291,9 +376,17 @@ def mobile_viking_scraper():
     with sync_playwright() as p:
         start_time = time.strftime("%Y-%m-%d %H:%M:%S")
         start_time_seconds = time.time()
+        error_details = 'no error'
 
         log_file_name = 'test.log'
         log_file_path = f"logs/scraper/{log_file_name}"
+        # log_directory = os.path.dirname(log_file_path)
+        # if not os.path.exists(log_directory):
+        #     os.makedirs(log_directory)
+        # if not os.path.exists(log_file_path):
+        #     with open(log_file_path, 'w'):
+        #         pass
+
         log_format = '%(asctime)s [%(levelname)s] - %(message)s'
         logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
         logging.info(f"=========== mobile_viking_scraper start: {start_time} ===========")
@@ -304,9 +397,6 @@ def mobile_viking_scraper():
             # by order of importance
             # TODO: add "only data" product
             # TODO: add product_id
-            # TODO: add timestamp to adhere to target db schema
-            # TODO: cast product price, data, minutes, price_per_min, sms to float or int
-            # TODO: implement status code logger with requests
             # TODO: add data validation with pydantic
             # TODO: add typing
             product_dict = get_products(browser, URL)
@@ -319,8 +409,11 @@ def mobile_viking_scraper():
             save_to_json(packs_dict, 'packs')
 
         except Exception as e:
-            error_message = f"Error in main function: {str(e)}"
+            error_message = f"Error in mobile_viking_scraper function: {str(e)}"
             logging.error(error_message)
+            error_details = error_message
+            traceback.print_exc()
+            raise AirflowException(error_message)
         finally:
             browser.close()
 
@@ -331,6 +424,4 @@ def mobile_viking_scraper():
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
             logging.info(f"=========== mobile_viking_scraper end: {end_time} ===========")
 
-
-if __name__ == "__main__":
-    mobile_viking_scraper()
+            save_scraping_log(error_details)
