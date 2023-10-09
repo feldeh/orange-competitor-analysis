@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "orange-401014",
+  "private_key_id": "ccbf33e58fc0e683521d7ff81dd92f88d2b80ae7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+mE+q9IPmyBMA\nLZ+M2aXcgIO6YbsDDJTmGUtOHhiglydy9f6zvfUfcm6DaH3bnXJJNwJbglcAj/le\nkv4m/3tdRsmVrje44R/a+X3fokgC/TXuB0r+aVNhmvZa3A6Vzr7lHcCJvYnO4s36\n9tpOlV9LMloBQ0GOzb/lJGzYC8uXBRCoqJsQU6Wp8DMVMRo6ii02SSkKOBWo8Fx6\ncWchyBgUjQFX6JzB4ko7OVigKx7siRQCrvflO99ZsyFlmdkz+mQTT7TH3gPfRSfQ\nQcoy02QN0Mtf88/5kdYU35ysvkajXwokXlPkhkqZNgCZZRYH2MG4TbmaECQMFi5R\nnnok6j0hAgMBAAECggEABYlpf1GIjUdGtsekg+Ig3XUz6nG3TeonL1Do2zhgahYh\nB6fT+BUQpFrx0R5DgXo3Ny92gXm5oPz1uzqzQJcVdoUBYzhdItkyoI0E1C7H13Mj\nVmaSpg3Rjd9baLHdyDoiCVgwIyo5ARwtbFzwZCX2h3HbS7AIVQuG54tbkHpFfhXb\nC5IGKCLSHSvjzvoc0gXlmDwyhTnVEi0/xLNEr9JvjeEigAi4JW5n+gWwue2NJzaV\nQY/GzNwpPKbGBoaTlBwON9gL8OWgKqYdNyUwxi59d4oFsOh0flu8E+Q+HGvusDSd\n9lKF5vHlX/l4+kDvJJvb+EMQ01MZUffFuzGYnjwnQQKBgQD7zGZ9IO9peOgPmuI8\nI6vbSBg9RDTDdzYVaPbvPBSRiDA5mIK6STRipcSXcFnb1qpntETJMYdb1T1Bc/9o\nPV3HzGvQXQuEQM4n8he21zUc4RS3DiISnd9lid/QSGJIe+ptGUN+qIBJ0GfseM0h\nCVV5a9LE4GhfK86zFyOpkvWc4QKBgQDBxnhIu3QNMnbTq3cwINTma7EJKhQsXLjE\nn4oshIEqBPKftpg6517Up6hl0aAUPC55QejLoRdWKBPXyyqPmKYnyPqNo/K/uMg+\nLavBus8dcMRVtmZ84MP3aks2OSGoeRw46KrAZY/5wDUHzlRtc7ty38pGNGK7Nw4v\naE4WpRJoQQKBgQDG4Ku2ezP9t2x7Htc/ruEHYosaoOuX02mZQX2AeZC5XbrRUv82\nCanhnJKJFkkzFPsky8JkssT5qJQoRWleuNGAhJpHSaZWACWUcWd/l70woSqOZxBM\naftPpLVtOi6+l3kSUJj5yjcBliTvJn7GcCvdqmcf7ysguGYbF9SoFBYAoQKBgQCl\nDPY7jV+GNiu8k9pLpktxkN0Un0DboIbJA9Nfo+WY8unuXEtCMP03SS9IussNMU2s\nfxVZDPehrTVpo2W3NiCg1rGDn9gOscfuHlykAQiVXQ3+rAST7ac9wM4be4JNzArb\n9mIqytddtff1lCuZpvBNIo1aSxilunlcrA2HgEczgQKBgGuWsZxjUx9iNfAN6HWF\nQ0yTNZQCKT/5KdmhaEGZvh/9DbKXimi42HQ4UmXrI+rUsr9P6BzmRFhXqrHlCJT7\nSuvosZzpoJLT/wKofvIlZ/8LYppEwkcRdCpQKd1zGOurCSrhdXeUgu3dPVCyDTyQ\n7fv9BT6BjAmN8ikzu1iHjMao\n-----END PRIVATE KEY-----\n",
+  "client_email": "orange-sa@orange-401014.iam.gserviceaccount.com",
+  "client_id": "118372083135632683714",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/orange-sa%40orange-401014.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
