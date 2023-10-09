@@ -1,23 +1,76 @@
 from playwright.sync_api import sync_playwright
-from bs4 import BeautifulSoup
+import json
+import re
 import time
+from bs4 import BeautifulSoup
+from datetime import datetime
 import logging
+import traceback
 
-from utils import save_to_json, save_to_ndjson
+
+
 
 URL = {
+    'mobile_subscription': 'https://www.scarlet.be/en/abonnement-gsm.html',
+    'option_mobile_subscription': 'https://www.scarlet.be/en/abonnement-gsm.html',
     'internet_subscription': 'https://www.scarlet.be/en/abonnement-internet.html'
 }
 
-
 def goto_page(browser, url):
-    """Navigate to a web page, handle cookies consent, and return the page."""
     page = browser.new_page()
     page.goto(url, wait_until='domcontentloaded')
-    page.wait_for_selector('#onetrust-accept-btn-handler')
-    page.query_selector('#onetrust-accept-btn-handler ').click(force=True)
+    time.sleep(5)
+    try:
+        page.wait_for_selector('#onetrust-accept-btn-handler')
+        page.query_selector('#onetrust-accept-btn-handler').click(force=True)
+    except Exception as e:
+        error_message = f"Accept cookie button error: {str(e)}"
+        logging.error(error_message)
+
     return page
 
+def unlimited_check_to_float(string):
+    return -1 if string.lower() == 'unlimited' else float(string)
+
+def extract_mobile_subscription_data(page_content, url):
+
+    mobile_subscription_data = []
+    date = time.strftime("%Y-%m-%d")
+    
+    try:
+        soup = BeautifulSoup(page_content, 'html.parser')
+        mobile_subscription_elements = soup.find_all('div', class_="rs-ctable-panel jsrs-resizerContainer")
+        
+        for element in mobile_subscription_elements:
+            product_name = element.find('h3', class_="rs-ctable-panel-title").get_text().strip()
+            price_per_month = element.find('span', class_="rs-unit").get_text()
+            elms = element.find_all('li', class_="jsrs-resizerPart")
+            mobile_data = elms[0].get_text().replace('GB','').strip()
+            minutes = elms[2].get_text().split(' ')[0]
+            sms = elms[1].get_text().replace('texting','').strip()
+            sms = unlimited_check_to_float(sms)
+            minutes = unlimited_check_to_float(minutes)
+            
+            mobile_subscription_data.append({
+                'product_name': f"mobile_subscription_{product_name}",
+                'competitor_name': 'scarlet',
+                'product_category': 'mobile_subscription',
+                'product_url': url,
+                'price': float(price_per_month),
+                'date' : date,
+                'data': float(mobile_data),
+                'minutes': minutes,
+                'sms': sms,
+                'upload_speed': None,
+                'download_speed': None
+                    })
+
+        return mobile_subscription_data
+
+    except Exception as e:
+        error_message = f"Error extracting mobile subscription data: {str(e)}"
+        logging.error(error_message)
+        traceback.print_exc()
 
 def extract_internet_table_data(page_content, url):
     """Extract internet subscription table from web page."""
@@ -57,75 +110,100 @@ def extract_internet_table_data(page_content, url):
     return internet_data
 
 
-def extract_internet_data(page, url):
-    """Extract data from internet subscription tables."""
-    page_content = page.content()
-
+def extract_options_data(page_content, url):
+    options_data = []
+    date = time.strftime("%Y-%m-%d")
     try:
-        first_table_data = extract_internet_table_data(page_content, url)
-
-        internet_data = []
-        internet_data.extend(first_table_data)
-
-        return internet_data
+        soup = BeautifulSoup(page_content, 'html.parser')
+        options_data_element = soup.find('div', class_="rs-checkbox")
+    
+        option_info = options_data_element.get_text().replace('Option:','').strip()
+        price = re.findall(r'€(\d+)', option_info)
+        option_details = option_info.encode('ascii', 'ignore').decode('ascii').lower().strip()
+        
+        options_data.append({
+            'product_category':'mobile_subscription',
+            'option_name': "extra_internet",
+            'option_details' : option_details,
+            'date': date,
+            'price' : float(price[0])
+                })
+        return options_data
 
     except Exception as e:
-        error_message = f"Error extracting internet data: {str(e)}"
-        print(error_message)
-        logging.error(error_message)
+        print(f"Error extracting options data: {str(e)}")
+
+  
+def get_mobile_subscription_data(browser, url):
+    page = goto_page(browser, url)
+    time.sleep(5)
+    page_content = page.content()
+
+    mobile_subscription_data = extract_mobile_subscription_data(page_content, url)
+
+    page.close()
+    return mobile_subscription_data
 
 
 def get_internet_subscription_data(browser, url):
 
     page = goto_page(browser, url)
     time.sleep(5)
+    page_content = page.content()
     logging.info(f"Extracting internet subscription data from URL: {url}")
-    internet_subscription_data = extract_internet_data(page, url)
+    internet_subscription_data = extract_internet_table_data(page_content, url)
     page.close()
 
     return internet_subscription_data
 
+def get_options_data(browser, url):
+    page = goto_page(browser, url)
+    time.sleep(5)
+    page_content = page.content()
+    
+    options_data = extract_options_data(page_content, url)
+
+    page.close()
+    return options_data
+
 
 def get_products(browser, url):
+    start = time.time()
+    mobile_subscription_data = get_mobile_subscription_data(browser, url['mobile_subscription'])
+    options_data = get_options_data(browser, url['option_mobile_subscription'])
     internet_subscription_data = get_internet_subscription_data(browser, url['internet_subscription'])
 
-    product_dict = {'products': internet_subscription_data}
+    
+    product_list =[]
+    options_list = []
+    product_list.extend(mobile_subscription_data)
+    product_list.extend(internet_subscription_data)
+    options_list.extend(options_data)
 
-    return product_dict
+    product_dict = {'products': product_list}
+    options_dict = {'options' : options_list}
+    end = time.time()
+    print("Time taken to scrape products: {:.3f}s".format(end - start))
+    return product_dict, options_dict
 
 
-def scarlet_internet_scraper():
-
+def main():    
     with sync_playwright() as p:
-        start_time = time.strftime("%Y-%m-%d %H:%M:%S")
-        start_time_seconds = time.time()
-
-        log_file_name = 'scarlet_scraper.log'
-        log_file_path = f"scraper/scarlet/logs/{log_file_name}"
-        log_format = '%(asctime)s [%(levelname)s] - %(message)s'
-        logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
-        logging.info(f"=========== scarlet_scraper start: {start_time} ===========")
-
-        browser = p.chromium.launch(headless=False, slow_mo=50)
-        try:
-            product_dict = get_products(browser, URL)
-            save_to_ndjson(product_dict['products'], 'products')
-            save_to_json(product_dict, 'products')
-
+        browser = p.chromium.launch(headless=False)
+        try: 
+            product_dict, options_dict = get_products(browser, URL)
+            products_json = json.dumps(product_dict, indent=4)
+            options_json = json.dumps(options_dict, indent=4)
+            print(products_json)
+            print(options_json)
         except Exception as e:
-            error_message = f"Error in main function: {str(e)}"
-            print(error_message)
-            logging.error(error_message)
+            print(f"Error in main function:{str(e)}")
         finally:
             browser.close()
-            end_time_seconds = time.time()
-            execution_time_message = "scarlet_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds)
-            print(execution_time_message)
-            logging.info(execution_time_message)
-
-            end_time = time.strftime("%Y-%m-%d %H:%M:%S")
-            logging.info(f"=========== scarlet_scraper end: {end_time} ===========")
 
 
 if __name__ == "__main__":
-    scarlet_internet_scraper()
+    main()
+
+
+
