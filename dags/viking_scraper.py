@@ -208,12 +208,16 @@ def extract_internet_data(page, url):
         first_table_data = extract_internet_table_data(page_content, url)
         first_btn_text = internet_type_btn[0].inner_text().lower().replace(' ', '_')
         first_table_data = {'product_name': first_btn_text, **first_table_data}
+        print(first_table_data)
 
         internet_type_btn[1].click()
+
+        page_content = page.content()
 
         second_table_data = extract_internet_table_data(page_content, url)
         second_btn_text = internet_type_btn[1].inner_text().lower().replace(' ', '_')
         second_table_data = {'product_name': second_btn_text, **second_table_data}
+        print(second_table_data)
 
         internet_data = []
         internet_data.append(first_table_data)
@@ -396,7 +400,6 @@ def mobile_viking_scraper():
         try:
             # by order of importance
             # TODO: add "only data" product
-            # TODO: add product_id
             # TODO: add data validation with pydantic
             # TODO: add typing
             product_dict = get_products(browser, URL)

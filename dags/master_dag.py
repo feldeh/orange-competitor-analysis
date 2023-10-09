@@ -20,20 +20,20 @@ def master_dag():
 
     trigger_scraping = TriggerDagRunOperator(
         task_id='trigger_scraping',
-        trigger_dag_id='scraping_dag',
+        trigger_dag_id='scrape_dag',
     )
 
-    # trigger_cleaning = TriggerDagRunOperator(
-    #     task_id='trigger_cleaning',
-    #     trigger_dag_id='cleaning_dag',
-    # )
+    trigger_cleaning = TriggerDagRunOperator(
+        task_id='trigger_cleaning',
+        trigger_dag_id='clean_dag',
+    )
 
     trigger_load_to_bigquery = TriggerDagRunOperator(
         task_id='trigger_load_to_bigquery',
         trigger_dag_id='load_to_bigquery_dag',
     )
 
-    trigger_scraping >> trigger_load_to_bigquery
+    trigger_scraping >> trigger_cleaning >> trigger_load_to_bigquery
 
 
 # instantiate the dag
