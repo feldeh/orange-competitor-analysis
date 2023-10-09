@@ -358,3 +358,4 @@ def mobile_viking_scraper():
 
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
             logging.info(f"=========== mobile_viking_scraper end: {end_time} ===========")
+

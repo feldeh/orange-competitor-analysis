@@ -2,12 +2,8 @@ from google.cloud import bigquery
 
 import os
 
-from dotenv import load_dotenv
-load_dotenv()
 
-
-service_acc_key_path = os.getenv("SERVICE_ACC_KEY_PATH")
-
+service_acc_key_path = os.environ.get("SERVICE_ACC_KEY_PATH")
 project_id = 'arched-media-273319'
 dataset_id = 'mobileviking'
 table_id = 'test_table'
