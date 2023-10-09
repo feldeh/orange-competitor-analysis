@@ -35,21 +35,28 @@ def extract_internet_table_data(page_content, url):
         for table in tables:
 
             subscription_name = table.find('h3', class_='rs-ctable-panel-title').get_text().strip()
-            internet_volume = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(1)').get_text().strip().replace(' Internet volume', '')
-            max_surfing_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(2)').get_text().strip()
-            upload_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(3)').get_text().strip()
+            internet_volume = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(1)').get_text().strip().replace(' Internet volume', '').replace(' GB', '').replace('Unlimited surfing', '-1')
+            max_surfing_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(2)').get_text().replace('Max surfing speed of ','').replace(' Mbps','').strip()
+            upload_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(3)').get_text().replace('Upload speed ','').replace('of ','').replace(' Mbps','').strip()
             price_per_month = table.find('span', class_='rs-unit').get_text().strip()
             bonus = table.find('span', class_='rs-font-pxB rs-txt-primary').get_text().strip().encode('ascii', 'ignore').decode('ascii')
 
-            internet_data.append({'competitor_name': 'scarlet',
-                                  'product_category': 'internet_subscription',
-                                  'product_name': subscription_name,
-                                  'internet_volume': internet_volume,
-                                  'product_url': url,
-                                  'price_per_month': price_per_month,
-                                  'max_surfing_speed': max_surfing_speed,
-                                  'upload_speed': upload_speed,
-                                  'bonus': bonus})
+            internet_data.append({
+                'product_name': subscription_name + '_internet_subscription',
+                'competitor_name': 'scarlet',
+                'product_category': 'internet_subscription',
+                'product_url': url,
+                'price': float(price_per_month),
+                'date' : time.strftime("%Y-%m-%d %H:%M:%S"),
+                'data': float(internet_volume),
+                "network": "",
+                "minutes": "",
+                "price_per_minute": "",
+                "sms": "",
+                'upload_speed': float(upload_speed),
+                'download_speed': float(max_surfing_speed),
+                #'promo': bonus
+                })
 
     except Exception as e:
         error_message = f"Error extracting internet table data: {str(e)}"
@@ -67,7 +74,7 @@ def extract_internet_data(page, url):
         first_table_data = extract_internet_table_data(page_content, url)
         
         internet_data = []
-        internet_data.append(first_table_data)
+        internet_data.extend(first_table_data)
         
         return internet_data
     
