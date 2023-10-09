@@ -24,7 +24,7 @@ def goto_page(browser, url):
 
 
 def extract_internet_table_data(page_content, url):
-    """Extract internet subscription table from a web page."""
+    """Extract internet subscription table from web page."""
     soup = BeautifulSoup(page_content, 'html.parser')
     
 
@@ -35,11 +35,11 @@ def extract_internet_table_data(page_content, url):
         for table in tables:
 
             subscription_name = table.find('h3', class_='rs-ctable-panel-title').get_text().strip()
-            internet_volume = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(1)').get_text().strip()
+            internet_volume = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(1)').get_text().strip().replace(' Internet volume', '')
             max_surfing_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(2)').get_text().strip()
             upload_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(3)').get_text().strip()
             price_per_month = table.find('span', class_='rs-unit').get_text().strip()
-            bonus = table.find('span', class_='rs-font-pxB rs-txt-primary').get_text().strip()
+            bonus = table.find('span', class_='rs-font-pxB rs-txt-primary').get_text().strip().encode('ascii', 'ignore').decode('ascii')
 
             internet_data.append({'competitor_name': 'scarlet',
                                   'product_category': 'internet_subscription',
