@@ -1,10 +1,7 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-import requests
-import re
 import time
 import logging
-from pathlib import Path
 
 from utils import save_to_json, save_to_ndjson
 
@@ -22,24 +19,21 @@ def goto_page(browser, url):
     return page
 
 
-
 def extract_internet_table_data(page_content, url):
     """Extract internet subscription table from web page."""
     soup = BeautifulSoup(page_content, 'html.parser')
-    
 
     try:
         internet_data = []
         tables = soup.find_all('div', class_='small-12 medium-6 large-6 columns')
-        
+
         for table in tables:
 
-            subscription_name = table.find('h3', class_='rs-ctable-panel-title').get_text().strip()
+            subscription_name = table.find('h3', class_='rs-ctable-panel-title').get_text().strip().lower()
             internet_volume = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(1)').get_text().strip().replace(' Internet volume', '').replace(' GB', '').replace('Unlimited surfing', '-1')
-            max_surfing_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(2)').get_text().replace('Max surfing speed of ','').replace(' Mbps','').strip()
-            upload_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(3)').get_text().replace('Upload speed ','').replace('of ','').replace(' Mbps','').strip()
+            max_surfing_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(2)').get_text().replace('Max surfing speed of ', '').replace(' Mbps', '').strip()
+            upload_speed = table.select_one('ul.rs-ctable-nobulletlist li:nth-of-type(3)').get_text().replace('Upload speed ', '').replace('of ', '').replace(' Mbps', '').strip()
             price_per_month = table.find('span', class_='rs-unit').get_text().strip()
-            bonus = table.find('span', class_='rs-font-pxB rs-txt-primary').get_text().strip().encode('ascii', 'ignore').decode('ascii')
 
             internet_data.append({
                 'product_name': subscription_name + '_internet_subscription',
@@ -47,22 +41,19 @@ def extract_internet_table_data(page_content, url):
                 'product_category': 'internet_subscription',
                 'product_url': url,
                 'price': float(price_per_month),
-                'date' : time.strftime("%Y-%m-%d %H:%M:%S"),
+                'date': time.strftime("%Y-%m-%d"),
                 'data': float(internet_volume),
-                "network": "",
-                "minutes": "",
-                "price_per_minute": "",
-                "sms": "",
+                "minutes": None,
+                "sms": None,
                 'upload_speed': float(upload_speed),
                 'download_speed': float(max_surfing_speed),
-                #'promo': bonus
-                })
+            })
 
     except Exception as e:
         error_message = f"Error extracting internet table data: {str(e)}"
         print(error_message)
         logging.error(error_message)
-    
+
     return internet_data
 
 
@@ -72,12 +63,12 @@ def extract_internet_data(page, url):
 
     try:
         first_table_data = extract_internet_table_data(page_content, url)
-        
+
         internet_data = []
         internet_data.extend(first_table_data)
-        
+
         return internet_data
-    
+
     except Exception as e:
         error_message = f"Error extracting internet data: {str(e)}"
         print(error_message)
@@ -85,7 +76,7 @@ def extract_internet_data(page, url):
 
 
 def get_internet_subscription_data(browser, url):
-    
+
     page = goto_page(browser, url)
     time.sleep(5)
     logging.info(f"Extracting internet subscription data from URL: {url}")
@@ -101,7 +92,6 @@ def get_products(browser, url):
     product_dict = {'products': internet_subscription_data}
 
     return product_dict
-
 
 
 def scarlet_internet_scraper():
@@ -135,6 +125,7 @@ def scarlet_internet_scraper():
 
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
             logging.info(f"=========== scarlet_scraper end: {end_time} ===========")
+
 
 if __name__ == "__main__":
     scarlet_internet_scraper()
