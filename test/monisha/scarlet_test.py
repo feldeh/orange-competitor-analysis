@@ -113,7 +113,7 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         try: 
-            product_dict = get_products(browser, URL)
+            option_dict = get_products(browser, "https://www.scarlet.be/en/homepage/packs/trio_packs/trio_pack.html/")
         except Exception as e:
             print(f"Error in main function:{str(e)}")
         finally:

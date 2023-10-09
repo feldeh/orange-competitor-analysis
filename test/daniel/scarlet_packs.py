@@ -1,4 +1,3 @@
-from turtle import down
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import requests
@@ -7,8 +6,6 @@ import ndjson
 import re
 import time
 from datetime import date
-
-URL = 'https://www.scarlet.be/en/packs.html'
 
 
 def scarlet_trio():
@@ -22,7 +19,7 @@ def scarlet_trio():
     time.sleep(5)
     soup = BeautifulSoup(response.content, "html.parser")
     internet_speed = soup.find_all("h3", class_="rs-mediabox-title")
-    pack_name = soup.find("h1").get_text()
+    pack_name = soup.find("h1").get_text().lower().replace(' ','_')
     pack_description = soup.find_all("p")
     price = soup.find(class_="rs-unit").get_text()
     
@@ -45,7 +42,7 @@ def scarlet_trio():
             upload_speed =  int(upload_speed)
 
         elif 'Unlimited' in i.get_text():
-            internet_data = "unlimited"
+            internet_data = -1
 
         else:
             continue
@@ -53,14 +50,12 @@ def scarlet_trio():
     pack_description = (f"{pack_desc} {pack_desc1} Internet info: Upload speed:{upload_speed}, Download speed:{download_speed}, Data:{internet_data}")
 
     today = date.today()
-    today = today.strftime("%d/%m/%Y")        
+    today = today.strftime("%Y-%m-%d")        
 
-    packs['competitor_id'] = 'scarlet'
+    packs['competitor_name'] = 'scarlet'
     packs['pack_name'] = pack_name
     packs['pack_url'] = url
     packs['pack_description'] = pack_description
-    packs['download_speed'] = "N/A"
-    packs['upload_speed'] = "N/A"
     packprices['date'] = today
     packprices['price'] = float(price)
    
@@ -81,7 +76,7 @@ def scarlet_trio_mobile():
     time.sleep(5)
     soup = BeautifulSoup(response.content, "html.parser")
     internet_speed = soup.find_all("h3", class_="rs-mediabox-title")
-    pack_name = soup.find("h1").get_text()
+    pack_name = soup.find("h1").get_text().lower().replace(' ','_')
     pack_description = soup.find_all("p")
     price = soup.find(class_="rs-unit").get_text()
     
@@ -104,7 +99,7 @@ def scarlet_trio_mobile():
             upload_speed =  int(upload_speed)
 
         elif 'Unlimited' in i.get_text():
-            internet_data = "unlimited"
+            internet_data = -1
         else:
             continue
     
@@ -121,35 +116,116 @@ def scarlet_trio_mobile():
         else:
             continue
     
-    product_url = soup.find("a", text="Cherry").get_text()
 
     pack_description = (f"{pack_desc} {pack_desc1} Internet info: Upload speed:{upload_speed}, Download speed:{download_speed}, Data:{internet_data}")
     
     today = date.today()
-    today = today.strftime("%d/%m/%Y")
+    today = today.strftime("%Y-%m-%d")
 
-    packs['competitor_id'] = 'scarlet'
+    packs['competitor_name'] = 'scarlet'
     packs['pack_name'] = pack_name
     packs['pack_url'] = url
     packs['pack_description'] = pack_description
     packprices['date'] = today
     packprices['price'] = float(price)
-    products['product_name'] = "Cherry"
-    products['product_category'] = "Mobile Subscription"
-    products['product_url'] = product_url
-    products['download_speed'] = "N/A"
-    products['upload_speed'] = "N/A"
-    products['minutes'] = minutes
-    products['sms'] = sms
-    products['data'] = mobile_data
     
     return link
 
+def get_options_data(browser, url):
+    page = goto_page(browser, url)
+    time.sleep(5)
+    page_content = page.content()
+    
+    options_data = extract_options_data(page_content, url)
+
+    page.close()
+    return options_data
+
+def goto_page(browser, url):
+    page = browser.new_page()
+    page.goto(url, wait_until='domcontentloaded')
+    time.sleep(5)
+    page.wait_for_selector('#onetrust-accept-btn-handler')
+    page.query_selector('#onetrust-accept-btn-handler').click(force=True)
+    return page
+
+def extract_options_data(page_content, url):
+    options_data = []
+    today = date.today()
+    today = today.strftime("%Y-%m-%d")
+    try:
+        soup = BeautifulSoup(page_content, 'html.parser')
+        pack_list = soup.find_all("span")
+        for i in pack_list:
+            if i.find_parent('a', href="#"):
+                pack_name = i.get_text().lower().replace(' ','_')
+            else:
+                pack_name = "scarlet_mobile_trio"
+        detail_list = soup.find_all("div", class_="rs-sbox rs-sbox-with-topimage rs-sbox-with-extracontent")
+        for i in detail_list:
+            titles = i.find("span", class_="rs-sbox-title")
+            details = i.find("span", class_="rs-sbox-block")
+            price_unit = i.find("span", class_="rs-unit").get_text()
+            price_decimal = i.find("span", class_="rs-decimal").get_text()
+            option_name = titles.get_text().lower().replace(' ','_')
+            option_details = details.get_text()
+            price = (price_unit + price_decimal)
+
+            options_data.append({'product_category': 'N/A', 'options_name': option_name, 'options_details': option_details, 'price': float(price), 'date': today, 'pack_name': pack_name})
+        
+        
+        return options_data
+    except Exception as e:
+        print(f"Error extracting options data: {str(e)}")
+
+def get_options_tv(browser, url):
+    time.sleep(5)
+    page = goto_page(browser, url)
+    time.sleep(5)
+    page_content = page.content()
+    
+    options_data = extract_options_tv(page_content, url)
+
+    page.close()
+    return options_data
+
+def extract_options_tv(page_content, url):
+    options_data = []
+    today = date.today()
+    today = today.strftime("%Y-%m-%d")
+    try:
+        soup = BeautifulSoup(page_content, 'html.parser')
+        details = soup.find_all(class_="rs-panel-flex-cell-big rs-bg-grey2 ")
+        for i in details:
+            titles = i.find("h3", class_="rs-mediabox-title ")
+            option_name = titles.get_text().lower().replace(' ','_')
+            detail = i.find("p", class_="jsrs-resizerPart")
+            option_details = detail.get_text()
+            prices = i.find("p", class_="jsrs-resizerPart")
+            price = ''.join(filter(str.isdigit, prices.get_text()))
+        
+            options_data.append({'product_category': 'N/A', 'options_name': option_name, 'options_details': option_details, 'price': float(price), 'date': today, 'pack_name': "scarlet_packs"})
+        
+        
+        return options_data
+    except Exception as e:
+        print(f"Error extracting options data: {str(e)}")
 
 def main():
-    pack_one = scarlet_trio()
-    pack_two = scarlet_trio_mobile()
-    print(pack_one, pack_two)
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        time.sleep(5)
+        try: 
+            #options_dict = get_options_data(browser, "https://www.scarlet.be/en/homepage/packs/trio_packs/trio_pack")
+            options_dict_mobile = get_options_data(browser, "https://www.scarlet.be/en/homepage/packs/all_packs_arc_dof/trio_mobile")
+            #tv_options = get_options_tv(browser, "https://www.scarlet.be/en/tv-digitale.html")
+        except Exception as e:
+            print(f"Error in main function:{str(e)}")
+        finally:
+            browser.close()
+            #pack_one = scarlet_trio()
+            #pack_two = scarlet_trio_mobile()
+            print(options_dict_mobile)
 
 
 if __name__ == "__main__":
