@@ -7,6 +7,7 @@ from bigquery import load_json_to_bigquery
 from google.cloud import bigquery
 import os
 import time
+import logging
 from pathlib import Path
 
 
@@ -20,12 +21,14 @@ TABLE_NAMES = ['products', 'packs']
 DEFAULT_DAG_ARGS = {
     'owner': 'admin',
     'retries': 2,
-    'retry_delay': timedelta(minutes=1)
+    'retry_delay': timedelta(minutes=1),
 }
 
 
 def check_ndjson_exist(file_names):
-    while True:
+    time.sleep(30)
+    counter = 0
+    while counter < 2:
         all_exist = True
         for file_name in file_names:
             file_path = Path.cwd() / 'data' / 'raw_data' / 'ndjson' / f'{file_name}.ndjson'
@@ -35,6 +38,7 @@ def check_ndjson_exist(file_names):
         if all_exist:
             return True
         else:
+            counter += 1
             time.sleep(5)
 
 
@@ -51,6 +55,8 @@ def load_to_bigquery_dag():
         task_id='wait_for_file',
         python_callable=check_ndjson_exist,
         op_kwargs={"file_names": TABLE_NAMES},
+        mode='reschedule',
+        timeout=70,
 
     )
 
