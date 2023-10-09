@@ -1,0 +1,238 @@
+{
+    "packs": [
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_data_1_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 47.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_data_1_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_data_4_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 52.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_data_4_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_data_6_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 57.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_data_6_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_data_8_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 62.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_data_8_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_voice_0.5_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 47.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_voice_0.5_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_voice_2_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 52.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_voice_2_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_voice_3_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 57.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_voice_3_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_voice_4_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 62.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_voice_4_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_2_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 47.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_2_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_4_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 49.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_4_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_10_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 52.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_10_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_20_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 57.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_20_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_70_gb_unlimited_fast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 66.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_70_gb",
+            "internet_product_name": "unlimited_fast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_data_1_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 47.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_data_1_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_data_4_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 52.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_data_4_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_data_6_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 57.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_data_6_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_data_8_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 62.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_data_8_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_voice_0.5_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 47.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_voice_0.5_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_voice_2_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 52.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_voice_2_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_voice_3_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 57.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_voice_3_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_prepaid_voice_4_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 62.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_prepaid_voice_4_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_2_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 47.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_2_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_4_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 49.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_4_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_10_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 52.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_10_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_20_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 57.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_20_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        },
+        {
+            "competitor_name": "mobile_viking",
+            "pack_name": "mobile_subscription_70_gb_unlimited_superfast_internet",
+            "pack_url": "https://mobilevikings.be/en/offer/combo/",
+            "price": 66.0,
+            "date": "2023-10-09",
+            "mobile_product_name": "mobile_subscription_70_gb",
+            "internet_product_name": "unlimited_superfast_internet"
+        }
+    ]
+}
