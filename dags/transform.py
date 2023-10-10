@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 import json
-
+import ndjson
 
 
 def convert_speed(speed):
@@ -30,6 +30,7 @@ def json_to_df(header):
 
     return df
 
+
 def clean_product_data(df):
 
     df['upload_speed'] = df['upload_speed'].apply(convert_speed)
@@ -37,18 +38,26 @@ def clean_product_data(df):
 
     return df
 
+
+
+def df_to_ndjson(df, header):
+    ndjson_data = df.to_dict(orient='records')
+    with open(f'/tmp/cleaned_{header}.ndjson', 'w') as f:
+    # with open(f'/tmp/cleaned_{header}.ndjson', 'w') as f:
+        ndjson.dump(ndjson_data, f)
+
+
 def clean_data_task(headers):
 
     for header in headers:
         df = json_to_df(header)
         if header == 'products':
             cleaned_df = clean_product_data(df)
-            cleaned_df.to_csv(f'/tmp/cleaned_{header}.csv', index=False)
+            df_to_ndjson(cleaned_df, header)
+            print(cleaned_df)
             continue
         # add cleanup for each header as needed
-        df.to_csv(f'/tmp/cleaned_{header}.csv', index=False)
 
+        df_to_ndjson(df, header)
 
-
-
-
+        # df.to_csv(f'/tmp/cleaned_{header}.csv', index=False)
