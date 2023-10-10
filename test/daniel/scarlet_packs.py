@@ -147,6 +147,7 @@ def goto_page(browser, url):
     time.sleep(5)
     page.wait_for_selector('#onetrust-accept-btn-handler')
     page.query_selector('#onetrust-accept-btn-handler').click(force=True)
+    time.sleep(5)
     return page
 
 def extract_options_data(page_content, url):
@@ -195,14 +196,14 @@ def extract_options_tv(page_content, url):
     today = today.strftime("%Y-%m-%d")
     try:
         soup = BeautifulSoup(page_content, 'html.parser')
-        details = soup.find_all(class_="rs-panel-flex-cell-big rs-bg-grey2 ")
+        details = soup.find_all("div", class_="rs-panel-flex-cell-big rs-bg-grey2")
+        print(details)
         for i in details:
-            titles = i.find("h3", class_="rs-mediabox-title ")
-            option_name = titles.get_text().lower().replace(' ','_')
-            detail = i.find("p", class_="jsrs-resizerPart")
-            option_details = detail.get_text()
-            prices = i.find("p", class_="jsrs-resizerPart")
-            price = ''.join(filter(str.isdigit, prices.get_text()))
+            price = i.find(class_="rs-unit").get_text()
+            titles = i.find(class_="rs-mediabox-title").get_text()
+            detail = i.find(class_="jsrs-resizerPart").get_text()
+            option_name = titles.lower().replace(' ','_')
+            option_details = detail
         
             options_data.append({'product_category': 'N/A', 'options_name': option_name, 'options_details': option_details, 'price': float(price), 'date': today, 'pack_name': "scarlet_packs"})
         
@@ -217,15 +218,15 @@ def main():
         time.sleep(5)
         try: 
             #options_dict = get_options_data(browser, "https://www.scarlet.be/en/homepage/packs/trio_packs/trio_pack")
-            options_dict_mobile = get_options_data(browser, "https://www.scarlet.be/en/homepage/packs/all_packs_arc_dof/trio_mobile")
-            #tv_options = get_options_tv(browser, "https://www.scarlet.be/en/tv-digitale.html")
+            #options_dict_mobile = get_options_data(browser, "https://www.scarlet.be/en/homepage/packs/all_packs_arc_dof/trio_mobile")
+            tv_options = get_options_tv(browser, "https://www.scarlet.be/en/tv-digitale.html")
         except Exception as e:
             print(f"Error in main function:{str(e)}")
         finally:
             browser.close()
             #pack_one = scarlet_trio()
             #pack_two = scarlet_trio_mobile()
-            print(options_dict_mobile)
+            print(tv_options)
 
 
 if __name__ == "__main__":
