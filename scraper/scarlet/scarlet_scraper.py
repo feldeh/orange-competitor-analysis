@@ -3,9 +3,11 @@ import json
 import re
 import time
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import date
 import logging
 import traceback
+import requests
+
 
 
 
@@ -13,10 +15,12 @@ import traceback
 URL = {
     'mobile_subscription': 'https://www.scarlet.be/en/abonnement-gsm.html',
     'option_mobile_subscription': 'https://www.scarlet.be/en/abonnement-gsm.html',
-    'internet_subscription': 'https://www.scarlet.be/en/abonnement-internet.html'
+    'internet_subscription': 'https://www.scarlet.be/en/abonnement-internet.html',
+    'packs':'https://www.scarlet.be/en/packs.html'
 }
 
 def goto_page(browser, url):
+    """function to open a page with the given url using a browser"""
     page = browser.new_page()
     page.goto(url, wait_until='domcontentloaded')
     time.sleep(5)
@@ -30,9 +34,11 @@ def goto_page(browser, url):
     return page
 
 def unlimited_check_to_float(string):
+    """function to convert unlimited to -1 and string to float"""
     return -1 if string.lower() == 'unlimited' else float(string)
 
 def extract_mobile_subscription_data(page_content, url):
+ """extract mobile subscription data for three different categories from scarlet"""
 
     mobile_subscription_data = []
     date = time.strftime("%Y-%m-%d")
@@ -111,6 +117,7 @@ def extract_internet_table_data(page_content, url):
 
 
 def extract_options_data(page_content, url):
+    """function to extract options data for extra internet"""
     options_data = []
     date = time.strftime("%Y-%m-%d")
     try:
@@ -133,12 +140,18 @@ def extract_options_data(page_content, url):
     except Exception as e:
         print(f"Error extracting options data: {str(e)}")
 
+
+'''def extract_packs(page_content, url):'''
+
+
+
   
 def get_mobile_subscription_data(browser, url):
+    """function to load content from the page and extract data"""
     page = goto_page(browser, url)
     time.sleep(5)
     page_content = page.content()
-
+    logging.info(f"Extracting mobile subscription data from URL: {url}")
     mobile_subscription_data = extract_mobile_subscription_data(page_content, url)
 
     page.close()
@@ -146,7 +159,7 @@ def get_mobile_subscription_data(browser, url):
 
 
 def get_internet_subscription_data(browser, url):
-
+    """function to load content from the page and extract data"""
     page = goto_page(browser, url)
     time.sleep(5)
     page_content = page.content()
@@ -157,14 +170,26 @@ def get_internet_subscription_data(browser, url):
     return internet_subscription_data
 
 def get_options_data(browser, url):
+    """function to load content from the page and extract data"""
     page = goto_page(browser, url)
     time.sleep(5)
     page_content = page.content()
-    
+    logging.info(f"Extracting options data from URL: {url}")
     options_data = extract_options_data(page_content, url)
 
     page.close()
     return options_data
+
+'''def packs_data(browser, url):
+    """function to load content from the page and extract data"""
+    page = goto_page(browser, url)
+    time.sleep(5)
+    page_content = page.content()
+    logging.info(f"Extracting options data from URL: {url}")
+    options_data = extract_packs_data(page_content, url)
+
+    page.close()
+    return packs_data'''
 
 
 def get_products(browser, url):
@@ -172,19 +197,156 @@ def get_products(browser, url):
     mobile_subscription_data = get_mobile_subscription_data(browser, url['mobile_subscription'])
     options_data = get_options_data(browser, url['option_mobile_subscription'])
     internet_subscription_data = get_internet_subscription_data(browser, url['internet_subscription'])
-
+    packs_data = scarlet_trio()
     
     product_list =[]
     options_list = []
+    packs_list = []
     product_list.extend(mobile_subscription_data)
     product_list.extend(internet_subscription_data)
     options_list.extend(options_data)
+    packs_list.extend(packs_data)
 
     product_dict = {'products': product_list}
     options_dict = {'options' : options_list}
+    packs_dict = {'packs' : packs_list}
     end = time.time()
     print("Time taken to scrape products: {:.3f}s".format(end - start))
-    return product_dict, options_dict
+    return product_dict, options_dict, packs_dict
+
+def scarlet_trio():
+    packs =  {}
+    packprices = {}
+    packs_data = [packs, packprices]
+    url = 'https://www.scarlet.be/en/packs/trio.html?#/OurTrio'
+
+    session = requests.Session()
+    response = session.get(url)
+    time.sleep(5)
+    soup = BeautifulSoup(response.content, "html.parser")
+    internet_speed = soup.find_all("h3", class_="rs-mediabox-title")
+    pack_name = soup.find("h1").get_text()
+    pack_description = soup.find_all("p")
+    price = soup.find(class_="rs-unit").get_text()
+    
+    for i in pack_description:
+        if i.find_parent(class_="panel rs-emphasis-light rs-usp"):
+            pack_desc = i.get_text()
+        elif i.find("strong"):
+            pack_desc1 = i.get_text()
+            break
+        else:
+            continue
+
+    for i in internet_speed:
+        if 'download' in i.get_text():
+            download_speed = ''.join(filter(str.isdigit, i.get_text()))
+            download_speed = int(download_speed)
+
+        elif 'upload' in i.get_text():
+            upload_speed = ''.join(filter(str.isdigit, i.get_text()))
+            upload_speed =  int(upload_speed)
+
+        elif 'Unlimited' in i.get_text():
+            internet_data = "unlimited"
+
+        else:
+            continue
+    
+    pack_description = (f"{pack_desc} {pack_desc1} Internet info: Upload speed:{upload_speed}, Download speed:{download_speed}, Data:{internet_data}")
+
+    today = date.today()
+    today = today.strftime("%d/%m/%Y")        
+
+    packs['competitor_id'] = 'scarlet'
+    packs['pack_name'] = pack_name
+    packs['pack_url'] = url
+    packs['pack_description'] = pack_description
+    packs['download_speed'] = "N/A"
+    packs['upload_speed'] = "N/A"
+    packprices['date'] = today
+    packprices['price'] = float(price)
+   
+    
+    return packs_data
+
+
+def scarlet_trio_mobile():
+    packs =  {}
+    packprices = {}
+    products = {}
+    link = [packs, packprices, products]
+
+    url = 'https://www.scarlet.be/en/packs/trio-mobile.html?#/OurTrioMobile'
+
+    session = requests.Session()
+    response = session.get(url)
+    time.sleep(5)
+    soup = BeautifulSoup(response.content, "html.parser")
+    internet_speed = soup.find_all("h3", class_="rs-mediabox-title")
+    pack_name = soup.find("h1").get_text()
+    pack_description = soup.find_all("p")
+    price = soup.find(class_="rs-unit").get_text()
+    
+    for i in pack_description:
+        if i.find_parent(class_="panel rs-emphasis-light rs-usp"):
+            pack_desc = i.get_text()
+        elif i.find("strong"):
+            pack_desc1 = i.get_text()
+            break
+        else:
+            continue
+    
+    for i in internet_speed:
+        if 'download' in i.get_text():
+            download_speed = ''.join(filter(str.isdigit, i.get_text()))
+            download_speed = int(download_speed)
+
+        elif 'upload' in i.get_text():
+            upload_speed = ''.join(filter(str.isdigit, i.get_text()))
+            upload_speed =  int(upload_speed)
+
+        elif 'Unlimited' in i.get_text():
+            internet_data = "unlimited"
+        else:
+            continue
+    
+    info = soup.find_all("h3", class_="rs-tit4 rs-txt-c2 rs-padding-bottom1")
+    for i in info:
+        if "GB" in i.get_text():
+            mobile_data = ''.join(filter(str.isdigit, i.get_text()))
+            mobile_data = int(mobile_data)
+        elif "minutes" in i.get_text():
+            minutes = ''.join(filter(str.isdigit, i.get_text()))
+            minutes = int(minutes)
+        elif "SMS" in i.get_text():
+            sms = i.get_text()
+        else:
+            continue
+    
+    product_url = soup.find("a", text="Cherry").get_text()
+
+    pack_description = (f"{pack_desc} {pack_desc1} Internet info: Upload speed:{upload_speed}, Download speed:{download_speed}, Data:{internet_data}")
+    
+    today = date.today()
+    today = today.strftime("%d/%m/%Y")
+
+    packs['competitor_id'] = 'scarlet'
+    packs['pack_name'] = pack_name
+    packs['pack_url'] = url
+    packs['pack_description'] = pack_description
+    packprices['date'] = today
+    packprices['price'] = float(price)
+    products['product_name'] = "Cherry"
+    products['product_category'] = "Mobile Subscription"
+    products['product_url'] = product_url
+    products['download_speed'] = "N/A"
+    products['upload_speed'] = "N/A"
+    products['minutes'] = minutes
+    products['sms'] = sms
+    products['data'] = mobile_data
+    
+    return link
 
 
 def main():    
