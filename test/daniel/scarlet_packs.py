@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import requests
 import json
-import ndjson
+#import ndjson
 import re
 import time
 from datetime import date
@@ -197,7 +197,7 @@ def extract_options_tv(page_content, url):
     try:
         soup = BeautifulSoup(page_content, 'html.parser')
         details = soup.find_all("div", class_="rs-panel-flex-cell-big rs-bg-grey2")
-        print(details)
+
         for i in details:
             price = i.find(class_="rs-unit").get_text()
             titles = i.find(class_="rs-mediabox-title").get_text()
@@ -214,7 +214,7 @@ def extract_options_tv(page_content, url):
 
 def main():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         time.sleep(5)
         try: 
             #options_dict = get_options_data(browser, "https://www.scarlet.be/en/homepage/packs/trio_packs/trio_pack")
