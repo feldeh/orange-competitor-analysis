@@ -26,8 +26,10 @@ def save_to_ndjson(list_data, competitor, filename):
     logging.info(file_saved_message)
 
 
-
 def check_request(url):
+    """
+    Check url request for errors
+    """
     try:
         response = requests.get(url)
         response.raise_for_status()
@@ -58,6 +60,7 @@ def save_scraping_log(error_details, competitor):
             ]
     }
     save_to_json(log_entry, competitor, "logs")
+
 
 def check_file_exist(dir, competitors, file_names, file_type):
     counter = 0

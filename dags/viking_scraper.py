@@ -81,7 +81,6 @@ def extract_prepaid_selector_data(page_content, url):
             logging.error(error_message)
             traceback.print_exc()
 
-
     return prepaid_data
 
 
@@ -221,7 +220,6 @@ def extract_internet_data(page, url):
 
 def get_mobile_prepaid_data(browser, url):
 
-
     page = goto_page(browser, url)
     time.sleep(5)
     logging.info(f"Extracting mobile prepaid data from: {url}")
@@ -232,7 +230,6 @@ def get_mobile_prepaid_data(browser, url):
 
 
 def get_mobile_subscription_data(browser, url):
-
 
     page = goto_page(browser, url)
     time.sleep(5)
@@ -245,7 +242,6 @@ def get_mobile_subscription_data(browser, url):
 
 
 def get_internet_subscription_data(browser, url):
-
 
     page = goto_page(browser, url)
     time.sleep(5)
@@ -289,6 +285,9 @@ def extract_combo_advantage(url):
 
 
 def generate_packs(products_list, combo_advantage, url):
+    """
+    Generate packs based on mobile + internet products combinations
+    """
     logging.info('Generating packs')
     try:
         packs_list = []
@@ -327,7 +326,6 @@ def generate_packs(products_list, combo_advantage, url):
         error_message = f'Error generating packs: {str(e)}'
         logging.error(error_message)
         traceback.print_exc()
-
 
 
 def mobileviking_scraper():

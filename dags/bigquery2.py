@@ -45,6 +45,9 @@ def is_different_record(existing_record, new_record, ignored_keys):
 
 
 def get_existing_record(client, query):
+    """
+    Retrieve the first record that matches a given SQL query
+    """
     try:
         query_job = client.query(query)
         results = [dict(row.items()) for row in query_job.result()][0]
@@ -128,6 +131,9 @@ def load_logs_to_bq(client, project_id, dataset_id, competitor):
 
 
 def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, competitors):
+    """
+    Load data to BigQuery, ensuring that existing records are not duplicated
+    """
     for competitor in competitors:
         create_dataset_if_not_exist(client, project_id, dataset_id)
         create_table_if_not_exist(client, project_id, dataset_id, table_names, table_schemas)
