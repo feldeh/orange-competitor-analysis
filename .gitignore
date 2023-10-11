@@ -3,3 +3,4 @@ orange_env/
 .env
 gcloud/
 logs/
+.DS_Store
