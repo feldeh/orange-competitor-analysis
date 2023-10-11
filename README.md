@@ -1,22 +1,70 @@
-# Automated Data Collection: Mobile Vikings and Scarlet
+# Orange Competitor Analysis Pipeline
 
-## Overview
+### Overview
 
-This project was initiated by Orange and conducted by a team of data scientists from BeCode. The primary objective was to gather competitive intelligence from key competitors in the telecom industry, namely Mobile Vikings and Scarlet, to gain valuable insights into the telecom industry, helping Orange make informed decisions and stay competitive in the market. The target data included pricing, upload and download speeds, internet volume, and other relevant details.
+This project automates the process of scraping, processing, and storing promotional data from competitors in the telecom industry. It focuses on two competitors: [Mobile Vikings](https://mobilevikings.be/en/) and [Scarlet](https://www.scarlet.be/en/homepage/), utilizing data extraction and loading it into BigQuery for further analysis and potential insights extraction.
 
-### Data Collection
+### Architecture
 
-To achieve this, the team started by thoroughly examining the competitors' websites to identify the specific data elements to be collected. After gaining a comprehensive understanding of the data sources, we employed a combination of web scraping technologies to automate the data extraction process.
+- **Scrapers**: Extract data from Mobile Vikings and Scarlet websites.
+- **Data Storage**: Scraped data is temporarily stored as JSON and then cleaned and converted to NDJSON format.
+- **Data Warehouse**: Cleaned data is loaded into Google BigQuery for analytical purposes.
+- **Technology Stack**: BeautifulSoup, Playwright, Docker, and Apache Airflow.
 
-- **Beautiful Soup**: We used Beautiful Soup to parse the HTML structure of the websites and extract relevant information.
+### Components
 
-- **Playwright**: Playwright was instrumental in handling the interactive components of the websites, ensuring that we captured dynamic data accurately.
+#### Scrapers
 
-The collected data was then transformed into structured JSON format for further processing.
+- Utilize BeautifulSoup and Playwright to navigate and extract data from competitor websites.
+- Capture promotion-related data: product name, product category, URL, data allowance, minutes, SMS, upload/download speed, price, and scrape timestamp.
+- The scraped data is stored in a JSON format for further processing.
 
-### Data Processing
+#### Data Cleaning & Processing
 
-At this point, data processing pipelines were introduced to the project. We use BigQuery to store the collected data and Airflow to automate data processing, allowing for regular updates of competitor data.
+- Clean and transform JSON data into NDJSON (newline delimited JSON), enabling each line to be processed as a separate entry.
+- Ensure data quality and consistency for accurate analysis in BigQuery.
 
-## Installation
+#### Data Loading
 
+- Using Google Cloud BigQuery Python Client, the cleaned data is loaded into specific BigQuery tables.
+- Employs strategic checks to avoid duplication and maintain data integrity.
+- Before loading, the data is compared with existing records from the table to prevent data duplication and ensuring that only new or modified records are inserted into BigQuery.
+
+### Setup & Usage
+
+#### Prerequisites
+
+- Google Cloud Platform account
+- Docker & Docker Compose
+
+#### Installation
+
+1. **Clone the Repository**
+   ```sh
+   git clone https://github.com/feldeh/orange-competitor-analysis
+   cd orange-competitor-analysis
+   ```
+2. **Setup Google Cloud**
+
+   - Setup a GCP Project, enable the BigQuery API, and create a Service Account with BigQuery Admin roles.
+   - Download the JSON key file for the Service Account and place it in the root of the repo as "gcloud/bigquery_credentials.json".
+
+3. **Setup Docker**
+
+   - Ensure Docker and Docker Compose are installed on your system.
+   - Build the Docker image:
+
+   ```sh
+   docker-compose build
+   ```
+
+4. **Configure Airflow**
+
+   - Define the scraping schedule and adjust configurations in the Airflow DAG.
+   - Ensure any credentials, variables, and connections are securely set up in Airflow.
+
+5. **Run the Pipeline**
+   ```sh
+   docker-compose up
+   ```
+   Navigate to Apache Airflow's UI from port `localhost:8080` and enable the DAG.
