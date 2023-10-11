@@ -334,6 +334,7 @@ def generate_packs(products_list, combo_advantage, url):
                         'competitor_name': competitor_name,
                         'pack_name': pack_name,
                         'pack_url': url,
+                        'pack_description': None,
                         'price': price,
                         'scraped_at': date,
                         'mobile_product_name': mobile_product_name,
@@ -366,7 +367,7 @@ def save_scraping_log(error_details):
                 }
             ]
         }
-    save_to_json(log_entry, "scraping_log.json")
+    save_to_json(log_entry, 'mobile_vikings', "scraping_log.json")
 
 
 def mobile_viking_scraper():
@@ -390,13 +391,13 @@ def mobile_viking_scraper():
             # TODO: add data validation with pydantic
             # TODO: add typing
             product_dict = get_products(browser, URL)
-            # save_to_ndjson(product_dict['products'], 'products')
-            save_to_json(product_dict, 'products')
+            # save_to_ndjson(product_dict['products'], 'mobile_vikings', 'products')
+            save_to_json(product_dict, 'mobile_vikings', 'products')
 
             combo_advantage = extract_combo_advantage(URL['combo'])
             packs_dict = generate_packs(product_dict['products'], combo_advantage, URL['combo'])
-            # save_to_ndjson(packs_dict['packs'], 'packs')
-            save_to_json(packs_dict, 'packs')
+            # save_to_ndjson(packs_dict['packs'], 'mobile_vikings', 'packs')
+            save_to_json(packs_dict, 'mobile_vikings', 'packs')
 
         except Exception as e:
             error_message = f"Error in mobile_viking_scraper function: {str(e)}"

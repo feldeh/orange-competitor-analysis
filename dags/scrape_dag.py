@@ -14,13 +14,13 @@ DEFAULT_ARGS = {
 
 
 @dag(
-    dag_id='scraping_dag',
+    dag_id='scrape_dag',
     start_date=datetime(2023, 10, 5),
     schedule_interval=None,
     catchup=False,
     default_args=DEFAULT_ARGS
 )
-def scraping_dag():
+def scrape_dag():
     scrape_data = PythonOperator(
         task_id='scrape_data',
         python_callable=mobile_viking_scraper,
@@ -29,4 +29,4 @@ def scraping_dag():
     scrape_data
 
 
-scrape_job = scraping_dag()
+scrape_job = scrape_dag()
