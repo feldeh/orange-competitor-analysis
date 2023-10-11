@@ -1,6 +1,10 @@
 {
-    "competitor_name": "mobile_viking",
-    "scrape_date": "2023-10-09",
-    "error_details": "no error",
-    "status": "success"
+    "logs": [
+        {
+            "competitor_name": "mobile_viking",
+            "scrape_date": "2023-10-11",
+            "error_details": "no error",
+            "status": "success"
+        }
+    ]
 }

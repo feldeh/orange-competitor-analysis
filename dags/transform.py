@@ -1,17 +1,16 @@
-import pandas as pd
 import re
 import json
 import ndjson
 
 
 def convert_speed(speed):
-
-    if pd.isnull(speed):
+    if speed is None:
         return None
     match = re.match(r'(\d+)(mbps|gbps)', speed)
 
     if not match:
         return None
+
     value, unit = match.groups()
     value = int(value)
 
@@ -21,43 +20,34 @@ def convert_speed(speed):
     return value
 
 
-def json_to_df(header):
-
+def json_to_list_of_dicts(header):
     json_file_path = f'data/raw_data/json/{header}.json'
     with open(json_file_path, 'r') as f:
         data_dict = json.load(f)
-    df = pd.DataFrame(data_dict[header])
-
-    return df
+    return data_dict[header]
 
 
-def clean_product_data(df):
+def clean_product_data(data_list):
+    for data_dict in data_list:
+        data_dict['upload_speed'] = convert_speed(data_dict['upload_speed'])
+        data_dict['download_speed'] = convert_speed(data_dict['upload_speed'])
+        for key, value in data_dict.items():
+            if value is None:
+                data_dict[key] = None
+    return data_list
 
-    df['upload_speed'] = df['upload_speed'].apply(convert_speed)
-    df['download_speed'] = df['download_speed'].apply(convert_speed)
 
-    return df
-
-
-
-def df_to_ndjson(df, header):
-    ndjson_data = df.to_dict(orient='records')
-    with open(f'/tmp/cleaned_{header}.ndjson', 'w') as f:
-    # with open(f'/tmp/cleaned_{header}.ndjson', 'w') as f:
-        ndjson.dump(ndjson_data, f)
+def list_of_dicts_to_ndjson(data_list, header):
+    with open(f'data/cleaned_data/{header}.ndjson', 'w') as f:
+        ndjson.dump(data_list, f)
 
 
 def clean_data_task(headers):
-
     for header in headers:
-        df = json_to_df(header)
+        data_list = json_to_list_of_dicts(header)
         if header == 'products':
-            cleaned_df = clean_product_data(df)
-            df_to_ndjson(cleaned_df, header)
-            print(cleaned_df)
+            cleaned_data = clean_product_data(data_list)
+            list_of_dicts_to_ndjson(cleaned_data, header)
             continue
         # add cleanup for each header as needed
-
-        df_to_ndjson(df, header)
-
-        # df.to_csv(f'/tmp/cleaned_{header}.csv', index=False)
+        list_of_dicts_to_ndjson(data_list, header)
