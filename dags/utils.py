@@ -57,4 +57,4 @@ def save_scraping_log(error_details, competitor):
                 }
             ]
     }
-    save_to_json(log_entry, competitor, "scraping_log.json")
+    save_to_json(log_entry, competitor, "log.json")

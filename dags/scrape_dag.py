@@ -4,6 +4,7 @@ from airflow.operators.python import PythonOperator
 
 
 from viking_scraper import mobileviking_scraper
+from scarlet_scraper import scarlet_scraper
 
 
 DEFAULT_ARGS = {
@@ -21,12 +22,18 @@ DEFAULT_ARGS = {
     default_args=DEFAULT_ARGS
 )
 def scrape_dag():
-    scrape_data = PythonOperator(
-        task_id='scrape_data',
+
+    scrape_viking = PythonOperator(
+        task_id='scrape_viking',
         python_callable=mobileviking_scraper,
     )
 
-    scrape_data
+    scrape_scarlet = PythonOperator(
+        task_id='scrape_scarlet',
+        python_callable=scarlet_scraper,
+    )
+
+    scrape_viking >> scrape_scarlet
 
 
 scrape_job = scrape_dag()

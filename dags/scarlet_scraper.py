@@ -447,7 +447,3 @@ def scarlet_scraper():
             logging.info(f"=========== mobileviking_scraper end: {end_time} ===========")
 
             save_scraping_log(error_details, 'scarlet')
-
-
-
-scarlet_scraper()
