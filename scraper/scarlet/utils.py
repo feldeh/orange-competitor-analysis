@@ -15,7 +15,7 @@ def save_to_json(dict_data, competitor, filename):
     logging.info(file_saved_message)
 
 
-def save_to_ndjson(list_data,competitor,  filename):
+def save_to_ndjson(list_data,competitor, filename):
     ndjson_path = f"data/raw_data/{competitor}/ndjson/{filename}.ndjson"
     with open(ndjson_path, "w", encoding="utf-8") as f:
         ndjson.dump(list_data, f)

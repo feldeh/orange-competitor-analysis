@@ -29,8 +29,8 @@ def json_to_list_of_dicts(header):
 
 def clean_product_data(data_list):
     for data_dict in data_list:
-        data_dict['upload_speed'] = convert_speed(data_dict['upload_speed'])
-        data_dict['download_speed'] = convert_speed(data_dict['upload_speed'])
+        data_dict['upload_speed'] = convert_speed(data_dict.get('upload_speed'))
+        data_dict['download_speed'] = convert_speed(data_dict.get('download_speed'))
         for key, value in data_dict.items():
             if value is None:
                 data_dict[key] = None

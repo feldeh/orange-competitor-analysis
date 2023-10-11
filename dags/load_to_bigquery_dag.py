@@ -19,7 +19,7 @@ client = bq.Client.from_service_account_json(service_acc_key_path)
 
 
 PROJECT_ID = 'arched-media-273319'
-DATASET_ID = 'testtttt'
+DATASET_ID = 'test123'
 TABLE_NAMES = ['competitors', 'products', 'features', 'prices', 'packs']
 FILE_NAMES = ['products', 'packs']
 
