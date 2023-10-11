@@ -44,7 +44,7 @@ def list_of_dicts_to_ndjson(data_list, competitor, header):
 
 def clean_data_task(competitors, headers):
     for competitor in competitors:
-
+        
     for header in headers:
         data_list = json_to_list_of_dicts(header)
         if header == 'products':

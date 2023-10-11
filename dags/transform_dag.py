@@ -8,6 +8,7 @@ from airflow.sensors.time_delta import TimeDeltaSensor
 from transform import clean_data_task
 
 HEADERS = ['products', 'packs']
+COMPETITORS = ['mobile_vikings', 'scarlet']
 
 DEFAULT_ARGS = {
     'owner': 'admin',
@@ -33,7 +34,7 @@ def clean_dag():
     clean_data = PythonOperator(
         task_id='clean_data',
         python_callable=clean_data_task,
-        op_kwargs={'headers': HEADERS}
+        op_kwargs={'competitors': COMPETITORS, 'headers': HEADERS}
     )
 
     delay_task >> clean_data
