@@ -5,8 +5,6 @@ import re
 import time
 import logging
 import traceback
-import os
-from datetime import datetime
 from airflow import AirflowException
 
 
@@ -66,15 +64,12 @@ def extract_prepaid_selector_data(page_content, url):
                 'product_category': 'mobile_prepaid',
                 'product_url': url,
                 'price': float(price),
-                'date': date,
+                'scraped_at': date,
                 'data': float(data),
-                'network': None,
                 'minutes': minutes,
-                'price_per_minute': float(price_per_minute),
                 'sms': sms,
                 'upload_speed': None,
                 'download_speed': None,
-                # 'line_type': None
             })
 
         except Exception as e:
@@ -137,15 +132,12 @@ def extract_subscription_data(page_content, url):
                 'product_category': 'mobile_subscription',
                 'product_url': url,
                 'price': float(price_per_month),
-                'date': date,
+                'scraped_at': date,
                 'data': float(mobile_data),
-                'network': network,
                 'minutes': minutes,
-                'price_per_minute': None,
                 'sms': sms,
                 'upload_speed': None,
                 'download_speed': None,
-                # 'line_type': None
             })
 
     except Exception as e:
@@ -179,15 +171,12 @@ def extract_internet_table_data(page_content, url):
         internet_data['product_category'] = 'internet_subscription'
         internet_data['product_url'] = url
         internet_data['price'] = float(cleaned_price)
-        internet_data['date'] = date
+        internet_data['scraped_at'] = date
         internet_data['data'] = monthly_data
-        internet_data['network'] = None
         internet_data['minutes'] = None
-        internet_data['price_per_minute'] = None
         internet_data['sms'] = None
         internet_data['download_speed'] = download_speed
         internet_data['upload_speed'] = upload_speed
-        # internet_data['line_type'] = line_type
 
         return internet_data
 
@@ -208,12 +197,16 @@ def extract_internet_data(page, url):
         first_table_data = extract_internet_table_data(page_content, url)
         first_btn_text = internet_type_btn[0].inner_text().lower().replace(' ', '_')
         first_table_data = {'product_name': first_btn_text, **first_table_data}
+        print(first_table_data)
 
         internet_type_btn[1].click()
+
+        page_content = page.content()
 
         second_table_data = extract_internet_table_data(page_content, url)
         second_btn_text = internet_type_btn[1].inner_text().lower().replace(' ', '_')
         second_table_data = {'product_name': second_btn_text, **second_table_data}
+        print(second_table_data)
 
         internet_data = []
         internet_data.append(first_table_data)
@@ -342,7 +335,7 @@ def generate_packs(products_list, combo_advantage, url):
                         'pack_name': pack_name,
                         'pack_url': url,
                         'price': price,
-                        'date': date,
+                        'scraped_at': date,
                         'mobile_product_name': mobile_product_name,
                         'internet_product_name': internet_product_name
                     })
@@ -363,11 +356,16 @@ def save_scraping_log(error_details):
     status = 'success' if error_details == 'no error' else 'failed'
 
     log_entry = {
-        'competitor_name': 'mobile_viking',
-        'scrape_date': time.strftime("%Y-%m-%d"),
-        'error_details': error_details,
-        'status': status
-    }
+        "logs":
+            [
+                {
+                    'competitor_name': 'mobile_viking',
+                    'scrape_date': time.strftime("%Y-%m-%d"),
+                    'error_details': error_details,
+                    'status': status
+                }
+            ]
+        }
     save_to_json(log_entry, "scraping_log.json")
 
 
@@ -379,13 +377,8 @@ def mobile_viking_scraper():
         error_details = 'no error'
 
         log_file_name = 'test.log'
-        log_file_path = f"logs/scraper/{log_file_name}"
-        # log_directory = os.path.dirname(log_file_path)
-        # if not os.path.exists(log_directory):
-        #     os.makedirs(log_directory)
-        # if not os.path.exists(log_file_path):
-        #     with open(log_file_path, 'w'):
-        #         pass
+        log_file_path = f"logs/{log_file_name}"
+
 
         log_format = '%(asctime)s [%(levelname)s] - %(message)s'
         logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
@@ -394,18 +387,15 @@ def mobile_viking_scraper():
         browser = p.chromium.launch(headless=True, slow_mo=50)
 
         try:
-            # by order of importance
-            # TODO: add "only data" product
-            # TODO: add product_id
             # TODO: add data validation with pydantic
             # TODO: add typing
             product_dict = get_products(browser, URL)
-            save_to_ndjson(product_dict['products'], 'products')
+            # save_to_ndjson(product_dict['products'], 'products')
             save_to_json(product_dict, 'products')
 
             combo_advantage = extract_combo_advantage(URL['combo'])
             packs_dict = generate_packs(product_dict['products'], combo_advantage, URL['combo'])
-            save_to_ndjson(packs_dict['packs'], 'packs')
+            # save_to_ndjson(packs_dict['packs'], 'packs')
             save_to_json(packs_dict, 'packs')
 
         except Exception as e:

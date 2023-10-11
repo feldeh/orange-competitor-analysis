@@ -1,0 +1,53 @@
+import re
+import json
+import ndjson
+
+
+def convert_speed(speed):
+    if speed is None:
+        return None
+    match = re.match(r'(\d+)(mbps|gbps)', speed)
+
+    if not match:
+        return None
+
+    value, unit = match.groups()
+    value = int(value)
+
+    if unit == "gbps":
+        value *= 1000
+
+    return value
+
+
+def json_to_list_of_dicts(header):
+    json_file_path = f'data/raw_data/json/{header}.json'
+    with open(json_file_path, 'r') as f:
+        data_dict = json.load(f)
+    return data_dict[header]
+
+
+def clean_product_data(data_list):
+    for data_dict in data_list:
+        data_dict['upload_speed'] = convert_speed(data_dict['upload_speed'])
+        data_dict['download_speed'] = convert_speed(data_dict['upload_speed'])
+        for key, value in data_dict.items():
+            if value is None:
+                data_dict[key] = None
+    return data_list
+
+
+def list_of_dicts_to_ndjson(data_list, header):
+    with open(f'data/cleaned_data/{header}.ndjson', 'w') as f:
+        ndjson.dump(data_list, f)
+
+
+def clean_data_task(headers):
+    for header in headers:
+        data_list = json_to_list_of_dicts(header)
+        if header == 'products':
+            cleaned_data = clean_product_data(data_list)
+            list_of_dicts_to_ndjson(cleaned_data, header)
+            continue
+        # add cleanup for each header as needed
+        list_of_dicts_to_ndjson(data_list, header)
