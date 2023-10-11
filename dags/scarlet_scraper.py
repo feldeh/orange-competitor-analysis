@@ -154,6 +154,7 @@ def extract_options_data(page_content, url):
         error_message = f"Error extracting options data: {str(e)}"
         print(error_message)
         logging.error(error_message)
+        traceback.print_exc()
         raise AirflowException(error_message)
 
 
@@ -194,7 +195,6 @@ def get_options_data(browser, url):
 
 
 def get_products(browser, url):
-    start = time.time()
     mobile_subscription_data = get_mobile_subscription_data(browser, url['mobile_subscription'])
     options_data = get_options_data(browser, url['option_mobile_subscription'])
     internet_subscription_data = get_internet_subscription_data(browser, url['internet_subscription'])
@@ -220,8 +220,6 @@ def get_products(browser, url):
     product_dict = {'products': product_list}
     options_dict = {'options': options_list}
     packs_dict = {'packs': packs_list}
-    end = time.time()
-    logging.info("Time taken to scrape products: {:.3f}s".format(end - start))
     return product_dict, options_dict, packs_dict
 
 
@@ -370,8 +368,8 @@ def extract_options_streaming(page_content, url):
     except Exception as e:
         error_message = f"Error extracting options streaming data: {str(e)}"
         logging.error(error_message)
+        traceback.print_exc()
         raise AirflowException(error_message)
-
 
 def get_options_tv(browser, url):
     time.sleep(5)
@@ -406,6 +404,7 @@ def extract_options_tv(page_content, url):
     except Exception as e:
         error_message = f"Error extracting options tv data: {str(e)}"
         logging.error(error_message)
+        traceback.print_exc()
         raise AirflowException(error_message)
 
 def scarlet_scraper():
@@ -435,15 +434,17 @@ def scarlet_scraper():
             # save_to_ndjson(list_packs, 'scarlet', 'packs')
 
         except Exception as e:
-            logging.error(f"Error in scarlet_scraper function:{str(e)}")
+            error_message = f"Error in scarlet_scraper function: {str(e)}"
+            traceback.print_exc()
+            raise AirflowException(error_message)
         finally:
             browser.close()
 
             end_time_seconds = time.time()
-            execution_time_message = "mobileviking_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds)
+            execution_time_message = "scarlet_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds)
             logging.info(execution_time_message)
 
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
-            logging.info(f"=========== mobileviking_scraper end: {end_time} ===========")
+            logging.info(f"=========== scarlet_scraper end: {end_time} ===========")
 
             save_scraping_log(error_details, 'scarlet')

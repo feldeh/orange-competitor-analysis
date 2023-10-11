@@ -57,4 +57,22 @@ def save_scraping_log(error_details, competitor):
                 }
             ]
     }
-    save_to_json(log_entry, competitor, "log.json")
+    save_to_json(log_entry, competitor, "logs")
+
+def check_file_exist(dir, competitors, file_names, file_type):
+    counter = 0
+    while counter < 3:
+        all_exist = True
+        for competitor in competitors:
+            for file_name in file_names:
+                # file_path = Path(f'/tmp/cleaned_{file_name}.csv')
+                file_path = Path(f'data/{dir}/{competitor}_{file_name}.{file_type}')
+                if not file_path.is_file():
+                    all_exist = False
+                    break
+        if all_exist:
+            return True
+        else:
+            counter += 1
+            time.sleep(5)
+    return False

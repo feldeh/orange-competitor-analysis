@@ -8,9 +8,9 @@ from airflow.sensors.time_delta import TimeDeltaSensor
 from bigquery2 import load_to_bq
 import google.cloud.bigquery as bq
 
-import time
 import os
-from pathlib import Path
+
+from utils import check_file_exist
 
 
 service_acc_key_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
@@ -21,6 +21,7 @@ client = bq.Client.from_service_account_json(service_acc_key_path)
 PROJECT_ID = 'arched-media-273319'
 DATASET_ID = 'test123'
 TABLE_NAMES = ['competitors', 'products', 'features', 'prices', 'packs']
+COMPETITORS = ['mobileviking', 'scarlet']
 FILE_NAMES = ['products', 'packs']
 
 BQ_TABLE_SCHEMAS = {
@@ -79,22 +80,6 @@ DEFAULT_DAG_ARGS = {
 }
 
 
-def check_file_exist(file_names):
-    counter = 0
-    while counter < 3:
-        all_exist = True
-        for file_name in file_names:
-            # file_path = Path(f'/tmp/cleaned_{file_name}.csv')
-            file_path = Path(f'data/cleaned_data/{file_name}.ndjson')
-            if not file_path.is_file():
-                all_exist = False
-                break
-        if all_exist:
-            return True
-        else:
-            counter += 1
-            time.sleep(5)
-    return False
 
 @dag(
     dag_id='load_to_bigquery_dag',
@@ -108,15 +93,15 @@ def load_to_bigquery_dag():
 
     delay_task = TimeDeltaSensor(
         task_id='delay_task',
-        delta=timedelta(seconds=30)
+        delta=timedelta(seconds=80)
     )
 
     wait_for_file = PythonSensor(
         task_id='wait_for_file',
         python_callable=check_file_exist,
-        op_kwargs={"file_names": FILE_NAMES},
+        op_kwargs={"dir": "cleaned_data","competitors": COMPETITORS, "file_names": FILE_NAMES, "file_type": "ndjson"},
         mode='reschedule',
-        timeout=70,
+        timeout=180,
 
     )
 

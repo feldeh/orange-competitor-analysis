@@ -2,16 +2,21 @@ from datetime import datetime, timedelta
 from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
 from airflow.sensors.time_delta import TimeDeltaSensor
+from airflow.sensors.python import PythonSensor
 
 
 
 from transform import clean_data_task
+from utils import check_file_exist
 
-HEADERS = ['products', 'packs']
+
+HEADERS = ['products', 'packs', 'logs']
+COMPETITORS = ['mobileviking', 'scarlet']
+FILE_NAMES = ['products', 'packs', 'logs']
 
 DEFAULT_ARGS = {
     'owner': 'admin',
-    'retries': 1,
+    'retries': 2,
     'retry_delay': timedelta(seconds=30)
 }
 
@@ -27,16 +32,25 @@ def clean_dag():
 
     delay_task = TimeDeltaSensor(
         task_id='delay_task',
-        delta=timedelta(seconds=30)
+        delta=timedelta(seconds=200)
+    )
+
+    wait_for_file = PythonSensor(
+        task_id='wait_for_file',
+        python_callable=check_file_exist,
+        op_kwargs={"dir": "raw_data","competitors": COMPETITORS, "file_names": FILE_NAMES, "file_type": "json"},
+        mode='reschedule',
+        timeout=200,
+
     )
 
     clean_data = PythonOperator(
         task_id='clean_data',
         python_callable=clean_data_task,
-        op_kwargs={'headers': HEADERS}
+        op_kwargs={'competitors': COMPETITORS,'headers': HEADERS}
     )
 
-    delay_task >> clean_data
+    delay_task >> wait_for_file >> clean_data
 
 
 clean_job = clean_dag()
