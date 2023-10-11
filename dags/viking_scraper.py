@@ -8,7 +8,7 @@ import traceback
 from airflow import AirflowException
 
 
-from utils import save_to_json, save_to_ndjson
+from utils import save_to_json, check_request, save_scraping_log
 
 URL = {
     'mobile_prepaid': 'https://mobilevikings.be/en/offer/prepaid/',
@@ -19,7 +19,11 @@ URL = {
 
 
 def goto_page(browser, url):
+
+    check_request(url)
+
     page = browser.new_page()
+    logging.info(f"Navigating to URL: {url}")
     page.goto(url, wait_until='domcontentloaded')
 
     try:
@@ -60,7 +64,7 @@ def extract_prepaid_selector_data(page_content, url):
 
             prepaid_data.append({
                 'product_name': f"mobile_prepaid_{data_focus}_{data}_gb",
-                'competitor_name': 'mobile_viking',
+                'competitor_name': 'mobileviking',
                 'product_category': 'mobile_prepaid',
                 'product_url': url,
                 'price': float(price),
@@ -128,7 +132,7 @@ def extract_subscription_data(page_content, url):
 
             subscription_data.append({
                 'product_name': f"mobile_subscription_{mobile_data}_gb",
-                'competitor_name': 'mobile_viking',
+                'competitor_name': 'mobileviking',
                 'product_category': 'mobile_subscription',
                 'product_url': url,
                 'price': float(price_per_month),
@@ -167,7 +171,7 @@ def extract_internet_table_data(page_content, url):
 
         monthly_data = unlimited_check_to_float(monthly_data)
 
-        internet_data['competitor_name'] = 'mobile_viking'
+        internet_data['competitor_name'] = 'mobileviking'
         internet_data['product_category'] = 'internet_subscription'
         internet_data['product_url'] = url
         internet_data['price'] = float(cleaned_price)
@@ -197,7 +201,6 @@ def extract_internet_data(page, url):
         first_table_data = extract_internet_table_data(page_content, url)
         first_btn_text = internet_type_btn[0].inner_text().lower().replace(' ', '_')
         first_table_data = {'product_name': first_btn_text, **first_table_data}
-        print(first_table_data)
 
         internet_type_btn[1].click()
 
@@ -206,7 +209,6 @@ def extract_internet_data(page, url):
         second_table_data = extract_internet_table_data(page_content, url)
         second_btn_text = internet_type_btn[1].inner_text().lower().replace(' ', '_')
         second_table_data = {'product_name': second_btn_text, **second_table_data}
-        print(second_table_data)
 
         internet_data = []
         internet_data.append(first_table_data)
@@ -221,25 +223,8 @@ def extract_internet_data(page, url):
         raise AirflowException(error_message)
 
 
-def check_request(url):
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-
-    except requests.exceptions.ConnectionError as ec:
-        logging.error(ec)
-        raise AirflowException(ec)
-    except requests.exceptions.Timeout as et:
-        logging.error(et)
-        raise AirflowException(et)
-    except requests.exceptions.HTTPError as eh:
-        logging.error(eh)
-        raise AirflowException(eh)
-
-
 def get_mobile_prepaid_data(browser, url):
 
-    check_request(url)
 
     page = goto_page(browser, url)
     time.sleep(5)
@@ -252,7 +237,6 @@ def get_mobile_prepaid_data(browser, url):
 
 def get_mobile_subscription_data(browser, url):
 
-    check_request(url)
 
     page = goto_page(browser, url)
     time.sleep(5)
@@ -266,7 +250,6 @@ def get_mobile_subscription_data(browser, url):
 
 def get_internet_subscription_data(browser, url):
 
-    check_request(url)
 
     page = goto_page(browser, url)
     time.sleep(5)
@@ -351,25 +334,8 @@ def generate_packs(products_list, combo_advantage, url):
         raise AirflowException(error_message)
 
 
-def save_scraping_log(error_details):
 
-    status = 'success' if error_details == 'no error' else 'failed'
-
-    log_entry = {
-        "logs":
-            [
-                {
-                    'competitor_name': 'mobile_viking',
-                    'scrape_date': time.strftime("%Y-%m-%d"),
-                    'error_details': error_details,
-                    'status': status
-                }
-            ]
-        }
-    save_to_json(log_entry, "scraping_log.json")
-
-
-def mobile_viking_scraper():
+def mobileviking_scraper():
 
     with sync_playwright() as p:
         start_time = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -379,10 +345,9 @@ def mobile_viking_scraper():
         log_file_name = 'test.log'
         log_file_path = f"logs/{log_file_name}"
 
-
         log_format = '%(asctime)s [%(levelname)s] - %(message)s'
         logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
-        logging.info(f"=========== mobile_viking_scraper start: {start_time} ===========")
+        logging.info(f"=========== mobileviking_scraper start: {start_time} ===========")
 
         browser = p.chromium.launch(headless=True, slow_mo=50)
 
@@ -391,15 +356,15 @@ def mobile_viking_scraper():
             # TODO: add typing
             product_dict = get_products(browser, URL)
             # save_to_ndjson(product_dict['products'], 'products')
-            save_to_json(product_dict, 'products')
+            save_to_json(product_dict, "mobileviking", 'products')
 
             combo_advantage = extract_combo_advantage(URL['combo'])
             packs_dict = generate_packs(product_dict['products'], combo_advantage, URL['combo'])
             # save_to_ndjson(packs_dict['packs'], 'packs')
-            save_to_json(packs_dict, 'packs')
+            save_to_json(packs_dict, "mobileviking", 'packs')
 
         except Exception as e:
-            error_message = f"Error in mobile_viking_scraper function: {str(e)}"
+            error_message = f"Error in mobileviking_scraper function: {str(e)}"
             logging.error(error_message)
             error_details = error_message
             traceback.print_exc()
@@ -408,10 +373,10 @@ def mobile_viking_scraper():
             browser.close()
 
             end_time_seconds = time.time()
-            execution_time_message = "mobile_viking_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds)
+            execution_time_message = "mobileviking_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds)
             logging.info(execution_time_message)
 
             end_time = time.strftime("%Y-%m-%d %H:%M:%S")
-            logging.info(f"=========== mobile_viking_scraper end: {end_time} ===========")
+            logging.info(f"=========== mobileviking_scraper end: {end_time} ===========")
 
-            save_scraping_log(error_details)
+            save_scraping_log(error_details, 'mobileviking')

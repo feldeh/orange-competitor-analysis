@@ -3,7 +3,7 @@ from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
 
 
-from viking_scraper import mobile_viking_scraper
+from viking_scraper import mobileviking_scraper
 
 
 DEFAULT_ARGS = {
@@ -23,7 +23,7 @@ DEFAULT_ARGS = {
 def scrape_dag():
     scrape_data = PythonOperator(
         task_id='scrape_data',
-        python_callable=mobile_viking_scraper,
+        python_callable=mobileviking_scraper,
     )
 
     scrape_data

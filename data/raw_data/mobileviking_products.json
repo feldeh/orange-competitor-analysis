@@ -2,7 +2,7 @@
     "products": [
         {
             "product_name": "mobile_prepaid_data_1_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_prepaid",
             "product_url": "https://mobilevikings.be/en/offer/prepaid/",
             "price": 10.0,
@@ -15,7 +15,7 @@
         },
         {
             "product_name": "mobile_prepaid_data_4_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_prepaid",
             "product_url": "https://mobilevikings.be/en/offer/prepaid/",
             "price": 15.0,
@@ -28,7 +28,7 @@
         },
         {
             "product_name": "mobile_prepaid_data_6_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_prepaid",
             "product_url": "https://mobilevikings.be/en/offer/prepaid/",
             "price": 20.0,
@@ -41,7 +41,7 @@
         },
         {
             "product_name": "mobile_prepaid_data_8_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_prepaid",
             "product_url": "https://mobilevikings.be/en/offer/prepaid/",
             "price": 25.0,
@@ -54,7 +54,7 @@
         },
         {
             "product_name": "mobile_prepaid_voice_0.5_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_prepaid",
             "product_url": "https://mobilevikings.be/en/offer/prepaid/",
             "price": 10.0,
@@ -67,7 +67,7 @@
         },
         {
             "product_name": "mobile_prepaid_voice_2_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_prepaid",
             "product_url": "https://mobilevikings.be/en/offer/prepaid/",
             "price": 15.0,
@@ -80,7 +80,7 @@
         },
         {
             "product_name": "mobile_prepaid_voice_3_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_prepaid",
             "product_url": "https://mobilevikings.be/en/offer/prepaid/",
             "price": 20.0,
@@ -93,7 +93,7 @@
         },
         {
             "product_name": "mobile_prepaid_voice_4_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_prepaid",
             "product_url": "https://mobilevikings.be/en/offer/prepaid/",
             "price": 25.0,
@@ -106,7 +106,7 @@
         },
         {
             "product_name": "mobile_subscription_2_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_subscription",
             "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
             "price": 10.0,
@@ -119,7 +119,7 @@
         },
         {
             "product_name": "mobile_subscription_4_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_subscription",
             "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
             "price": 12.0,
@@ -132,7 +132,7 @@
         },
         {
             "product_name": "mobile_subscription_10_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_subscription",
             "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
             "price": 15.0,
@@ -145,7 +145,7 @@
         },
         {
             "product_name": "mobile_subscription_20_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_subscription",
             "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
             "price": 20.0,
@@ -158,7 +158,7 @@
         },
         {
             "product_name": "mobile_subscription_70_gb",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "mobile_subscription",
             "product_url": "https://mobilevikings.be/en/offer/subscriptions/",
             "price": 29.0,
@@ -171,7 +171,7 @@
         },
         {
             "product_name": "unlimited_fast_internet",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "internet_subscription",
             "product_url": "https://mobilevikings.be/en/offer/internet/",
             "price": 40.0,
@@ -184,7 +184,7 @@
         },
         {
             "product_name": "unlimited_superfast_internet",
-            "competitor_name": "mobile_viking",
+            "competitor_name": "mobileviking",
             "product_category": "internet_subscription",
             "product_url": "https://mobilevikings.be/en/offer/internet/",
             "price": 55.0,

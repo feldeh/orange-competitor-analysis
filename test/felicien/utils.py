@@ -5,7 +5,7 @@ import logging
 
 
 def save_to_json(dict_data, filename):
-    json_path = f"data/raw_data/json/{filename}.json"
+    json_path = f"data/{filename}.json"
     json_data = json.dumps(dict_data, indent=4)
     with open(json_path, mode="w", encoding="utf-8") as f:
         f.write(json_data)

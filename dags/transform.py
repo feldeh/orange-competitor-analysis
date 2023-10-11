@@ -21,7 +21,7 @@ def convert_speed(speed):
 
 
 def json_to_list_of_dicts(header):
-    json_file_path = f'data/raw_data/json/{header}.json'
+    json_file_path = f'data/{header}.json'
     with open(json_file_path, 'r') as f:
         data_dict = json.load(f)
     return data_dict[header]

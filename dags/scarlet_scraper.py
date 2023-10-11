@@ -1,5 +1,4 @@
 from playwright.sync_api import sync_playwright
-import json
 import re
 import time
 from bs4 import BeautifulSoup
@@ -7,10 +6,10 @@ from datetime import date
 import logging
 import traceback
 import requests
-from pathlib import Path
+from airflow import AirflowException
 
-from utils import save_to_json
-from utils import save_to_ndjson
+
+from utils import save_to_json, check_request, save_scraping_log
 
 
 URL = {
@@ -23,7 +22,11 @@ URL = {
 
 def goto_page(browser, url):
     """function to open a page with the given url using a browser"""
+
+    check_request(url)
+
     page = browser.new_page()
+    logging.info(f"Navigating to URL: {url}")
     page.goto(url, wait_until='domcontentloaded')
     time.sleep(5)
     try:
@@ -32,6 +35,7 @@ def goto_page(browser, url):
     except Exception as e:
         error_message = f"Accept cookie button error: {str(e)}"
         logging.error(error_message)
+        raise AirflowException(error_message)
 
     return page
 
@@ -81,6 +85,7 @@ def extract_mobile_subscription_data(page_content, url):
         error_message = f"Error extracting mobile subscription data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def extract_internet_table_data(page_content, url):
@@ -117,6 +122,7 @@ def extract_internet_table_data(page_content, url):
         error_message = f"Error extracting internet table data: {str(e)}"
         print(error_message)
         logging.error(error_message)
+        raise AirflowException(error_message)
 
     return internet_data
 
@@ -145,7 +151,10 @@ def extract_options_data(page_content, url):
         return options_data
 
     except Exception as e:
-        print(f"Error extracting options data: {str(e)}")
+        error_message = f"Error extracting options data: {str(e)}"
+        print(error_message)
+        logging.error(error_message)
+        raise AirflowException(error_message)
 
 
 def get_mobile_subscription_data(browser, url):
@@ -212,7 +221,7 @@ def get_products(browser, url):
     options_dict = {'options': options_list}
     packs_dict = {'packs': packs_list}
     end = time.time()
-    print("Time taken to scrape products: {:.3f}s".format(end - start))
+    logging.info("Time taken to scrape products: {:.3f}s".format(end - start))
     return product_dict, options_dict, packs_dict
 
 
@@ -262,8 +271,10 @@ def scarlet_trio():
     packs['pack_name'] = pack_name
     packs['pack_url'] = url
     packs['pack_description'] = pack_description.encode('ascii', 'ignore').decode('ascii')
-    packs['scraped_at'] = today
     packs['price'] = float(price)
+    packs['scraped_at'] = today
+    packs["mobile_product_name"] = None
+    packs["internet_product_name"] = None
 
     return packs
 
@@ -314,8 +325,10 @@ def scarlet_trio_mobile():
     packs['pack_name'] = pack_name
     packs['pack_url'] = url
     packs['pack_description'] = pack_description.encode('ascii', 'ignore').decode('ascii')
-    packs['scraped_at'] = today
     packs['price'] = float(price)
+    packs['scraped_at'] = today
+    packs["mobile_product_name"] = None
+    packs["internet_product_name"] = None
 
     return packs
 
@@ -355,7 +368,9 @@ def extract_options_streaming(page_content, url):
 
         return options_data
     except Exception as e:
-        print(f"Error extracting options data: {str(e)}")
+        error_message = f"Error extracting options streaming data: {str(e)}"
+        logging.error(error_message)
+        raise AirflowException(error_message)
 
 
 def get_options_tv(browser, url):
@@ -389,29 +404,50 @@ def extract_options_tv(page_content, url):
 
         return options_data
     except Exception as e:
-        print(f"Error extracting options data: {str(e)}")
+        error_message = f"Error extracting options tv data: {str(e)}"
+        logging.error(error_message)
+        raise AirflowException(error_message)
 
-
-def main():
+def scarlet_scraper():
     with sync_playwright() as p:
+        start_time = time.strftime("%Y-%m-%d %H:%M:%S")
+        start_time_seconds = time.time()
+        error_details = 'no error'
+
+        log_file_name = 'test.log'
+        log_file_path = f"logs/{log_file_name}"
+
+        log_format = '%(asctime)s [%(levelname)s] - %(message)s'
+        logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
+        logging.info(f"=========== scarlet_scraper start: {start_time} ===========")
+
         browser = p.chromium.launch(headless=True)
         try:
             product_dict, options_dict, packs_dict = get_products(browser, URL)
-            list_product = [product_dict]
-            list_options = [options_dict]
-            list_packs = [packs_dict]
+            # list_product = [product_dict]
+            # list_options = [options_dict]
+            # list_packs = [packs_dict]
             save_to_json(product_dict, 'scarlet', 'products')
             save_to_json(options_dict, 'scarlet', 'options')
             save_to_json(packs_dict, 'scarlet', 'packs')
-            save_to_ndjson(list_product, 'scarlet', 'products')
-            save_to_ndjson(list_options, 'scarlet', 'options')
-            save_to_ndjson(list_packs, 'scarlet', 'packs')
+            # save_to_ndjson(list_product, 'scarlet', 'products')
+            # save_to_ndjson(list_options, 'scarlet', 'options')
+            # save_to_ndjson(list_packs, 'scarlet', 'packs')
 
         except Exception as e:
-            print(f"Error in main function:{str(e)}")
+            logging.error(f"Error in scarlet_scraper function:{str(e)}")
         finally:
             browser.close()
 
+            end_time_seconds = time.time()
+            execution_time_message = "mobileviking_scraper execution time: {:.3f}s".format(end_time_seconds - start_time_seconds)
+            logging.info(execution_time_message)
 
-if __name__ == "__main__":
-    main()
+            end_time = time.strftime("%Y-%m-%d %H:%M:%S")
+            logging.info(f"=========== mobileviking_scraper end: {end_time} ===========")
+
+            save_scraping_log(error_details, 'scarlet')
+
+
+
+scarlet_scraper()
