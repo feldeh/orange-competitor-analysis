@@ -51,7 +51,7 @@ def save_scraping_log(error_details, competitor):
             [
                 {
                     'competitor_name': competitor,
-                    'scrape_date': time.strftime("%Y-%m-%d"),
+                    'scraped_at': time.strftime("%Y-%m-%d"),
                     'error_details': error_details,
                     'status': status
                 }

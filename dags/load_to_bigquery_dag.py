@@ -19,13 +19,12 @@ client = bq.Client.from_service_account_json(service_acc_key_path)
 
 
 PROJECT_ID = 'arched-media-273319'
-DATASET_ID = 'test123'
-TABLE_NAMES = ['competitors', 'products', 'features', 'prices', 'packs']
+DATASET_ID = 'competitors_dataset'
+TABLE_NAMES = ['competitors', 'products', 'features', 'product_prices', 'packs', 'logs']
 COMPETITORS = ['mobileviking', 'scarlet']
-FILE_NAMES = ['products', 'packs']
+FILE_NAMES = ['products', 'packs', 'logs']
 
 BQ_TABLE_SCHEMAS = {
-    # this table should contain immutable data
     "competitors": [
         bq.SchemaField('competitor_uuid', 'STRING', mode='REQUIRED'),
         bq.SchemaField('competitor_name', 'STRING', mode='REQUIRED'),
@@ -55,7 +54,7 @@ BQ_TABLE_SCHEMAS = {
         bq.SchemaField('download_speed', 'FLOAT', mode='NULLABLE'),
 
     ],
-    "prices": [
+    "product_prices": [
         bq.SchemaField('price_uuid', 'STRING', mode='REQUIRED'),
         bq.SchemaField('feature_uuid', 'STRING', mode='REQUIRED'),
         bq.SchemaField('price', 'FLOAT', mode='REQUIRED'),
@@ -65,10 +64,17 @@ BQ_TABLE_SCHEMAS = {
         bq.SchemaField('competitor_name', 'STRING', mode='REQUIRED'),
         bq.SchemaField('pack_name', 'STRING', mode='REQUIRED'),
         bq.SchemaField('pack_url', 'STRING', mode='REQUIRED'),
+        bq.SchemaField('pack_description', 'STRING', mode='NULLABLE'),
         bq.SchemaField('price', 'FLOAT', mode='REQUIRED'),
         bq.SchemaField('scraped_at', 'DATETIME', mode='REQUIRED'),
         bq.SchemaField('mobile_product_name', 'STRING', mode='NULLABLE'),
         bq.SchemaField('internet_product_name', 'STRING', mode='NULLABLE'),
+    ],
+    "logs": [
+        bq.SchemaField('competitor_name', 'STRING', mode='REQUIRED'),
+        bq.SchemaField('scraped_at', 'DATETIME', mode='REQUIRED'),
+        bq.SchemaField('error_details', 'STRING', mode='NULLABLE'),
+        bq.SchemaField('status', 'STRING', mode='NULLABLE'),
     ]
 
 }
@@ -80,7 +86,6 @@ DEFAULT_DAG_ARGS = {
 }
 
 
-
 @dag(
     dag_id='load_to_bigquery_dag',
     start_date=datetime(2023, 10, 5),
@@ -90,16 +95,15 @@ DEFAULT_DAG_ARGS = {
 )
 def load_to_bigquery_dag():
 
-
     delay_task = TimeDeltaSensor(
         task_id='delay_task',
-        delta=timedelta(seconds=80)
+        delta=timedelta(seconds=200)
     )
 
     wait_for_file = PythonSensor(
         task_id='wait_for_file',
         python_callable=check_file_exist,
-        op_kwargs={"dir": "cleaned_data","competitors": COMPETITORS, "file_names": FILE_NAMES, "file_type": "ndjson"},
+        op_kwargs={"dir": "cleaned_data", "competitors": COMPETITORS, "file_names": FILE_NAMES, "file_type": "ndjson"},
         mode='reschedule',
         timeout=180,
 
@@ -108,13 +112,14 @@ def load_to_bigquery_dag():
     load_to_bigquery = PythonOperator(
         task_id='load_to_bigquery',
         python_callable=load_to_bq,
-        op_kwargs= {
+        op_kwargs={
             "client": client,
             "project_id": PROJECT_ID,
             "dataset_id": DATASET_ID,
             "table_names": TABLE_NAMES,
-            "table_schemas": BQ_TABLE_SCHEMAS
-            }
+            "table_schemas": BQ_TABLE_SCHEMAS,
+            "competitors": COMPETITORS
+        }
 
     )
 

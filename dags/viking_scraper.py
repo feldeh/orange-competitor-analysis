@@ -80,7 +80,7 @@ def extract_prepaid_selector_data(page_content, url):
             error_message = f"Error extracting prepaid selector data: {str(e)}"
             logging.error(error_message)
             traceback.print_exc()
-            raise AirflowException(error_message)
+
 
     return prepaid_data
 
@@ -106,7 +106,6 @@ def extract_prepaid_data(page, url):
         error_message = f"Error extracting prepaid data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
 
 
 def extract_subscription_data(page_content, url):
@@ -148,7 +147,6 @@ def extract_subscription_data(page_content, url):
         error_message = f"Error extracting subscription data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
 
     return subscription_data
 
@@ -188,7 +186,6 @@ def extract_internet_table_data(page_content, url):
         error_message = f"Error extracting internet table data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
 
 
 def extract_internet_data(page, url):
@@ -220,7 +217,6 @@ def extract_internet_data(page, url):
         error_message = f"Error extracting internet data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
 
 
 def get_mobile_prepaid_data(browser, url):
@@ -290,7 +286,6 @@ def extract_combo_advantage(url):
         error_message = f'Error extracting combo: {str(e)}'
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
 
 
 def generate_packs(products_list, combo_advantage, url):
@@ -309,18 +304,19 @@ def generate_packs(products_list, combo_advantage, url):
                 pack_name = f"{mobile_product['product_name']}_{internet_product['product_name']}"
                 competitor_name = internet_product['competitor_name']
 
-                mobile_product_name = mobile_product['product_name']
-                internet_product_name = internet_product['product_name']
+                # mobile_product_name = mobile_product['product_name']
+                # internet_product_name = internet_product['product_name']
 
                 packs_list.append(
                     {
                         'competitor_name': competitor_name,
                         'pack_name': pack_name,
                         'pack_url': url,
+                        'pack_description': None,
                         'price': price,
                         'scraped_at': date,
-                        'mobile_product_name': mobile_product_name,
-                        'internet_product_name': internet_product_name
+                        # 'mobile_product_name': mobile_product_name,
+                        # 'internet_product_name': internet_product_name
                     })
 
         packs_dict = {'packs': packs_list}
@@ -331,7 +327,6 @@ def generate_packs(products_list, combo_advantage, url):
         error_message = f'Error generating packs: {str(e)}'
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
 
 
 
@@ -368,7 +363,6 @@ def mobileviking_scraper():
             logging.error(error_message)
             error_details = error_message
             traceback.print_exc()
-            raise AirflowException(error_message)
         finally:
             browser.close()
 

@@ -32,7 +32,7 @@ def clean_dag():
 
     delay_task = TimeDeltaSensor(
         task_id='delay_task',
-        delta=timedelta(seconds=200)
+        delta=timedelta(seconds=170)
     )
 
     wait_for_file = PythonSensor(

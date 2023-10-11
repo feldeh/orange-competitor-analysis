@@ -85,7 +85,7 @@ def extract_mobile_subscription_data(page_content, url):
         error_message = f"Error extracting mobile subscription data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
+        raise error_message
 
 
 def extract_internet_table_data(page_content, url):
@@ -122,7 +122,7 @@ def extract_internet_table_data(page_content, url):
         error_message = f"Error extracting internet table data: {str(e)}"
         print(error_message)
         logging.error(error_message)
-        raise AirflowException(error_message)
+        raise error_message
 
     return internet_data
 
@@ -155,7 +155,7 @@ def extract_options_data(page_content, url):
         print(error_message)
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
+        raise error_message
 
 
 def get_mobile_subscription_data(browser, url):
@@ -271,8 +271,8 @@ def scarlet_trio():
     packs['pack_description'] = pack_description.encode('ascii', 'ignore').decode('ascii')
     packs['price'] = float(price)
     packs['scraped_at'] = today
-    packs["mobile_product_name"] = None
-    packs["internet_product_name"] = None
+    # packs["mobile_product_name"] = None
+    # packs["internet_product_name"] = None
 
     return packs
 
@@ -325,8 +325,8 @@ def scarlet_trio_mobile():
     packs['pack_description'] = pack_description.encode('ascii', 'ignore').decode('ascii')
     packs['price'] = float(price)
     packs['scraped_at'] = today
-    packs["mobile_product_name"] = None
-    packs["internet_product_name"] = None
+    # packs["mobile_product_name"] = None
+    # packs["internet_product_name"] = None
 
     return packs
 
@@ -369,7 +369,7 @@ def extract_options_streaming(page_content, url):
         error_message = f"Error extracting options streaming data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
+        raise error_message
 
 def get_options_tv(browser, url):
     time.sleep(5)
@@ -405,7 +405,7 @@ def extract_options_tv(page_content, url):
         error_message = f"Error extracting options tv data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise AirflowException(error_message)
+        raise error_message
 
 def scarlet_scraper():
     with sync_playwright() as p:
@@ -436,7 +436,7 @@ def scarlet_scraper():
         except Exception as e:
             error_message = f"Error in scarlet_scraper function: {str(e)}"
             traceback.print_exc()
-            raise AirflowException(error_message)
+
         finally:
             browser.close()
 
