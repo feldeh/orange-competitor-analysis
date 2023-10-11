@@ -9,8 +9,8 @@ import traceback
 import requests
 from pathlib import Path
 
-from utils import save_to_json
-from utils import save_to_ndjson
+from utils_scarlet import save_to_json
+from utils_scarlet import save_to_ndjson
 
 
 URL = {
