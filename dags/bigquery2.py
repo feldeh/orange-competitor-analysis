@@ -48,8 +48,8 @@ def get_existing_record(client, query):
     try:
         query_job = client.query(query)
         results = [dict(row.items()) for row in query_job.result()][0]
-        print("Query executed successfully")
-        print('Query results: ', results)
+        # print("Query executed successfully")
+        # print('Query results: ', results)
         return results
 
     except IndexError:
@@ -78,8 +78,6 @@ def load_packs_to_bq(client, project_id, dataset_id, competitor):
 
     ndjson_file_path = Path(f'data/cleaned_data/{competitor}_packs.ndjson')
 
-
-
     with open(ndjson_file_path, "rb") as source_file:
         packs_data = ndjson.load(source_file)
 
@@ -104,6 +102,7 @@ def load_packs_to_bq(client, project_id, dataset_id, competitor):
 
         if packs_to_load != []:
             insert_rows(client, project_id, dataset_id, 'packs', packs_to_load)
+
 
 def load_logs_to_bq(client, project_id, dataset_id, competitor):
 
@@ -146,6 +145,8 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
 
             get_competitor_query = (f'SELECT * FROM `{dataset_id}.competitors` WHERE competitor_name="{first_record["competitor_name"]}" LIMIT 1')
             existing_competitor_record = get_existing_record(client, get_competitor_query)
+
+            # if the competitor doesn't exist, insert new competitor data with associated product, features, and price data.
             if not existing_competitor_record:
                 new_competitor = [
                     {
@@ -238,22 +239,21 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
                     "scraped_at": record["scraped_at"],
                 }
 
-                # Check if product exist
+                # check if product exist
                 get_product_query = (f'SELECT * FROM `{dataset_id}.products` WHERE competitor_uuid="{competitor_uuid}" AND product_name="{product_data["product_name"]}" LIMIT 1')
                 existing_product_record = get_existing_record(client, get_product_query)
-                # To be loaded if product not exist
+                # if product doesn't exist, load product, feature and price
                 if not existing_product_record:
                     products_to_load.append(product_data)
                     features_to_load.append(feature_data)
                     prices_to_load.append(price_data)
 
                 else:
+                    # store the fetched product_uuid
                     product_uuid = existing_product_record['product_uuid']
-
-                    # Keep the same product_uuid
                     feature_data["product_uuid"] = product_uuid
 
-                    # Fetch last record from product feature
+                    # fetch last record from product feature
                     get_feature_query = (f'SELECT * FROM `{dataset_id}.features` WHERE product_uuid="{product_uuid}" ORDER BY scraped_at LIMIT 1')
                     existing_feature_record = get_existing_record(client, get_feature_query)
 
@@ -269,14 +269,15 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
                             features_to_load.append(feature_data)
                             prices_to_load.append(price_data)
 
-
-                    # Keep the same feature_uuid
+                    # store the fetched feature_uuid
+                    feature_uuid = existing_product_record['feature_uuid']
                     price_data["feature_uuid"] = feature_uuid
 
-                    # Fetch last record from product price
+                    # fetch the last record matching that feature_uuid and product price
                     get_price_query = (f'SELECT * FROM `{dataset_id}.product_prices` WHERE feature_uuid="{feature_uuid}" ORDER BY scraped_at LIMIT 1')
                     existing_price_record = get_existing_record(client, get_price_query)
 
+                    # if no hit insert price data with newly generated price_uuid
                     if not existing_price_record:
                         prices_to_load.append(price_data)
 
@@ -285,7 +286,6 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
                         # To be loaded if price changed
                         if is_different_record(existing_price_record, price_data, ignored_keys):
                             prices_to_load.append(price_data)
-
 
             if products_to_load:
                 insert_rows(client, project_id, dataset_id, 'products', products_to_load)
