@@ -4,8 +4,8 @@ import json
 import logging
 
 
-def save_to_json(dict_data, filename):
-    json_path = f"data/raw_data/scarlet_data/json/{filename}.json"
+def save_to_json(dict_data, competitor, filename):
+    json_path = f"data/raw_data/{competitor}/json/{filename}.json"
     json_data = json.dumps(dict_data, indent=4)
     with open(json_path, mode="w", encoding="utf-8") as f:
         f.write(json_data)
@@ -15,8 +15,8 @@ def save_to_json(dict_data, filename):
     logging.info(file_saved_message)
 
 
-def save_to_ndjson(list_data, filename):
-    ndjson_path = f"data/raw_data/scarlet_data/ndjson/{filename}.ndjson"
+def save_to_ndjson(list_data,competitor,  filename):
+    ndjson_path = f"data/raw_data/{competitor}/ndjson/{filename}.ndjson"
     with open(ndjson_path, "w", encoding="utf-8") as f:
         ndjson.dump(list_data, f)
 
