@@ -37,6 +37,7 @@ BQ_TABLE_SCHEMAS = {
         bq.SchemaField('product_name', 'STRING', mode='REQUIRED'),
         bq.SchemaField('competitor_name', 'STRING', mode='REQUIRED'),
         bq.SchemaField('competitor_uuid', 'STRING', mode='REQUIRED'),
+        bq.SchemaField('feature_uuid', 'STRING', mode='REQUIRED'),
         bq.SchemaField('scraped_at', 'DATETIME', mode='REQUIRED'),
 
     ],

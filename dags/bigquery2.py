@@ -51,8 +51,8 @@ def get_existing_record(client, query):
     try:
         query_job = client.query(query)
         results = [dict(row.items()) for row in query_job.result()][0]
-        # print("Query executed successfully")
-        # print('Query results: ', results)
+        print("Query executed successfully")
+        print('Query results: ', results)
         return results
 
     except IndexError:
@@ -172,6 +172,7 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
                         "product_uuid": product_uuid,
                         "product_name": record["product_name"],
                         "competitor_uuid": competitor_uuid,
+                        "feature_uuid": feature_uuid,
                         "competitor_name": record["competitor_name"],
                         "scraped_at": record["scraped_at"],
                     }
@@ -221,6 +222,7 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
                     "product_name": record["product_name"],
                     "competitor_uuid": competitor_uuid,
                     "competitor_name": record["competitor_name"],
+                    "feature_uuid": feature_uuid,
                     "scraped_at": record["scraped_at"],
                 }
 
@@ -276,6 +278,7 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
                             prices_to_load.append(price_data)
 
                     # store the fetched feature_uuid
+                    print("existing_product_record =====> ", existing_product_record)
                     feature_uuid = existing_product_record['feature_uuid']
                     price_data["feature_uuid"] = feature_uuid
 
@@ -283,13 +286,13 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
                     get_price_query = (f'SELECT * FROM `{dataset_id}.product_prices` WHERE feature_uuid="{feature_uuid}" ORDER BY scraped_at LIMIT 1')
                     existing_price_record = get_existing_record(client, get_price_query)
 
-                    # if no hit insert price data with newly generated price_uuid
+                    # if no price found insert price data with newly generated price_uuid
                     if not existing_price_record:
                         prices_to_load.append(price_data)
 
                     else:
                         ignored_keys = ['scraped_at', 'feature_uuid', 'price_uuid']
-                        # To be loaded if price changed
+                        # if new price, load the new price
                         if is_different_record(existing_price_record, price_data, ignored_keys):
                             prices_to_load.append(price_data)
 
