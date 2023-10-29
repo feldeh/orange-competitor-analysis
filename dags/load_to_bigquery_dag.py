@@ -91,15 +91,16 @@ DEFAULT_DAG_ARGS = {
     dag_id='load_to_bigquery_dag',
     start_date=datetime(2023, 10, 5),
     schedule_interval=None,
+    description='Loading data to bq',
     catchup=False,
     default_args=DEFAULT_DAG_ARGS
 )
 def load_to_bigquery_dag():
 
-    delay_task = TimeDeltaSensor(
-        task_id='delay_task',
-        delta=timedelta(seconds=200)
-    )
+    # delay_task = TimeDeltaSensor(
+    #     task_id='delay_task',
+    #     delta=timedelta(seconds=200)
+    # )
 
     wait_for_file = PythonSensor(
         task_id='wait_for_file',
@@ -124,7 +125,7 @@ def load_to_bigquery_dag():
 
     )
 
-    delay_task >> wait_for_file >> load_to_bigquery
+    wait_for_file >> load_to_bigquery
 
 
 load_job = load_to_bigquery_dag()

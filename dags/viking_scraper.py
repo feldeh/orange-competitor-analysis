@@ -1,3 +1,5 @@
+from utils import save_to_json, check_request, save_scraping_log
+from data_model import Products
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import requests
@@ -6,9 +8,8 @@ import time
 import logging
 import traceback
 from airflow import AirflowException
+from pydantic import ValidationError
 
-
-from utils import save_to_json, check_request, save_scraping_log
 
 URL = {
     'mobile_prepaid': 'https://mobilevikings.be/en/offer/prepaid/',
@@ -53,7 +54,6 @@ def extract_prepaid_selector_data(page_content, url):
         try:
             prepaid_rates_major = prepaid_element.select('.PrepaidSelectorProduct__rates__major')
             sms = prepaid_rates_major[2].get_text().lower()
-            price_per_minute = prepaid_element.select('.PrepaidSelectorProduct__rates__minor')[2].get_text().replace(',', '.').replace('per minute', '').strip()
             data_focus = prepaid_element['data-focus']
             data = prepaid_element['data-gb']
             minutes = prepaid_element['data-min']
@@ -118,7 +118,6 @@ def extract_subscription_data(page_content, url):
         for subscription_element in subscription_elements:
 
             mobile_data = subscription_element.select_one('.data-amount').get_text().lower().replace('gb', '').strip()
-            network = '5g' if subscription_element.select_one('.FourGFiveG--has5g') else '4g'
             calls_texts = subscription_element.select_one('.PostpaidOption__voiceTextAmount').get_text().lower()
             price_per_month = subscription_element.select_one('.monthlyPrice__price').get_text().strip().replace(',-', '')
 
@@ -254,18 +253,31 @@ def get_internet_subscription_data(browser, url):
 
 def get_products(browser, url):
 
-    prepaid_data = get_mobile_prepaid_data(browser, url['mobile_prepaid'])
-    mobile_subscription_data = get_mobile_subscription_data(browser, url['mobile_subscriptions'])
-    internet_subscription_data = get_internet_subscription_data(browser, url['internet_subscription'])
+    try:
+        prepaid_data = get_mobile_prepaid_data(browser, url['mobile_prepaid'])
+        mobile_subscription_data = get_mobile_subscription_data(browser, url['mobile_subscriptions'])
+        internet_subscription_data = get_internet_subscription_data(browser, url['internet_subscription'])
 
-    product_list = []
-    product_list.extend(prepaid_data)
-    product_list.extend(mobile_subscription_data)
-    product_list.extend(internet_subscription_data)
+        product_list = []
+        product_list.extend(prepaid_data)
+        product_list.extend(mobile_subscription_data)
+        product_list.extend(internet_subscription_data)
 
-    product_dict = {'products': product_list}
+        # Create an instance of the Products pydantic class
+        products_instance = Products(products=product_list)
 
-    return product_dict
+        # Convert the products_instance to a dictionary
+        products_dict = products_instance.model_dump()
+
+        return products_dict
+    except ValidationError as validation_error:
+        error_message = f"Validation error: {validation_error}"
+        logging.error(error_message)
+        raise
+    # except Exception as e:
+    #     error_message = f"Error: {str(e)}"
+    #     logging.error(error_message)
+    #     raise
 
 
 def extract_combo_advantage(url):
@@ -330,7 +342,7 @@ def generate_packs(products_list, combo_advantage, url):
 
 def mobileviking_scraper():
 
-    with sync_playwright() as p:
+    with sync_playwright() as pw:
         start_time = time.strftime("%Y-%m-%d %H:%M:%S")
         start_time_seconds = time.time()
         error_details = 'no error'
@@ -342,10 +354,9 @@ def mobileviking_scraper():
         logging.basicConfig(filename=log_file_path, level=logging.INFO, format=log_format)
         logging.info(f"=========== mobileviking_scraper start: {start_time} ===========")
 
-        browser = p.chromium.launch(headless=True, slow_mo=50)
+        browser = pw.chromium.launch(headless=True, slow_mo=50)
 
         try:
-            # TODO: add data validation with pydantic
             # TODO: add typing
             product_dict = get_products(browser, URL)
             # save_to_ndjson(product_dict['products'], 'products')

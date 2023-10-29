@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow.decorators import dag
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
+from airflow.operators.empty import EmptyOperator
 
 DEFAULT_ARGS = {
     'owner': 'admin',
@@ -21,16 +22,20 @@ def master_dag():
     trigger_scraping = TriggerDagRunOperator(
         task_id='trigger_scraping',
         trigger_dag_id='scrape_dag',
+        wait_for_completion=True,
+        poke_interval=150
     )
 
     trigger_cleaning = TriggerDagRunOperator(
         task_id='trigger_cleaning',
         trigger_dag_id='clean_dag',
+        wait_for_completion=True,
+        poke_interval=30
     )
 
     trigger_load_to_bigquery = TriggerDagRunOperator(
         task_id='trigger_load_to_bigquery',
-        trigger_dag_id='load_to_bigquery_dag',
+        trigger_dag_id='load_to_bigquery_dag'
     )
 
     trigger_scraping >> trigger_cleaning >> trigger_load_to_bigquery

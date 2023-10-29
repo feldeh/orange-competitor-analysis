@@ -18,6 +18,7 @@ DEFAULT_ARGS = {
     dag_id='scrape_dag',
     start_date=datetime(2023, 10, 5),
     schedule_interval=None,
+    description="Scraping data",
     catchup=False,
     default_args=DEFAULT_ARGS
 )
@@ -33,7 +34,7 @@ def scrape_dag():
         python_callable=scarlet_scraper,
     )
 
-    scrape_viking >> scrape_scarlet
+    scrape_viking, scrape_scarlet
 
 
 scrape_job = scrape_dag()
