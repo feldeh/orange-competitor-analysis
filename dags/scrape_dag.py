@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
+from airflow.operators.empty import EmptyOperator
 
 
 from viking_scraper import mobileviking_scraper
@@ -34,7 +35,13 @@ def scrape_dag():
         python_callable=scarlet_scraper,
     )
 
-    scrape_viking, scrape_scarlet
+    # Allow DAG to continue execution regardless of upstream task outcomes
+    end_task = EmptyOperator(
+        task_id='end_task',
+        trigger_rule='all_done',
+    )
+
+    [scrape_viking, scrape_scarlet] >> end_task
 
 
 scrape_job = scrape_dag()

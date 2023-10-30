@@ -2,8 +2,8 @@
     "logs": [
         {
             "competitor_name": "scarlet",
-            "scraped_at": "2023-10-28",
-            "error_details": "no error",
+            "scraped_at": "2023-10-29",
+            "error_message": "no error",
             "status": "success"
         }
     ]

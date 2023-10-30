@@ -9,6 +9,7 @@ import logging
 import traceback
 from airflow import AirflowException
 from pydantic import ValidationError
+from utils import *
 
 
 URL = {
@@ -31,16 +32,12 @@ def goto_page(browser, url):
         page.wait_for_selector('#btn-accept-cookies')
         page.query_selector('#btn-accept-cookies').click(force=True)
 
+        return page
+
     except Exception as e:
         error_message = f"Accept cookie button error: {str(e)}"
         logging.error(error_message)
         raise AirflowException(error_message)
-
-    return page
-
-
-def unlimited_check_to_float(string):
-    return -1 if string.lower() == 'unlimited' else float(string)
 
 
 def extract_prepaid_selector_data(page_content, url):
@@ -76,35 +73,37 @@ def extract_prepaid_selector_data(page_content, url):
                 'download_speed': None,
             })
 
+            return prepaid_data
+
         except Exception as e:
             error_message = f"Error extracting prepaid selector data: {str(e)}"
             logging.error(error_message)
             traceback.print_exc()
-
-    return prepaid_data
+            raise AirflowException(error_message)
 
 
 def activate_toggles(page):
-    toggles = page.query_selector_all('.slider')
-    for i in range(len(toggles)):
-        toggles[i].click()
+    try:
+        toggles = page.query_selector_all('.slider')
+        for i in range(len(toggles)):
+            toggles[i].click()
+    except Exception as e:
+        error_message = f"Error activating toggles: {str(e)}"
+        logging.error(error_message)
+        traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def extract_prepaid_data(page, url):
-    try:
-        page_content = page.content()
-        prepaid_data = extract_prepaid_selector_data(page_content, url)
-        activate_toggles(page)
+    page_content = page.content()
+    prepaid_data = extract_prepaid_selector_data(page_content, url)
+    activate_toggles(page)
 
-        page_content = page.content()
-        prepaid_data_calls = extract_prepaid_selector_data(page_content, url)
-        prepaid_data.extend(prepaid_data_calls)
+    page_content = page.content()
+    prepaid_data_calls = extract_prepaid_selector_data(page_content, url)
+    prepaid_data.extend(prepaid_data_calls)
 
-        return prepaid_data
-    except Exception as e:
-        error_message = f"Error extracting prepaid data: {str(e)}"
-        logging.error(error_message)
-        traceback.print_exc()
+    return prepaid_data
 
 
 def extract_subscription_data(page_content, url):
@@ -141,12 +140,13 @@ def extract_subscription_data(page_content, url):
                 'download_speed': None,
             })
 
+        return subscription_data
+
     except Exception as e:
         error_message = f"Error extracting subscription data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-
-    return subscription_data
+        raise AirflowException(error_message)
 
 
 def extract_internet_table_data(page_content, url):
@@ -163,7 +163,6 @@ def extract_internet_table_data(page_content, url):
 
         download_speed = soup.select_one('tr.matrix__downloadSpeed td').get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
         upload_speed = soup.select_one('tr.matrix__voice td').get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
-        # line_type = soup.select_one('tr.matrix__lineType td').get_text().encode('ascii', 'ignore').decode('ascii').lower().strip()
 
         monthly_data = unlimited_check_to_float(monthly_data)
 
@@ -184,6 +183,7 @@ def extract_internet_table_data(page_content, url):
         error_message = f"Error extracting internet table data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def extract_internet_data(page, url):
@@ -215,6 +215,7 @@ def extract_internet_data(page, url):
         error_message = f"Error extracting internet data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def get_mobile_prepaid_data(browser, url):
@@ -270,14 +271,12 @@ def get_products(browser, url):
         products_dict = products_instance.model_dump()
 
         return products_dict
+
     except ValidationError as validation_error:
         error_message = f"Validation error: {validation_error}"
         logging.error(error_message)
-        raise
-    # except Exception as e:
-    #     error_message = f"Error: {str(e)}"
-    #     logging.error(error_message)
-    #     raise
+        traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def extract_combo_advantage(url):
@@ -294,6 +293,7 @@ def extract_combo_advantage(url):
         error_message = f'Error extracting combo: {str(e)}'
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def generate_packs(products_list, combo_advantage, url):
@@ -338,6 +338,7 @@ def generate_packs(products_list, combo_advantage, url):
         error_message = f'Error generating packs: {str(e)}'
         logging.error(error_message)
         traceback.print_exc()
+        raise AirflowException(error_message)
 
 
 def mobileviking_scraper():
@@ -359,12 +360,10 @@ def mobileviking_scraper():
         try:
             # TODO: add typing
             product_dict = get_products(browser, URL)
-            # save_to_ndjson(product_dict['products'], 'products')
             save_to_json(product_dict, "mobileviking", 'products')
 
             combo_advantage = extract_combo_advantage(URL['combo'])
             packs_dict = generate_packs(product_dict['products'], combo_advantage, URL['combo'])
-            # save_to_ndjson(packs_dict['packs'], 'packs')
             save_to_json(packs_dict, "mobileviking", 'packs')
 
         except Exception as e:
@@ -372,6 +371,8 @@ def mobileviking_scraper():
             logging.error(error_message)
             error_details = error_message
             traceback.print_exc()
+            # stack_trace = traceback.format_exc()
+            raise AirflowException(error_message)
         finally:
             browser.close()
 

@@ -7,9 +7,7 @@ import logging
 import traceback
 import requests
 from airflow import AirflowException
-
-
-from utils import save_to_json, check_request, save_scraping_log
+from utils import *
 
 
 URL = {
@@ -21,8 +19,6 @@ URL = {
 
 
 def goto_page(browser, url):
-    """function to open a page with the given url using a browser"""
-
     check_request(url)
 
     page = browser.new_page()
@@ -32,21 +28,16 @@ def goto_page(browser, url):
     try:
         page.wait_for_selector('#onetrust-accept-btn-handler')
         page.query_selector('#onetrust-accept-btn-handler').click(force=True)
+
+        return page
+
     except Exception as e:
         error_message = f"Accept cookie button error: {str(e)}"
         logging.error(error_message)
         raise AirflowException(error_message)
 
-    return page
-
-
-def unlimited_check_to_float(string):
-    """function to convert unlimited to -1 and string to float"""
-    return -1 if string.lower() == 'unlimited' else float(string)
-
 
 def extract_mobile_subscription_data(page_content, url):
-    """extract mobile subscription data for three different categories from scarlet"""
 
     mobile_subscription_data = []
     date = time.strftime("%Y-%m-%d")
@@ -85,11 +76,10 @@ def extract_mobile_subscription_data(page_content, url):
         error_message = f"Error extracting mobile subscription data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise error_message
+        raise AirflowException(error_message)
 
 
-def extract_internet_table_data(page_content, url):
-    """Extract internet subscription table from web page."""
+def extract_internet_subscription_data(page_content, url):
     soup = BeautifulSoup(page_content, 'html.parser')
 
     try:
@@ -118,13 +108,12 @@ def extract_internet_table_data(page_content, url):
                 'download_speed': float(max_surfing_speed),
             })
 
+        return internet_data
+
     except Exception as e:
         error_message = f"Error extracting internet table data: {str(e)}"
-        print(error_message)
         logging.error(error_message)
-        raise error_message
-
-    return internet_data
+        raise AirflowException(error_message)
 
 
 def extract_options_data(page_content, url):
@@ -143,6 +132,7 @@ def extract_options_data(page_content, url):
             'product_category': 'mobile_subscription',
             'option_name': "extra_internet",
             'option_details': option_details,
+            'option_url': url,
             'price': float(price[0]),
             'scraped_at': date,
             'pack_name': None
@@ -152,10 +142,9 @@ def extract_options_data(page_content, url):
 
     except Exception as e:
         error_message = f"Error extracting options data: {str(e)}"
-        print(error_message)
         logging.error(error_message)
         traceback.print_exc()
-        raise error_message
+        raise AirflowException(error_message)
 
 
 def get_mobile_subscription_data(browser, url):
@@ -176,7 +165,7 @@ def get_internet_subscription_data(browser, url):
     time.sleep(5)
     page_content = page.content()
     logging.info(f"Extracting internet subscription data from URL: {url}")
-    internet_subscription_data = extract_internet_table_data(page_content, url)
+    internet_subscription_data = extract_internet_subscription_data(page_content, url)
     page.close()
 
     return internet_subscription_data
@@ -225,11 +214,11 @@ def get_products(browser, url):
 
 def scarlet_trio():
     packs = {}
-    url = 'https://www.scarlet.be/en/packs/trio.html?#/OurTrio'
+    url = 'https://www.scarlet.be/en/packs/trio.html'
 
     session = requests.Session()
     response = session.get(url)
-    time.sleep(5)
+    # time.sleep(5)
     soup = BeautifulSoup(response.content, "html.parser")
     internet_speed = soup.find_all("h3", class_="rs-mediabox-title")
     pack_name = soup.find("h1").get_text().lower().replace(' ', '_')
@@ -369,7 +358,8 @@ def extract_options_streaming(page_content, url):
         error_message = f"Error extracting options streaming data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise error_message
+        raise AirflowException(error_message)
+
 
 def get_options_tv(browser, url):
     time.sleep(5)
@@ -405,7 +395,8 @@ def extract_options_tv(page_content, url):
         error_message = f"Error extracting options tv data: {str(e)}"
         logging.error(error_message)
         traceback.print_exc()
-        raise error_message
+        raise AirflowException(error_message)
+
 
 def scarlet_scraper():
     with sync_playwright() as p:
@@ -435,7 +426,10 @@ def scarlet_scraper():
 
         except Exception as e:
             error_message = f"Error in scarlet_scraper function: {str(e)}"
+            logging.error(error_message)
+            error_details = error_message
             traceback.print_exc()
+            raise AirflowException(error_message)
 
         finally:
             browser.close()
