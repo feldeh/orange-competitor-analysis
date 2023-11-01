@@ -18,7 +18,7 @@ URL = {
 }
 
 
-def goto_page(browser, url):
+def navigate(browser, url):
     check_request(url)
 
     page = browser.new_page()
@@ -149,7 +149,7 @@ def extract_options_data(page_content, url):
 
 def get_mobile_subscription_data(browser, url):
     """function to load content from the page and extract data"""
-    page = goto_page(browser, url)
+    page = navigate(browser, url)
     time.sleep(5)
     page_content = page.content()
     logging.info(f"Extracting mobile subscription data from URL: {url}")
@@ -161,7 +161,7 @@ def get_mobile_subscription_data(browser, url):
 
 def get_internet_subscription_data(browser, url):
     """function to load content from the page and extract data"""
-    page = goto_page(browser, url)
+    page = navigate(browser, url)
     time.sleep(5)
     page_content = page.content()
     logging.info(f"Extracting internet subscription data from URL: {url}")
@@ -173,7 +173,7 @@ def get_internet_subscription_data(browser, url):
 
 def get_options_data(browser, url):
     """function to load content from the page and extract data"""
-    page = goto_page(browser, url)
+    page = navigate(browser, url)
     time.sleep(5)
     page_content = page.content()
     logging.info(f"Extracting options data from URL: {url}")
@@ -321,7 +321,7 @@ def scarlet_trio_mobile():
 
 
 def get_options_streaming(browser, url):
-    page = goto_page(browser, url)
+    page = navigate(browser, url)
     time.sleep(5)
     page_content = page.content()
 
@@ -363,7 +363,7 @@ def extract_options_streaming(page_content, url):
 
 def get_options_tv(browser, url):
     time.sleep(5)
-    page = goto_page(browser, url)
+    page = navigate(browser, url)
     time.sleep(5)
     page_content = page.content()
 

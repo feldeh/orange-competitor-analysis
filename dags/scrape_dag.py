@@ -2,10 +2,9 @@ from datetime import datetime, timedelta
 from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
 from airflow.operators.empty import EmptyOperator
-
-
 from viking_scraper import mobileviking_scraper
 from scarlet_scraper import scarlet_scraper
+from utils import read_config_from_json
 
 
 DEFAULT_ARGS = {
@@ -25,9 +24,12 @@ DEFAULT_ARGS = {
 )
 def scrape_dag():
 
+    config = read_config_from_json()
+
     scrape_viking = PythonOperator(
         task_id='scrape_viking',
         python_callable=mobileviking_scraper,
+        op_args=[config['mobileviking']]
     )
 
     scrape_scarlet = PythonOperator(

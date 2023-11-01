@@ -3,12 +3,8 @@ import ndjson
 import json
 import logging
 import requests
-# from airflow import AirflowException
+from airflow import AirflowException
 import time
-
-
-def unlimited_check_to_float(string):
-    return -1 if string.lower() == 'unlimited' else float(string)
 
 
 def save_to_json(dict_data, competitor, filename):
@@ -40,26 +36,25 @@ def check_request(url):
 
     except requests.exceptions.ConnectionError as ec:
         logging.error(ec)
-        # raise AirflowException(ec)
+        raise AirflowException(ec)
     except requests.exceptions.Timeout as et:
         logging.error(et)
-        # raise AirflowException(et)
+        raise AirflowException(et)
     except requests.exceptions.HTTPError as eh:
         logging.error(eh)
-        # raise AirflowException(eh)
+        raise AirflowException(eh)
 
 
-def save_scraping_log(error_message, competitor):
+def save_scraping_log(error_details, competitor):
 
-    status = 'success' if error_message == 'no error' else 'failed'
+    status = 'success' if error_details == 'no error' else 'failed'
     log_entry = {
         "logs":
             [
                 {
                     'competitor_name': competitor,
                     'scraped_at': time.strftime("%Y-%m-%d"),
-                    'error_message': error_message,
-                    # 'stack_trace': stack_trace,
+                    'error_details': error_details,
                     'status': status
                 }
             ]

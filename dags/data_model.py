@@ -28,7 +28,7 @@ def validate_products(product_list) -> List[dict]:
     try:
         products_object = Products(products=product_list)
         products_dict = products_object.model_dump()
-        return products_dict['products']
+        return products_dict
 
     except ValidationError as validation_error:
         error_message = f"Validation error: {validation_error}"
