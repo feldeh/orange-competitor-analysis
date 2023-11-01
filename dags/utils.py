@@ -93,3 +93,9 @@ def read_config_from_json(filename='dags/scraper_config.json'):
 def check_empty_el(el, selector_name):
     if not el:
         raise Exception(f"Selector '{selector_name}' not found")
+
+
+def load_ndjson(competitor, table_name):
+    file_path = Path(f'data/cleaned_data/{competitor}_{table_name}.ndjson')
+    with open(file_path, "rb") as file:
+        return ndjson.load(file)
