@@ -26,6 +26,10 @@ def save_to_ndjson(list_data, competitor, filename):
     logging.info(file_saved_message)
 
 
+def unlimited_check_to_float(string):
+    return -1 if string.lower() == 'unlimited' else float(string)
+
+
 def check_request(url):
     """
     Check url request for errors
@@ -79,3 +83,13 @@ def check_file_exist(dir, competitors, file_names, file_type):
             counter += 1
             time.sleep(5)
     return False
+
+
+def read_config_from_json(filename='dags/scraper_config.json'):
+    with open(filename, 'r') as json_file:
+        return json.load(json_file)
+
+
+def check_empty_el(el, selector_name):
+    if not el:
+        raise Exception(f"Selector '{selector_name}' not found")

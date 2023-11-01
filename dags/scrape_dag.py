@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
 from airflow.operators.empty import EmptyOperator
-from viking_scraper import mobileviking_scraper
+from viking_class_scraper import mobileviking_scraper
 from scarlet_scraper import scarlet_scraper
 from utils import read_config_from_json
 
