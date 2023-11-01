@@ -1,9 +1,7 @@
 import google.cloud.bigquery as bq
 from google.cloud.exceptions import NotFound
-import ndjson
 import time
 import uuid
-from pathlib import Path
 from utils import *
 
 
@@ -24,7 +22,6 @@ def create_table_if_not_exist(client, project_id, dataset_id, tables, schemas):
 
     for table_id in tables:
         table_ref = dataset_ref.table(table_id)
-
         try:
             client.get_table(table_ref)
             print(f"Table {table_id} already exists.")
@@ -108,197 +105,155 @@ def load_packs_to_bq(client, project_id, dataset_id, competitor):
 
 def load_logs_to_bq(client, project_id, dataset_id, competitor):
 
-
     logs_data = load_ndjson(competitor, 'logs')
 
-    logs_to_load = []
-
-    for record in logs_data:
-        logs_data = {
-            "competitor_name": record["competitor_name"],
-            "scraped_at": record["scraped_at"],
-            "error_details": record["error_details"],
-            "status": record["status"],
-
-        }
-
-        logs_to_load.append(logs_data)
-
-    insert_rows(client, project_id, dataset_id, 'logs', logs_to_load)
+    insert_rows(client, project_id, dataset_id, 'logs', logs_data)
 
 
-def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, competitors):
+def prepare_data_for_insertion(record, competitor_uuid):
+
+    product_uuid = str(uuid.uuid4())
+    feature_uuid = str(uuid.uuid4())
+    price_uuid = str(uuid.uuid4())
+
+    product_data = {
+        "product_uuid": product_uuid,
+        "product_name": record["product_name"],
+        "competitor_uuid": competitor_uuid,
+        "feature_uuid": feature_uuid,
+        "competitor_name": record["competitor_name"],
+        "scraped_at": record["scraped_at"],
+    }
+
+    feature_data = {
+        "feature_uuid": feature_uuid,
+        "product_uuid": product_uuid,
+        "product_name": record["product_name"],
+        "product_category": record["product_category"],
+        "product_url": record["product_url"],
+        "scraped_at": record["scraped_at"],
+        "data": record["data"],
+        "minutes": record["minutes"],
+        "sms": record["sms"],
+        "upload_speed": record["upload_speed"],
+        "download_speed": record["download_speed"]
+    }
+
+    price_data = {
+        "price_uuid": price_uuid,
+        "feature_uuid": feature_uuid,
+        "price": record["price"],
+        "scraped_at": record["scraped_at"],
+    }
+
+    return product_data, feature_data, price_data
+
+
+
+
+def load_products_to_bq(client, project_id, dataset_id, competitor):
     """
     Load data to BigQuery, ensuring that existing records are not duplicated
     """
-    # TODO: extract function from loop
-    for competitor in competitors:
-        create_dataset_if_not_exist(client, project_id, dataset_id)
-        create_table_if_not_exist(client, project_id, dataset_id, table_names, table_schemas)
+    new_data = load_ndjson(competitor, 'products')
 
+    first_record = new_data[0]
+    products_to_load = []
+    features_to_load = []
+    prices_to_load = []
 
-        new_data = load_ndjson(competitor, 'products')
+    competitor_uuid = str(uuid.uuid4())
 
-        first_record = new_data[0]
-        products_to_load = []
-        features_to_load = []
-        prices_to_load = []
+    get_competitor_query = (f'SELECT * FROM `{dataset_id}.competitors` WHERE competitor_name="{first_record["competitor_name"]}" LIMIT 1')
+    existing_competitor_record = get_existing_record(client, get_competitor_query)
 
-        competitor_uuid = str(uuid.uuid4())
-
-        get_competitor_query = (f'SELECT * FROM `{dataset_id}.competitors` WHERE competitor_name="{first_record["competitor_name"]}" LIMIT 1')
-        existing_competitor_record = get_existing_record(client, get_competitor_query)
-
-        # if the competitor doesn't exist, insert new competitor data with associated product, features, and price data.
-        if not existing_competitor_record:
-            new_competitor = [
-                {
-                    "competitor_uuid": competitor_uuid,
-                    "competitor_name": first_record["competitor_name"],
-                    "created_at": first_record["scraped_at"],
-                }
-            ]
-            insert_rows(client, project_id, dataset_id, 'competitors', new_competitor)
-
-            for record in new_data:
-                product_uuid = str(uuid.uuid4())
-                feature_uuid = str(uuid.uuid4())
-                price_uuid = str(uuid.uuid4())
-
-                product_data = {
-                    "product_uuid": product_uuid,
-                    "product_name": record["product_name"],
-                    "competitor_uuid": competitor_uuid,
-                    "feature_uuid": feature_uuid,
-                    "competitor_name": record["competitor_name"],
-                    "scraped_at": record["scraped_at"],
-                }
-                products_to_load.append(product_data)
-
-                feature_data = {
-                    "feature_uuid": feature_uuid,
-                    "product_uuid": product_uuid,
-                    "product_name": record["product_name"],
-                    "product_category": record["product_category"],
-                    "product_url": record["product_url"],
-                    "scraped_at": record["scraped_at"],
-                    "data": record["data"],
-                    "minutes": record["minutes"],
-                    "sms": record["sms"],
-                    "upload_speed": record["upload_speed"],
-                    "download_speed": record["download_speed"]
-                }
-                features_to_load.append(feature_data)
-
-                price_data = {
-                    "price_uuid": price_uuid,
-                    "feature_uuid": feature_uuid,
-                    "price": record["price"],
-                    "scraped_at": record["scraped_at"],
-                }
-                prices_to_load.append(price_data)
-
-            insert_rows(client, project_id, dataset_id, 'products', products_to_load)
-            insert_rows(client, project_id, dataset_id, 'features', features_to_load)
-            insert_rows(client, project_id, dataset_id, 'product_prices', prices_to_load)
-
-            load_packs_to_bq(client, project_id, dataset_id, competitor)
-            load_logs_to_bq(client, project_id, dataset_id, competitor)
-
-            return
-
-        competitor_uuid = existing_competitor_record['competitor_uuid']
+    # if the competitor doesn't exist, insert new competitor data with associated product, features, and price data.
+    if not existing_competitor_record:
+        new_competitor = [
+            {
+                "competitor_uuid": competitor_uuid,
+                "competitor_name": first_record["competitor_name"],
+                "created_at": first_record["scraped_at"],
+            }
+        ]
+        insert_rows(client, project_id, dataset_id, 'competitors', new_competitor)
 
         for record in new_data:
-            product_uuid = str(uuid.uuid4())
-            feature_uuid = str(uuid.uuid4())
-            price_uuid = str(uuid.uuid4())
 
-            product_data = {
-                "product_uuid": product_uuid,
-                "product_name": record["product_name"],
-                "competitor_uuid": competitor_uuid,
-                "competitor_name": record["competitor_name"],
-                "feature_uuid": feature_uuid,
-                "scraped_at": record["scraped_at"],
-            }
+            product_data, feature_data, price_data = prepare_data_for_insertion(record, competitor_uuid)
 
-            feature_data = {
-                "feature_uuid": feature_uuid,
-                "product_uuid": product_uuid,
-                "product_name": record["product_name"],
-                "product_category": record["product_category"],
-                "product_url": record["product_url"],
-                "scraped_at": record["scraped_at"],
-                "data": record["data"],
-                "minutes": record["minutes"],
-                "sms": record["sms"],
-                "upload_speed": record["upload_speed"],
-                "download_speed": record["download_speed"]
-            }
+            products_to_load.append(product_data)
+            features_to_load.append(feature_data)
+            prices_to_load.append(price_data)
 
-            price_data = {
-                "price_uuid": price_uuid,
-                "feature_uuid": feature_uuid,
-                "price": record["price"],
-                "scraped_at": record["scraped_at"],
-            }
+        insert_rows(client, project_id, dataset_id, 'products', products_to_load)
+        insert_rows(client, project_id, dataset_id, 'features', features_to_load)
+        insert_rows(client, project_id, dataset_id, 'product_prices', prices_to_load)
 
-            # check if product exist
-            get_product_query = (f'SELECT * FROM `{dataset_id}.products` WHERE competitor_uuid="{competitor_uuid}" AND product_name="{product_data["product_name"]}" LIMIT 1')
-            existing_product_record = get_existing_record(client, get_product_query)
-            # if product doesn't exist, load product, feature and price
-            if not existing_product_record:
-                products_to_load.append(product_data)
+        load_packs_to_bq(client, project_id, dataset_id, competitor)
+        load_logs_to_bq(client, project_id, dataset_id, competitor)
+
+        return
+
+    competitor_uuid = existing_competitor_record['competitor_uuid']
+
+    for record in new_data:
+
+        product_data, feature_data, price_data = prepare_data_for_insertion(record, competitor_uuid)
+
+        # check if product exist
+        get_product_query = (f'SELECT * FROM `{dataset_id}.products` WHERE competitor_uuid="{competitor_uuid}" AND product_name="{product_data["product_name"]}" LIMIT 1')
+        existing_product_record = get_existing_record(client, get_product_query)
+        # if product doesn't exist, load product, feature and price
+        if not existing_product_record:
+            products_to_load.append(product_data)
+            features_to_load.append(feature_data)
+            prices_to_load.append(price_data)
+
+        else:
+            # store the fetched product_uuid
+            product_uuid = existing_product_record['product_uuid']
+            feature_data["product_uuid"] = product_uuid
+
+            # fetch last record from product feature
+            get_feature_query = (f'SELECT * FROM `{dataset_id}.features` WHERE product_uuid="{product_uuid}" ORDER BY scraped_at LIMIT 1')
+            existing_feature_record = get_existing_record(client, get_feature_query)
+
+            if not existing_feature_record:
                 features_to_load.append(feature_data)
                 prices_to_load.append(price_data)
 
             else:
-                # store the fetched product_uuid
-                product_uuid = existing_product_record['product_uuid']
-                feature_data["product_uuid"] = product_uuid
+                ignored_keys = ['scraped_at', 'product_uuid', 'feature_uuid']
+                # To be loaded if feature changed
+                if is_different_record(existing_feature_record, feature_data, ignored_keys):
 
-                # fetch last record from product feature
-                get_feature_query = (f'SELECT * FROM `{dataset_id}.features` WHERE product_uuid="{product_uuid}" ORDER BY scraped_at LIMIT 1')
-                existing_feature_record = get_existing_record(client, get_feature_query)
-
-                if not existing_feature_record:
                     features_to_load.append(feature_data)
                     prices_to_load.append(price_data)
 
-                else:
-                    ignored_keys = ['scraped_at', 'product_uuid', 'feature_uuid']
-                    # To be loaded if feature changed
-                    if is_different_record(existing_feature_record, feature_data, ignored_keys):
+            # store the fetched feature_uuid
+            feature_uuid = existing_product_record['feature_uuid']
+            price_data["feature_uuid"] = feature_uuid
 
-                        features_to_load.append(feature_data)
-                        prices_to_load.append(price_data)
+            # fetch the last record matching that feature_uuid and product price
+            get_price_query = (f'SELECT * FROM `{dataset_id}.product_prices` WHERE feature_uuid="{feature_uuid}" ORDER BY scraped_at LIMIT 1')
+            existing_price_record = get_existing_record(client, get_price_query)
 
-                # store the fetched feature_uuid
-                print("existing_product_record =====> ", existing_product_record)
-                feature_uuid = existing_product_record['feature_uuid']
-                price_data["feature_uuid"] = feature_uuid
+            # if no price found insert price data with newly generated price_uuid
+            if not existing_price_record:
+                prices_to_load.append(price_data)
 
-                # fetch the last record matching that feature_uuid and product price
-                get_price_query = (f'SELECT * FROM `{dataset_id}.product_prices` WHERE feature_uuid="{feature_uuid}" ORDER BY scraped_at LIMIT 1')
-                existing_price_record = get_existing_record(client, get_price_query)
-
-                # if no price found insert price data with newly generated price_uuid
-                if not existing_price_record:
+            else:
+                ignored_keys = ['scraped_at', 'feature_uuid', 'price_uuid']
+                # if new price, load the new price
+                if is_different_record(existing_price_record, price_data, ignored_keys):
                     prices_to_load.append(price_data)
 
-                else:
-                    ignored_keys = ['scraped_at', 'feature_uuid', 'price_uuid']
-                    # if new price, load the new price
-                    if is_different_record(existing_price_record, price_data, ignored_keys):
-                        prices_to_load.append(price_data)
+    if products_to_load:
+        insert_rows(client, project_id, dataset_id, 'products', products_to_load)
+    if features_to_load:
+        insert_rows(client, project_id, dataset_id, 'features', features_to_load)
+    if prices_to_load:
+        insert_rows(client, project_id, dataset_id, 'product_prices', prices_to_load)
 
-        if products_to_load:
-            insert_rows(client, project_id, dataset_id, 'products', products_to_load)
-        if features_to_load:
-            insert_rows(client, project_id, dataset_id, 'features', features_to_load)
-        if prices_to_load:
-            insert_rows(client, project_id, dataset_id, 'product_prices', prices_to_load)
 
-        load_packs_to_bq(client, project_id, dataset_id, competitor)
-        load_logs_to_bq(client, project_id, dataset_id, competitor)

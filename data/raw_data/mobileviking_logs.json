@@ -3,7 +3,7 @@
         {
             "competitor_name": "mobileviking",
             "scraped_at": "2023-11-01",
-            "error_details": "Error scraping mobileviking: Validation error: Error extracting internet data: Error extracting internet table data: Selector tr.matrix__downloadSpeed td123 not found",
+            "error_details": "Error scraping mobileviking: Validation error: Error extracting prepaid selector data: Selector '.PrepaidSelectorProduct test test test' not found",
             "status": "failed"
         }
     ]

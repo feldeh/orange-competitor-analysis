@@ -6,7 +6,6 @@ from airflow.sensors.python import PythonSensor
 
 
 from transform import clean_data_task
-from utils import check_file_exist
 
 
 HEADERS = ['products', 'packs', 'logs']
@@ -30,18 +29,9 @@ DEFAULT_ARGS = {
 )
 def clean_dag():
 
-    # delay_task = TimeDeltaSensor(
-    #     task_id='delay_task',
-    #     delta=timedelta(seconds=170)
-    # )
-
-    wait_for_file = PythonSensor(
-        task_id='wait_for_file',
-        python_callable=check_file_exist,
-        op_kwargs={"dir": "raw_data", "competitors": COMPETITORS, "file_names": FILE_NAMES, "file_type": "json"},
-        mode='reschedule',
-        timeout=200,
-
+    delay_task = TimeDeltaSensor(
+        task_id='delay_task',
+        delta=timedelta(seconds=2)
     )
 
     clean_data = PythonOperator(
@@ -50,7 +40,7 @@ def clean_dag():
         op_kwargs={'competitors': COMPETITORS, 'headers': HEADERS}
     )
 
-    wait_for_file >> clean_data
+    delay_task >> clean_data
 
 
 clean_job = clean_dag()

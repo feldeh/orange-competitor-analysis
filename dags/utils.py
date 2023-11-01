@@ -5,6 +5,7 @@ import logging
 import requests
 from airflow import AirflowException
 import time
+import os
 
 
 def save_to_json(dict_data, competitor, filename):
@@ -66,23 +67,6 @@ def save_scraping_log(error_details, competitor):
     save_to_json(log_entry, competitor, "logs")
 
 
-def check_file_exist(dir, competitors, file_names, file_type):
-    counter = 0
-    while counter < 3:
-        all_exist = True
-        for competitor in competitors:
-            for file_name in file_names:
-                # file_path = Path(f'/tmp/cleaned_{file_name}.csv')
-                file_path = Path(f'data/{dir}/{competitor}_{file_name}.{file_type}')
-                if not file_path.is_file():
-                    all_exist = False
-                    break
-        if all_exist:
-            return True
-        else:
-            counter += 1
-            time.sleep(5)
-    return False
 
 
 def read_config_from_json(filename='dags/scraper_config.json'):
@@ -99,3 +83,10 @@ def load_ndjson(competitor, table_name):
     file_path = Path(f'data/cleaned_data/{competitor}_{table_name}.ndjson')
     with open(file_path, "rb") as file:
         return ndjson.load(file)
+
+
+
+
+def check_file_exists(competitor, table_name):
+    file_path = f'data/cleaned_data/{competitor}_{table_name}.ndjson'
+    return os.path.isfile(file_path)

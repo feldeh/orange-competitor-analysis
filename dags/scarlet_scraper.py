@@ -218,7 +218,7 @@ def scarlet_trio():
 
     session = requests.Session()
     response = session.get(url)
-    # time.sleep(5)
+    time.sleep(5)
     soup = BeautifulSoup(response.content, "html.parser")
     internet_speed = soup.find_all("h3", class_="rs-mediabox-title")
     pack_name = soup.find("h1").get_text().lower().replace(' ', '_')

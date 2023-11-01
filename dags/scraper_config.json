@@ -1,38 +1,38 @@
 {
-    "mobileviking": {
-        "competitor": "mobileviking",
-        "baseurl": "https://mobilevikings.be/en/",
-        "endpoint": {
-            "mobile_prepaid": "offer/prepaid/",
-            "mobile_subscription": "offer/subscriptions/",
-            "internet_subscription": "offer/internet/",
-            "discount": "offer/combo/"
-        },
-        "selector": {
-            "cookie_btn": "#btn-accept-cookies",
-            "toggle_switch": ".slider",
-            "mobile_prepaid": {
-                "prepaid_card": ".PrepaidSelectorProduct",
-                "sms_parent": ".PrepaidSelectorProduct__rates__major",
-                "data_focus": "data-focus",
-                "data": "data-gb",
-                "minutes": "data-min",
-                "price": "data-price"
-            },
-            "mobile_subscription": {
-                "mobile_subscription_card": ".PostpaidOption",
-                "data": ".data-amount",
-                "calls_texts": ".PostpaidOption__voiceTextAmount",
-                "price": ".monthlyPrice__price"
-            },
-            "internet_subscription": {
-                "internet_type_btn": ".wideScreenFilters__budgetItem__label",
-                "price": "tr.matrix__price td",
-                "data": "tr.matrix__data td",
-                "download_speed": "tr.matrix__downloadSpeed td",
-                "upload_speed": "tr.matrix__voice td"
-            },
-            "discount": ".monthlyPrice__discountMessage"
-        }
+  "mobileviking": {
+    "competitor": "mobileviking",
+    "baseurl": "https://mobilevikings.be/en/",
+    "endpoint": {
+      "mobile_prepaid": "offer/prepaid/",
+      "mobile_subscription": "offer/subscriptions/",
+      "internet_subscription": "offer/internet/",
+      "discount": "offer/combo/"
+    },
+    "selector": {
+      "cookie_btn": "#btn-accept-cookies",
+      "toggle_switch": ".slider",
+      "mobile_prepaid": {
+        "prepaid_card": ".PrepaidSelectorProduct",
+        "sms_parent": ".PrepaidSelectorProduct__rates__major",
+        "data_focus": "data-focus",
+        "data": "data-gb",
+        "minutes": "data-min",
+        "price": "data-price"
+      },
+      "mobile_subscription": {
+        "mobile_subscription_card": ".PostpaidOption",
+        "data": ".data-amount",
+        "calls_texts": ".PostpaidOption__voiceTextAmount",
+        "price": ".monthlyPrice__price"
+      },
+      "internet_subscription": {
+        "internet_type_btn": ".wideScreenFilters__budgetItem__label",
+        "price": "tr.matrix__price td",
+        "data": "tr.matrix__data td",
+        "download_speed": "tr.matrix__downloadSpeed td",
+        "upload_speed": "tr.matrix__voice td"
+      },
+      "discount": ".monthlyPrice__discountMessage"
     }
+  }
 }

@@ -3,14 +3,13 @@ from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
 from airflow.sensors.python import PythonSensor
 from airflow.sensors.time_delta import TimeDeltaSensor
+from airflow.operators.empty import EmptyOperator
 
-
-from bigquery2 import load_to_bq
+from bigquery2 import *
 import google.cloud.bigquery as bq
 
 import os
 
-from utils import check_file_exist
 
 
 service_acc_key_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
@@ -97,35 +96,98 @@ DEFAULT_DAG_ARGS = {
 )
 def load_to_bigquery_dag():
 
-    # delay_task = TimeDeltaSensor(
-    #     task_id='delay_task',
-    #     delta=timedelta(seconds=200)
-    # )
-
-    wait_for_file = PythonSensor(
-        task_id='wait_for_file',
-        python_callable=check_file_exist,
-        op_kwargs={"dir": "cleaned_data", "competitors": COMPETITORS, "file_names": FILE_NAMES, "file_type": "ndjson"},
-        mode='reschedule',
-        timeout=180,
-
+    delay_task = TimeDeltaSensor(
+        task_id='delay_task',
+        delta=timedelta(seconds=2)
     )
 
-    load_to_bigquery = PythonOperator(
-        task_id='load_to_bigquery',
-        python_callable=load_to_bq,
+    create_dataset = PythonOperator(
+        task_id='create_dataset',
+        python_callable=create_dataset_if_not_exist,
         op_kwargs={
             "client": client,
             "project_id": PROJECT_ID,
             "dataset_id": DATASET_ID,
-            "table_names": TABLE_NAMES,
-            "table_schemas": BQ_TABLE_SCHEMAS,
-            "competitors": COMPETITORS
-        }
-
+        },
     )
 
-    wait_for_file >> load_to_bigquery
+    create_table = PythonOperator(
+        task_id='create_table',
+        python_callable=create_table_if_not_exist,
+        op_kwargs={
+            "client": client,
+            "project_id": PROJECT_ID,
+            "dataset_id": DATASET_ID,
+            "tables": TABLE_NAMES,
+            "schemas": BQ_TABLE_SCHEMAS,
+        },
+    )
+
+
+
+    end_products = EmptyOperator(
+        task_id='end_products',
+        trigger_rule='all_done',
+)
+
+    end_packs = EmptyOperator(
+        task_id='end_packs',
+        trigger_rule='all_done',
+)
+
+    end_logs = EmptyOperator(
+        task_id='end_logs',
+        trigger_rule='all_done',
+)
+
+
+
+    delay_task >> create_dataset >> create_table
+
+    for competitor in COMPETITORS:
+        load_products = PythonOperator(
+            task_id=f'load_products_{competitor}',
+            python_callable=load_products_to_bq,
+            op_kwargs={
+                "client": client,
+                "project_id": PROJECT_ID,
+                "dataset_id": DATASET_ID,
+                "competitor": competitor
+            },
+        )
+
+        create_table >> load_products >> end_products
+
+
+    for competitor in COMPETITORS:
+        load_packs = PythonOperator(
+            task_id=f'load_packs_{competitor}',
+            python_callable=load_packs_to_bq,
+            op_kwargs={
+                "client": client,
+                "project_id": PROJECT_ID,
+                "dataset_id": DATASET_ID,
+                "competitor": competitor
+            },
+        )
+
+        end_products >> load_packs >> end_packs
+
+
+    for competitor in COMPETITORS:
+        load_logs = PythonOperator(
+            task_id=f'load_logs_{competitor}',
+            python_callable=load_logs_to_bq,
+            op_kwargs={
+                "client": client,
+                "project_id": PROJECT_ID,
+                "dataset_id": DATASET_ID,
+                "competitor": competitor
+            },
+        )
+
+        end_packs >> load_logs >> end_logs
+
 
 
 load_job = load_to_bigquery_dag()

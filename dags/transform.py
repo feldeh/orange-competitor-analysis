@@ -51,11 +51,11 @@ def clean_data_task(competitors, headers):
         for header in headers:
             data_list = json_to_list_of_dicts(competitor, header)
             if data_list is None:
-                print(f"No data for {competitor} {header}")
-                continue
-            if header == 'products':
-                cleaned_data = clean_product_data(data_list)
-                list_of_dicts_to_ndjson(cleaned_data, competitor, header)
                 continue
             # add cleanup for each header as needed
+            if header == 'products':
+                cleaned_data = clean_product_data(data_list)
+                if cleaned_data is not None:
+                    list_of_dicts_to_ndjson(cleaned_data, competitor, header)
+                continue
             list_of_dicts_to_ndjson(data_list, competitor, header)
