@@ -14,7 +14,7 @@ from utils import *
 
 URL = {
     'mobile_prepaid': 'https://mobilevikings.be/en/offer/prepaid/',
-    'mobile_subscriptions': 'https://mobilevikings.be/en/offer/subscriptions/',
+    'mobile_subscription': 'https://mobilevikings.be/en/offer/subscriptions/',
     'internet_subscription': 'https://mobilevikings.be/en/offer/internet/',
     'combo': 'https://mobilevikings.be/en/offer/combo/'
 }
@@ -256,7 +256,7 @@ def get_products(browser, url):
 
     try:
         prepaid_data = get_mobile_prepaid_data(browser, url['mobile_prepaid'])
-        mobile_subscription_data = get_mobile_subscription_data(browser, url['mobile_subscriptions'])
+        mobile_subscription_data = get_mobile_subscription_data(browser, url['mobile_subscription'])
         internet_subscription_data = get_internet_subscription_data(browser, url['internet_subscription'])
 
         product_list = []

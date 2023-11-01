@@ -3,7 +3,7 @@ import ndjson
 import json
 import logging
 import requests
-from airflow import AirflowException
+# from airflow import AirflowException
 import time
 
 
@@ -40,13 +40,13 @@ def check_request(url):
 
     except requests.exceptions.ConnectionError as ec:
         logging.error(ec)
-        raise AirflowException(ec)
+        # raise AirflowException(ec)
     except requests.exceptions.Timeout as et:
         logging.error(et)
-        raise AirflowException(et)
+        # raise AirflowException(et)
     except requests.exceptions.HTTPError as eh:
         logging.error(eh)
-        raise AirflowException(eh)
+        # raise AirflowException(eh)
 
 
 def save_scraping_log(error_message, competitor):

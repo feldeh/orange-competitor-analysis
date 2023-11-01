@@ -134,6 +134,7 @@ def load_to_bq(client, project_id, dataset_id, table_names, table_schemas, compe
     """
     Load data to BigQuery, ensuring that existing records are not duplicated
     """
+    # TODO: extract function from loop
     for competitor in competitors:
         create_dataset_if_not_exist(client, project_id, dataset_id)
         create_table_if_not_exist(client, project_id, dataset_id, table_names, table_schemas)
