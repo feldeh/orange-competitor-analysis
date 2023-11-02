@@ -10,11 +10,10 @@ from transform import clean_data_task
 
 HEADERS = ['products', 'packs', 'logs']
 COMPETITORS = ['mobileviking', 'scarlet']
-FILE_NAMES = ['products', 'packs', 'logs']
 
 DEFAULT_ARGS = {
     'owner': 'admin',
-    'retries': 2,
+    'retries': 1,
     'retry_delay': timedelta(seconds=30)
 }
 

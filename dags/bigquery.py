@@ -108,6 +108,7 @@ def insert_rows(client: bq.Client, project_id: str, dataset_id: str, table_id: s
     errors = []
     try:
         table_ref = bq.DatasetReference(project_id, dataset_id).table(table_id)
+        # Insert rows into BigQuery table without specifying row IDs, BigQuery will generate unique IDs
         errors = client.insert_rows_json(table_ref, data_to_load, row_ids=[None] * len(data_to_load))
     except Exception as e:
         print(f"Error inserting data: {str(e)}")

@@ -80,7 +80,7 @@ BQ_TABLE_SCHEMAS = {
 
 DEFAULT_DAG_ARGS = {
     'owner': 'admin',
-    'retries': 2,
+    'retries': 1,
     'retry_delay': timedelta(minutes=1),
 }
 
@@ -122,7 +122,7 @@ def load_to_bigquery_dag():
         },
     )
 
-    # End task to set trigger rules
+    # End tasks to set trigger rules
     end_products = EmptyOperator(
         task_id='end_products',
         trigger_rule='all_done',

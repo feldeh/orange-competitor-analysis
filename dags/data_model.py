@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from pydantic import ValidationError
 import logging
 import traceback
-# from airflow import AirflowException
+from airflow import AirflowException
 
 
 class Product(BaseModel):
@@ -34,4 +34,4 @@ def validate_products(product_list) -> List[dict]:
         error_message = f"Validation error: {validation_error}"
         logging.error(error_message)
         traceback.print_exc()
-        # raise AirflowException(error_message)
+        raise AirflowException(error_message)
