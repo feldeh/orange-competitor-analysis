@@ -41,5 +41,4 @@ def master_dag():
     trigger_scraping >> trigger_cleaning >> trigger_load_to_bigquery
 
 
-# instantiate the dag
 etl_dag = master_dag()

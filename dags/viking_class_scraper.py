@@ -9,18 +9,33 @@ import traceback
 from typing import List, Dict
 from airflow import AirflowException
 from utils import *
+from typing import Any, Dict, List, Optional
+from playwright.sync_api import Page, Browser
 
 
 class Scraper:
+    """A scraper for extracting product data from web pages.
+
+    Attributes:
+        _browser (Browser): The browser instance for web scraping.
+        _config (dict): Configuration dictionary for scraper settings.
+        logger (logging.Logger): Logger for recording log messages.
+        _date (str): Current date in YYYY-MM-DD format.
+        _url (str): The URL to scrape.
+        _page (Page): The current page object from the browser.
+        _page_content (str): The content of the current page.
+    """
+
     def __init__(
         self,
-        browser,
-        config: dict,
-        url=None,
-        page=None,
-        page_content=None,
-        logger=None
+        browser: Browser,
+        config: Dict[str, Any],
+        url: Optional[str] = None,
+        page: Optional[Page] = None,
+        page_content: Optional[str] = None,
+        logger: Optional[logging.Logger] = None
     ) -> None:
+        """Initialize the Scraper object with a browser instance, configuration, and logger."""
         self._browser = browser
         self._config = config
         self.logger = logger
@@ -30,7 +45,8 @@ class Scraper:
         self._page = page
         self._page_content = page_content
 
-    def _initialize_logging(self):
+    def _initialize_logging(self) -> None:
+        """Initializes logging for the scraper."""
         if self.logger is None:
             # Create a logger
             self.logger = logging.getLogger()
@@ -49,7 +65,8 @@ class Scraper:
             # Add the handler to the logger
             self.logger.addHandler(handler)
 
-    def _accept_cookie(self):
+    def _accept_cookie(self) -> None:
+        """Accepts the cookie consent on the page."""
         try:
             btn_selector = self._config['selector']['cookie_btn']
             self._page.wait_for_selector(btn_selector)
@@ -60,8 +77,12 @@ class Scraper:
 
             raise AirflowException(error_message)
 
+    def _navigate(self, endpoint: str) -> None:
+        """Navigates to a specific endpoint on the website.
 
-    def _navigate(self, endpoint: str):
+        Args:
+            endpoint (str): The endpoint to navigate to.
+        """
         self._url = self._config['baseurl'] + self._config['endpoint'][endpoint]
 
         # Check url for errors
@@ -74,7 +95,12 @@ class Scraper:
         self._accept_cookie()
         time.sleep(3)
 
-    def _extract_prepaid_selector_data(self):
+    def _extract_prepaid_selector_data(self) -> List[Dict[str, Any]]:
+        """Extracts prepaid product data from the page selector.
+
+        Returns:
+            list: A list of dictionaries containing prepaid product data.
+        """
         prepaid_data = []
         soup = BeautifulSoup(self._page_content, 'html.parser')
         try:
@@ -119,8 +145,8 @@ class Scraper:
             traceback.print_exc()
             raise AirflowException(error_message)
 
-
-    def _activate_toggle_switch(self):
+    def _activate_toggle_switch(self) -> None:
+        """Activates toggle switch elements on the page."""
         try:
             toggles = self._page.query_selector_all(self._config['selector']['toggle_switch'])
             check_empty_el(toggles, self._config['selector']['toggle_switch'])
@@ -132,8 +158,12 @@ class Scraper:
             traceback.print_exc()
             raise AirflowException(error_message)
 
+    def _extract_prepaid_data(self) -> List[Dict[str, Any]]:
+        """Extracts all prepaid data from the page.
 
-    def _extract_prepaid_data(self):
+        Returns:
+            list: A list of dictionaries containing all prepaid data.
+        """
         self._page_content = self._page.content()
         prepaid_data = self._extract_prepaid_selector_data()
         self._activate_toggle_switch()
@@ -143,7 +173,12 @@ class Scraper:
 
         return prepaid_data
 
-    def _extract_subscription_data(self):
+    def _extract_subscription_data(self) -> List[Dict[str, Any]]:
+        """Extracts subscription product data from the page.
+
+        Returns:
+            list: A list of dictionaries containing subscription data.
+        """
         subscription_data = []
         self._page_content = self._page.content()
         try:
@@ -193,8 +228,12 @@ class Scraper:
             traceback.print_exc()
             raise AirflowException(error_message)
 
+    def _extract_internet_table_data(self) -> Dict[str, Any]:
+        """Extracts internet subscription data from the page.
 
-    def _extract_internet_table_data(self):
+        Returns:
+            dict: A dictionary containing internet subscription data.
+        """
         soup = BeautifulSoup(self._page_content, 'html.parser')
 
         internet_data = {}
@@ -238,9 +277,12 @@ class Scraper:
             traceback.print_exc()
             raise AirflowException(error_message)
 
+    def _extract_internet_data(self) -> List[Dict[str, Any]]:
+        """Extracts all internet subscription data from the page.
 
-    def _extract_internet_data(self):
-
+        Returns:
+            list: A list of dictionaries containing all internet data.
+        """
         self._page_content = self._page.content()
 
         try:
@@ -271,7 +313,15 @@ class Scraper:
             traceback.print_exc()
             raise AirflowException(error_message)
 
-    def _extract_page_data(self, product_type):
+    def _extract_page_data(self, product_type: str) -> List[Dict[str, Any]]:
+        """Extracts data from the page based on product type.
+
+        Args:
+            product_type (str): The type of product to extract data for.
+
+        Returns:
+            list: A list of dictionaries containing the product data.
+        """
         self._navigate(product_type)
         self.logger.info(f"Extracting mobile prepaid data from: {self._url}")
 
@@ -286,8 +336,12 @@ class Scraper:
 
         return data
 
-    def get_products(self):
+    def get_products(self) -> List[Dict[str, Any]]:
+        """Extracts product data from different product pages.
 
+        Returns:
+            list: A list of dictionaries containing product details.
+        """
         try:
             prepaid_data = self._extract_page_data('mobile_prepaid')
             mobile_subscription_data = self._extract_page_data('mobile_subscription')
@@ -309,8 +363,12 @@ class Scraper:
             traceback.print_exc()
             raise AirflowException(error_message)
 
+    def _extract_discount(self) -> int:
+        """Extracts the discount value from the combo pack page.
 
-    def _extract_discount(self):
+        Returns:
+            int: The extracted discount value.
+        """
         try:
             self._url = self._config['baseurl'] + self._config['endpoint']['discount']
             self._page_content = requests.get(self._url).text
@@ -327,10 +385,14 @@ class Scraper:
             traceback.print_exc()
             raise AirflowException(error_message)
 
+    def generate_packs(self, products_list: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+        """Generates a list of product packs combining mobile and internet products with the applied discount.
 
-    def generate_packs(self, products_list):
-        """
-        Generate packs based on mobile + internet products combinations
+        Args:
+            products_list: The list of mobile and internet products from which to generate packs.
+
+        Returns:
+            dict: A dictionary containing a list of product packs.
         """
         self.logger.info('Generating packs')
         try:
@@ -368,8 +430,16 @@ class Scraper:
             raise AirflowException(error_message)
 
 
+def mobileviking_scraper(config: Dict[str, Any]) -> None:
+    """Initializes the scraping process for mobileviking website.
 
-def mobileviking_scraper(config):
+    This function sets up the browser, creates an instance of the Scraper object,
+    and orchestrates the scraping of product and pack data, saving them to JSON files.
+    It ensures the browser is closed after the operation and logs are saved.
+
+    Args:
+        config: Configuration settings for the scraper.
+    """
     with sync_playwright() as pw:
         error_details = 'no error'
         try:

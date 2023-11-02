@@ -5,15 +5,14 @@ from airflow.sensors.python import PythonSensor
 from airflow.sensors.time_delta import TimeDeltaSensor
 from airflow.operators.empty import EmptyOperator
 
-from bigquery2 import *
+from bigquery import *
 import google.cloud.bigquery as bq
 
 import os
 
-
-
+# Retrieve the Google Cloud service account key path from environment variables
 service_acc_key_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
-
+# Initialize the bigquery client with the service account key
 client = bq.Client.from_service_account_json(service_acc_key_path)
 
 
@@ -90,7 +89,7 @@ DEFAULT_DAG_ARGS = {
     dag_id='load_to_bigquery_dag',
     start_date=datetime(2023, 10, 5),
     schedule_interval=None,
-    description='Loading data to bq',
+    description='DAG to load data into BigQuery. It handles creation of datasets and tables and loads data into BigQuery.',
     catchup=False,
     default_args=DEFAULT_DAG_ARGS
 )
@@ -123,27 +122,25 @@ def load_to_bigquery_dag():
         },
     )
 
-
-
+    # End task to set trigger rules
     end_products = EmptyOperator(
         task_id='end_products',
         trigger_rule='all_done',
-)
+    )
 
     end_packs = EmptyOperator(
         task_id='end_packs',
         trigger_rule='all_done',
-)
+    )
 
     end_logs = EmptyOperator(
         task_id='end_logs',
         trigger_rule='all_done',
-)
-
-
+    )
 
     delay_task >> create_dataset >> create_table
 
+    # Dynamically create and set dependencies for loading tables tasks for each competitor
     for competitor in COMPETITORS:
         load_products = PythonOperator(
             task_id=f'load_products_{competitor}',
@@ -157,7 +154,6 @@ def load_to_bigquery_dag():
         )
 
         create_table >> load_products >> end_products
-
 
     for competitor in COMPETITORS:
         load_packs = PythonOperator(
@@ -173,7 +169,6 @@ def load_to_bigquery_dag():
 
         end_products >> load_packs >> end_packs
 
-
     for competitor in COMPETITORS:
         load_logs = PythonOperator(
             task_id=f'load_logs_{competitor}',
@@ -187,7 +182,6 @@ def load_to_bigquery_dag():
         )
 
         end_packs >> load_logs >> end_logs
-
 
 
 load_job = load_to_bigquery_dag()

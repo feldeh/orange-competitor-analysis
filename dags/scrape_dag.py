@@ -37,7 +37,7 @@ def scrape_dag():
         python_callable=scarlet_scraper,
     )
 
-    # Allow DAG to continue execution regardless of upstream task outcomes
+    # DAG will be marked as successful regardless of upstream task outcomes
     end_task = EmptyOperator(
         task_id='end_task',
         trigger_rule='all_done',
