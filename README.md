@@ -2,7 +2,7 @@
 
 ### Overview
 
-This project automates the process of scraping, processing, and storing promotional data from competitors in the telecom industry. It focuses on two competitors: [Mobile Vikings](https://mobilevikings.be/en/) and [Scarlet](https://www.scarlet.be/en/homepage/), utilizing data extraction and loading it into BigQuery for further analysis and potential insights extraction.
+This project automates the process of scraping, processing, and storing promotional data from competitors in the telecom industry. It focuses on two competitors: [Mobile Vikings](https://mobilevikings.be/en/) and [Scarlet](https://www.scarlet.be/en/homepage/), utilizing data extraction and loading it into BigQuery for further analysis.
 
 ### Architecture
 
@@ -21,13 +21,11 @@ This project automates the process of scraping, processing, and storing promotio
 
 #### Data Cleaning & Processing
 
-- Clean and transform JSON data into NDJSON (newline delimited JSON), enabling each line to be processed as a separate entry.
-- Ensure data quality and consistency for accurate analysis in BigQuery.
+- Clean and transform JSON data into NDJSON (newline delimited JSON).
 
 #### Data Loading
 
 - Using Google Cloud BigQuery Python Client, the cleaned data is loaded into specific BigQuery tables.
-- Employs strategic checks to avoid duplication and maintain data integrity.
 - Before loading, the data is compared with existing records from the table to prevent data duplication and ensuring that only new or modified records are inserted into BigQuery.
 
 ### Setup & Usage
@@ -47,11 +45,17 @@ This project automates the process of scraping, processing, and storing promotio
 2. **Setup Google Cloud**
 
    - Setup a GCP Project, enable the BigQuery API, and create a Service Account with BigQuery Admin roles.
-   - Download the JSON key file for the Service Account and place it in the root of the repo as "gcloud/bigquery_credentials.json".
+   - Download the JSON key file for the Service Account and place it in the gcloud directory as "bigquery_credentials.json".
 
 3. **Setup Docker**
 
    - Ensure Docker and Docker Compose are installed on your system.
+   - Initialize the database
+
+   ```sh
+   docker compose up airflow-init
+   ```
+
    - Build the Docker image:
 
    ```sh
@@ -67,4 +71,4 @@ This project automates the process of scraping, processing, and storing promotio
    ```sh
    docker-compose up
    ```
-   Navigate to Apache Airflow's UI from port `localhost:8080` and enable the DAG.
+   Navigate to Apache Airflow's UI from `localhost:8080` and enable the DAG.
