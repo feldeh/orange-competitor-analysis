@@ -5,7 +5,7 @@ from airflow.operators.empty import EmptyOperator
 
 DEFAULT_ARGS = {
     'owner': 'admin',
-    'retries': 2,
+    'retries': 1,
     'retry_delay': timedelta(minutes=1)
 }
 
@@ -23,14 +23,12 @@ def master_dag():
         task_id='trigger_scraping',
         trigger_dag_id='scrape_dag',
         wait_for_completion=True,
-        poke_interval=150
     )
 
     trigger_cleaning = TriggerDagRunOperator(
         task_id='trigger_cleaning',
         trigger_dag_id='clean_dag',
         wait_for_completion=True,
-        poke_interval=30
     )
 
     trigger_load_to_bigquery = TriggerDagRunOperator(

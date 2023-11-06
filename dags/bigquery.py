@@ -10,9 +10,9 @@ def create_dataset_if_not_exist(client: bq.Client, project_id: str, dataset_id: 
     """Create a BigQuery dataset if it does not exist.
 
     Args:
-        client (bq.Client): A BigQuery client.
-        project_id (str): The ID of the Google Cloud project.
-        dataset_id (str): The ID of the dataset to create.
+        client: A BigQuery client.
+        project_id: The ID of the Google Cloud project.
+        dataset_id: The ID of the dataset to create.
 
     """
     dataset_ref = bq.DatasetReference(project_id, dataset_id)
@@ -30,11 +30,11 @@ def create_table_if_not_exist(client: bq.Client, project_id: str, dataset_id: st
     """Create BigQuery tables if they do not exist based on provided schemas.
 
     Args:
-        client (bq.Client): A BigQuery client.
-        project_id (str): The ID of the Google Cloud project.
-        dataset_id (str): The ID of the dataset where tables will be created.
-        tables (list): A list of table IDs to create.
-        schemas (dict): A dictionary mapping table IDs to their corresponding schemas.
+        client: A BigQuery client.
+        project_id: The ID of the Google Cloud project.
+        dataset_id: The ID of the dataset where tables will be created.
+        tables: A list of table IDs to create.
+        schemas: A dictionary mapping table IDs to their corresponding schemas.
 
     """
     dataset_ref = bq.DatasetReference(project_id, dataset_id)
@@ -54,9 +54,9 @@ def is_different_record(existing_record: Dict[str, Any], new_record: Dict[str, A
     """Check if two records are different, ignoring specified keys.
 
     Args:
-        existing_record (dict): The existing record.
-        new_record (dict): The new record to compare.
-        ignored_keys (list): Keys to ignore during the comparison.
+        existing_record: The existing record.
+        new_record: The new record to compare.
+        ignored_keys: Keys to ignore during the comparison.
 
     Returns:
         bool: True if records differ in keys not ignored, False otherwise.
@@ -72,8 +72,8 @@ def get_existing_record(client: bq.Client, query: str) -> Optional[Dict[str, Any
     """Retrieve the first record that matches a given SQL query.
 
     Args:
-        client (bq.Client): A BigQuery client.
-        query (str): A SQL query string to retrieve the record.
+        client: A BigQuery client.
+        query: A SQL query string to retrieve the record.
 
     Returns:
         dict: The first record found or None if no records are found.
@@ -81,7 +81,10 @@ def get_existing_record(client: bq.Client, query: str) -> Optional[Dict[str, Any
     """
     try:
         query_job = client.query(query)
+
+        # Retrieve the first element of the iterable and return it, if there is no element return None
         results = next(iter(query_job.result()), None)
+
         if results:
             print("Query executed successfully")
             print('Query results: ', results)
@@ -98,17 +101,17 @@ def insert_rows(client: bq.Client, project_id: str, dataset_id: str, table_id: s
     """Insert rows into a BigQuery table.
 
     Args:
-        client (bq.Client): A BigQuery client.
-        project_id (str): The ID of the Google Cloud project.
-        dataset_id (str): The ID of the dataset.
-        table_id (str): The ID of the table to insert data into.
-        data_to_load (list): The list of data to load into the table.
+        client: A BigQuery client.
+        project_id: The ID of the Google Cloud project.
+        dataset_id: The ID of the dataset.
+        table_id: The ID of the table to insert data into.
+        data_to_load: The list of data to load into the table.
 
     """
     errors = []
     try:
         table_ref = bq.DatasetReference(project_id, dataset_id).table(table_id)
-        # Insert rows into BigQuery table without specifying row IDs, BigQuery will generate unique IDs
+        # Insert rows into BigQuery table without specifying row IDs, BigQuery will generate unique row IDs
         errors = client.insert_rows_json(table_ref, data_to_load, row_ids=[None] * len(data_to_load))
     except Exception as e:
         print(f"Error inserting data: {str(e)}")
@@ -187,6 +190,7 @@ def prepare_data_for_insertion(record: Dict[str, Any], competitor_uuid: str) -> 
     product_data = {
         "product_uuid": product_uuid,
         "product_name": record["product_name"],
+        "product_category": record["product_category"],
         "competitor_uuid": competitor_uuid,
         "feature_uuid": feature_uuid,
         "competitor_name": record["competitor_name"],
@@ -197,7 +201,6 @@ def prepare_data_for_insertion(record: Dict[str, Any], competitor_uuid: str) -> 
         "feature_uuid": feature_uuid,
         "product_uuid": product_uuid,
         "product_name": record["product_name"],
-        "product_category": record["product_category"],
         "product_url": record["product_url"],
         "scraped_at": record["scraped_at"],
         "data": record["data"],

@@ -33,6 +33,7 @@ BQ_TABLE_SCHEMAS = {
     "products": [
         bq.SchemaField('product_uuid', 'STRING', mode='REQUIRED'),
         bq.SchemaField('product_name', 'STRING', mode='REQUIRED'),
+        bq.SchemaField('product_category', 'STRING', mode='REQUIRED'),
         bq.SchemaField('competitor_name', 'STRING', mode='REQUIRED'),
         bq.SchemaField('competitor_uuid', 'STRING', mode='REQUIRED'),
         bq.SchemaField('feature_uuid', 'STRING', mode='REQUIRED'),
@@ -43,7 +44,6 @@ BQ_TABLE_SCHEMAS = {
         bq.SchemaField('feature_uuid', 'STRING', mode='REQUIRED'),
         bq.SchemaField('product_uuid', 'STRING', mode='REQUIRED'),
         bq.SchemaField('product_name', 'STRING', mode='REQUIRED'),
-        bq.SchemaField('product_category', 'STRING', mode='REQUIRED'),
         bq.SchemaField('product_url', 'STRING', mode='REQUIRED'),
         bq.SchemaField('scraped_at', 'DATETIME', mode='REQUIRED'),
         bq.SchemaField('data', 'FLOAT', mode='NULLABLE'),
@@ -140,7 +140,7 @@ def load_to_bigquery_dag():
 
     delay_task >> create_dataset >> create_table
 
-    # Dynamically create and set dependencies for loading tables tasks for each competitor
+    # Iterate over each competitor to create a loading task for each table
     for competitor in COMPETITORS:
         load_products = PythonOperator(
             task_id=f'load_products_{competitor}',

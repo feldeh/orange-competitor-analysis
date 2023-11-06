@@ -24,7 +24,7 @@ DEFAULT_ARGS = {
 )
 def scrape_dag():
 
-    config = read_config_from_json()
+    config = read_config_from_json('dags/scraper_config.json')
 
     scrape_viking = PythonOperator(
         task_id='scrape_viking',

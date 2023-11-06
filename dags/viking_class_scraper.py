@@ -14,7 +14,7 @@ from playwright.sync_api import Page, Browser
 
 
 class Scraper:
-    """A scraper for extracting product data from web pages.
+    """A scraper for extracting telecom provider offering from webpage.
 
     Attributes:
         _browser (Browser): The browser instance for web scraping.
@@ -200,6 +200,7 @@ class Scraper:
                 check_empty_el(price_per_month_element, self._config['selector']['mobile_subscription']['price'])
                 price_per_month = price_per_month_element.get_text().strip().replace(',-', '')
 
+                # Extract call and sms values
                 minutes_match = re.search(r'(\d+) minutes', calls_texts)
                 sms_match = re.search(r'(\d+) texts', calls_texts)
 
@@ -433,7 +434,7 @@ class Scraper:
 def mobileviking_scraper(config: Dict[str, Any]) -> None:
     """Initializes the scraping process for mobileviking website.
 
-    This function sets up the browser, creates an instance of the Scraper object,
+    This function sets up the browser, creates an instance of the Scraper object
     and orchestrates the scraping of product and pack data, saving them to JSON files.
     It ensures the browser is closed after the operation and logs are saved.
 
