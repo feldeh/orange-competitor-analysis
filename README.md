@@ -1,4 +1,4 @@
-# Orange Competitor Analysis Pipeline
+# Belgian Telecom Competitor Analysis Pipeline
 
 ### Overview
 
@@ -39,8 +39,8 @@ This project automates the process of scraping, processing, and storing promotio
 
 1. **Clone the Repository**
    ```sh
-   git clone https://github.com/feldeh/orange-competitor-analysis
-   cd orange-competitor-analysis
+   git clone https://github.com/feldeh/telecom-competitor-analysis
+   cd telecom-competitor-analysis
    ```
 2. **Setup Google Cloud**
 
