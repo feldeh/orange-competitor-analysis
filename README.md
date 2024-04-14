@@ -71,4 +71,4 @@ This project automates the process of scraping, processing, and storing promotio
    ```sh
    docker-compose up
    ```
-   Navigate to Apache Airflow's UI from `localhost:8080` and enable the DAG.
+   Navigate to Apache Airflow's UI from `localhost:8080`, login with username: **airflow** and password: **airflow** and trigger the DAG.
